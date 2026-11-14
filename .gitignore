@@ -1,6 +1,7 @@
-third_party/
-extract/
+/third_party/
+/extract/
 *.log
 bin/
 obj/
 site/armor_data.js
+tools/los/target/
