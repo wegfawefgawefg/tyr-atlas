@@ -3,3 +3,4 @@ extract/
 *.log
 bin/
 obj/
+site/armor_data.js
