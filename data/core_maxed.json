@@ -1,0 +1,182 @@
+[
+ {
+  "name": "Alecto",
+  "cls": "LightTank",
+  "wip": false,
+  "dps": 53.48837209302326,
+  "alpha": 115.0,
+  "hp": 1150.0,
+  "speed": 61.8,
+  "points_needed": 30
+ },
+ {
+  "name": "Fortis",
+  "cls": "HeavyTank",
+  "wip": false,
+  "dps": 33.75,
+  "alpha": 337.5,
+  "hp": 1900.0,
+  "speed": 36.7,
+  "points_needed": 30
+ },
+ {
+  "name": "Ark",
+  "cls": "MediumTank",
+  "wip": false,
+  "dps": 32.22222222222222,
+  "alpha": 290.0,
+  "hp": 1275.0,
+  "speed": 52.2,
+  "points_needed": 20
+ },
+ {
+  "name": "Arbalest",
+  "cls": "MediumTank",
+  "wip": false,
+  "dps": 30.254545454545454,
+  "alpha": 416.0,
+  "hp": 1150.0,
+  "speed": 42.3,
+  "points_needed": 30
+ },
+ {
+  "name": "Parallax",
+  "cls": "MediumTank",
+  "wip": true,
+  "dps": 33.68421052631579,
+  "alpha": 240.0,
+  "hp": 1475.0,
+  "speed": 50.0,
+  "points_needed": 30
+ },
+ {
+  "name": "Kestrel",
+  "cls": "LightTank",
+  "wip": false,
+  "dps": 43.04347826086956,
+  "alpha": 165.0,
+  "hp": 1065.0,
+  "speed": 66.0,
+  "points_needed": 23
+ },
+ {
+  "name": "Valor",
+  "cls": "MediumTank",
+  "wip": false,
+  "dps": 34.375,
+  "alpha": 165.0,
+  "hp": 1350.0,
+  "speed": 50.6,
+  "points_needed": 30
+ },
+ {
+  "name": "Maul",
+  "cls": "HeavyTank",
+  "wip": false,
+  "dps": 31.857142857142858,
+  "alpha": 223.0,
+  "hp": 1825.0,
+  "speed": 43.5,
+  "points_needed": 30
+ },
+ {
+  "name": "Ranger",
+  "cls": "MediumTank",
+  "wip": false,
+  "dps": 37.31481481481481,
+  "alpha": 201.5,
+  "hp": 1525.0,
+  "speed": 51.5,
+  "points_needed": 28
+ },
+ {
+  "name": "Tempest",
+  "cls": "MediumTank",
+  "wip": false,
+  "dps": 28.26086956521739,
+  "alpha": 130.0,
+  "hp": 1405.0,
+  "speed": 49.8,
+  "points_needed": 30
+ },
+ {
+  "name": "Seeker",
+  "cls": "LightTank",
+  "wip": true,
+  "dps": 43.027027027027025,
+  "alpha": 159.2,
+  "hp": 1225.0,
+  "speed": 78.6,
+  "points_needed": 31
+ },
+ {
+  "name": "Tricera",
+  "cls": "HeavyTank",
+  "wip": false,
+  "dps": 30.0,
+  "alpha": 297.0,
+  "hp": 1978.0,
+  "speed": 32.4,
+  "points_needed": 30
+ },
+ {
+  "name": "Helio",
+  "cls": "HeavyTank",
+  "wip": false,
+  "dps": 29.5,
+  "alpha": 206.5,
+  "hp": 2060.0,
+  "speed": 33.0,
+  "points_needed": 10
+ },
+ {
+  "name": "Atlas",
+  "cls": "HeavyTank",
+  "wip": false,
+  "dps": 29.23076923076923,
+  "alpha": 380.0,
+  "hp": 2400.0,
+  "speed": 26.0,
+  "points_needed": 30
+ },
+ {
+  "name": "Phantom",
+  "cls": "LightTank",
+  "wip": false,
+  "dps": 28.046511627906977,
+  "alpha": 301.5,
+  "hp": 975.0,
+  "speed": 67.6,
+  "points_needed": 30
+ },
+ {
+  "name": "Fuse",
+  "cls": "LightTank",
+  "wip": true,
+  "dps": 37.2,
+  "alpha": 232.5,
+  "hp": 1185.0,
+  "speed": 67.2,
+  "points_needed": -1
+ },
+ {
+  "name": "Ikarus",
+  "cls": "LightTank",
+  "wip": false,
+  "dps": 49.35064935064935,
+  "alpha": 95.0,
+  "hp": 950.0,
+  "speed": 57.2,
+  "points_needed": 23
+ },
+ {
+  "name": "Rook",
+  "cls": "MediumTank",
+  "wip": false,
+  "dps": 35.65573770491803,
+  "alpha": 217.5,
+  "hp": 1605.0,
+  "speed": 40.0,
+  "points_needed": 28
+ }
+]
