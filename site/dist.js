@@ -128,12 +128,13 @@ function drawDist() {
 }
 
 // ---------- 2. one tank's z-score profile ----------
-function drawZ() {
-  const host = document.getElementById('zprof'); host.replaceChildren();
+// hostId/noteId let the tank page draw the same chart into its own container; noteId may be null
+function drawZ(hostId = 'zprof', noteId = 'z-note') {
+  const host = document.getElementById(hostId); host.replaceChildren();
   const t = tanks.find(x => x.id === TA.selected) || TA.sortedTanks[0];
-  document.getElementById('z-note').textContent = TA.selected ? `${t.name}, ${t.cls.toLowerCase()}, ${TA.mode === 'base' ? 'base stats' : '31-point core build'}.`
-    : `Showing ${t.name}. Pick a tank at the top of the page to see its profile.`;
-  const W = width('zprof'), lab = W < 560 ? 124 : 190, pad = 52, rh = 21;
+  if (noteId) document.getElementById(noteId).textContent = TA.selected ? `${t.name}, ${t.cls.toLowerCase()}, ${TA.mode === 'base' ? 'base stats' : '31-point core build'}.`
+    : `Showing ${t.name}. Pick a tank in the header to see its profile.`;
+  const W = width(hostId), lab = W < 560 ? 124 : 190, pad = 52, rh = 21;
   const groups = [...new Set(stats.map(s => s.group))];
   const rows = []; let H = 0;
   for (const g of groups) {
@@ -239,6 +240,7 @@ function drawCorr() {
   });
 }
 
-TA.onDraw.push(drawDist, drawZ, drawCorr);
-drawDist(); drawZ(); drawCorr();
+TA.chart('stats', drawDist); TA.chart('stats', () => drawZ());
+TA.chart('compare', drawCorr);
+TA.chart('tank', () => { if (TA.selected) drawZ('t-zprof', null); });
 })();

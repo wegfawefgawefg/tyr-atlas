@@ -16,17 +16,8 @@ const width = id => Math.max(320, document.getElementById(id).clientWidth);
 document.getElementById('source').textContent =
   `Steam build ${T.source.steam_buildid} · talent data v${T.source.talent_tree_version} · extracted 2026-11-14 · standard ammo, no components or abilities`;
 
-// legend + chips
-const legend = document.getElementById('legend');
-for (const c of ['Light', 'Medium', 'Heavy']) { const s = document.createElement('span'); const k = document.createElement('i'); k.className = 'key'; k.style.background = `var(${CLS[c]})`; s.append(k, c); legend.append(s); }
-{ const s = document.createElement('span'); const k = document.createElement('i'); k.className = 'key hollow'; s.append(k, 'Work in progress'); legend.append(s); }
-const chips = document.getElementById('chips');
-const sortedTanks = [...tanks].sort((a, b) => ['Light', 'Medium', 'Heavy'].indexOf(a.cls) - ['Light', 'Medium', 'Heavy'].indexOf(b.cls) || a.name.localeCompare(b.name));
-for (const t of sortedTanks) {
-  const b = document.createElement('button'); b.setAttribute('aria-pressed', 'false'); b.dataset.id = t.id;
-  const k = document.createElement('i'); k.className = 'key' + (t.wip ? ' hollow' : ''); if (!t.wip) k.style.background = col(t); else k.style.borderColor = col(t);
-  b.append(k, t.name); b.onclick = () => select(selected === t.id ? null : t.id); chips.append(b);
-}
+const CLASSES = ['Light', 'Medium', 'Heavy'];
+const sortedTanks = [...tanks].sort((a, b) => CLASSES.indexOf(a.cls) - CLASSES.indexOf(b.cls) || a.name.localeCompare(b.name));
 
 // tooltip
 const tip = document.getElementById('tip');
@@ -275,19 +266,29 @@ function drawTable() {
   tb.append(body);
 }
 
-const onDraw = [];
-function drawAll() { drawStrips(); drawScatter(); drawMap(); drawHeat(); drawUplift(); drawTable(); for (const f of onDraw) f(); }
-function select(id) {
-  selected = id;
-  for (const b of chips.children) b.setAttribute('aria-pressed', String(b.dataset.id === id));
+// Pages: each chart registers for the page it lives on, and only the visible page draws
+// (hidden containers measure 0 wide). Listeners run before the draw, so the router can show the page first.
+let page = null;
+const charts = [], listeners = [];
+const chart = (pg, fn) => charts.push({ pg, fn });
+const onDraw = [];   // older hook: functions pushed here draw with the Combat page; new code should use chart(page, fn)
+function drawAll() { hideTip(); for (const c of charts) if (c.pg === page) c.fn(); if (page === 'combat') for (const f of onDraw) f(); }
+function set(s) {
+  if ('selected' in s) selected = s.selected || null;
+  if ('mode' in s) mode = s.mode === 'core' ? 'core' : 'base';
+  if ('page' in s) page = s.page;
+  for (const f of listeners) f();
   drawAll();
 }
-function setMode(m) { mode = m; document.getElementById('m-base').setAttribute('aria-pressed', String(m === 'base')); document.getElementById('m-core').setAttribute('aria-pressed', String(m === 'core')); drawStrips(); drawScatter(); drawTable(); for (const f of onDraw) f(); }
-document.getElementById('m-base').onclick = () => setMode('base');
-document.getElementById('m-core').onclick = () => setMode('core');
+const select = id => set({ selected: id });
 sx.onchange = sy.onchange = drawScatter; us.onchange = drawUplift;
-let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawAll, 120); });
-window.TA = { el, txt, fmt, dot, showTip, hideTip, niceTicks, width, labelPoints, axes, tanks, stats, statBy, col, CLS, sortedTanks,
-  get selected() { return selected; }, get mode() { return mode; }, select, onDraw };
-drawAll();
+chart('stats', drawStrips);
+chart('compare', drawScatter); chart('compare', drawMap); chart('compare', drawHeat);
+chart('talents', drawUplift);
+chart('data', drawTable);
+let rt, lastW = innerWidth;
+addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW) { lastW = innerWidth; drawAll(); } }, 120); });
+window.TA = { el, txt, fmt, dot, showTip, hideTip, niceTicks, width, labelPoints, axes, tanks, stats, statBy, col, CLS, CLASSES, sortedTanks,
+  get selected() { return selected; }, get mode() { return mode; }, get page() { return page; },
+  select, set, chart, redraw: drawAll, onChange: listeners, onDraw };
 })();

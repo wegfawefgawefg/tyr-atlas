@@ -1,129 +1,90 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tyr Tank Atlas</title>
+<meta name="description" content="Every tank in the tank game Tyr compared from the game's own files: stats, talents, components, armor and face-offs. An unofficial fan analysis.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tyr Tank Atlas">
+<meta property="og:description" content="Every tank in Tyr compared from the game's own files: stats, talents, components, armor and face-offs. Unofficial fan analysis.">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: one reading column of stacked instrument panels; controls sit in a row above each chart. */
-:root {
-  --x-pen: #d03b3b; --x-fifty: #eda100; --x-bounce: #6da7ec; --x-auto: #184f95; --x-tread: #9085e9; --x-crit: #eb6834;
-  --page: #f3f5f6; --surface: #fcfcfb; --ink: #0d1114; --ink-2: #4b5258; --muted: #858b90;
-  --grid: #e1e3e3; --axis: #c2c6c8; --ring: rgba(13,17,20,.10); --accent: #1d4f7a;
-  --c-light: #2a78d6; --c-medium: #eb6834; --c-heavy: #1baf7a;
-  --seq-0: #eef4fc; --seq-1: #cde2fb; --seq-2: #9ec5f4; --seq-3: #6da7ec; --seq-4: #3987e5; --seq-5: #256abf; --seq-6: #184f95; --seq-7: #0d366b;
-  --div-n3: #b0321c; --div-n2: #dd6f55; --div-n1: #f3bfb1; --div-0: #e3e5e6; --div-p1: #bcd5f4; --div-p2: #5f9de8; --div-p3: #1c58a3;
-  --f-display: "Saira Condensed", "Arial Narrow", system-ui, sans-serif;
-  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --x-pen: #e66767; --x-fifty: #c98500; --x-bounce: #2a78d6; --x-auto: #0d366b; --x-tread: #9085e9; --x-crit: #d95926;
-  --page: #0e1113; --surface: #171a1c; --ink: #eef0f1; --ink-2: #bfc4c7; --muted: #8a9094;
-  --grid: #2a2e31; --axis: #3a3f42; --ring: rgba(255,255,255,.10); --accent: #8cb8e6;
-  --c-light: #3987e5; --c-medium: #d95926; --c-heavy: #199e70;
-  --seq-0: #1b2633; --seq-1: #0d366b; --seq-2: #104281; --seq-3: #184f95; --seq-4: #1c5cab; --seq-5: #2a78d6; --seq-6: #5598e7; --seq-7: #9ec5f4;
-  --div-n3: #f08a70; --div-n2: #b84a32; --div-n1: #5a2c23; --div-0: #303437; --div-p1: #1d3d63; --div-p2: #2d6dbd; --div-p3: #86b8f0;
-  color-scheme: dark; } }
-:root[data-theme="dark"] {
-  --x-pen: #e66767; --x-fifty: #c98500; --x-bounce: #2a78d6; --x-auto: #0d366b; --x-tread: #9085e9; --x-crit: #d95926;
-  --page: #0e1113; --surface: #171a1c; --ink: #eef0f1; --ink-2: #bfc4c7; --muted: #8a9094;
-  --grid: #2a2e31; --axis: #3a3f42; --ring: rgba(255,255,255,.10); --accent: #8cb8e6;
-  --c-light: #3987e5; --c-medium: #d95926; --c-heavy: #199e70;
-  --seq-0: #1b2633; --seq-1: #0d366b; --seq-2: #104281; --seq-3: #184f95; --seq-4: #1c5cab; --seq-5: #2a78d6; --seq-6: #5598e7; --seq-7: #9ec5f4;
-  --div-n3: #f08a70; --div-n2: #b84a32; --div-n1: #5a2c23; --div-0: #303437; --div-p1: #1d3d63; --div-p2: #2d6dbd; --div-p3: #86b8f0;
-  color-scheme: dark; }
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--f-body); }
-[hidden] { display: none !important; }
-.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 64px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
-  display: grid; gap: 28px; }
-header { display: grid; gap: 10px; }
-h1 { font: 700 clamp(40px, 7vw, 68px)/0.95 var(--f-display); letter-spacing: .01em; margin: 0; text-wrap: balance; }
-h1 span { color: var(--accent); }
-h2 { font: 700 28px/1.1 var(--f-display); margin: 0; letter-spacing: .01em; text-wrap: balance; }
-.lede { max-width: 68ch; color: var(--ink-2); margin: 0; }
-.source { font: 12px/1.5 var(--f-data); color: var(--muted); margin: 0; }
-.panel { background: var(--surface); border: 1px solid var(--ring); border-radius: 6px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
-.panel > p { margin: 0; max-width: 72ch; color: var(--ink-2); }
-.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
-.controls label { font-size: 13px; color: var(--ink-2); display: flex; gap: 6px; align-items: center; }
-select, button { font: 500 13px var(--f-body); color: var(--ink); background: var(--page); border: 1px solid var(--axis); border-radius: 4px; padding: 5px 8px; }
-button { cursor: pointer; }
-button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.seg { display: inline-flex; }
-.seg button { border-radius: 0; margin-left: -1px; }
-.seg button:first-child { border-radius: 4px 0 0 4px; margin-left: 0; }
-.seg button:last-child { border-radius: 0 4px 4px 0; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-.key { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.key.hollow { background: transparent !important; border: 2px solid var(--muted); }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chips button { font-size: 12px; padding: 3px 8px; display: inline-flex; gap: 6px; align-items: center; }
-.chips .key { width: 8px; height: 8px; }
-svg { display: block; width: 100%; height: auto; overflow: visible; }
-svg text { font-family: var(--f-body); }
-.chart { position: relative; min-width: 0; }
-.scroll { overflow-x: auto; }
-.tip { position: fixed; pointer-events: none; z-index: 20; background: var(--surface); color: var(--ink); border: 1px solid var(--ring);
-  box-shadow: 0 4px 16px rgba(0,0,0,.12); border-radius: 4px; padding: 7px 10px; font-size: 12px; line-height: 1.4; max-width: 260px; }
-.tip strong { font: 600 14px var(--f-data); display: block; }
-.tip .k { color: var(--ink-2); }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
-.note { font-size: 13px; color: var(--muted); margin: 0; }
-table { border-collapse: collapse; font: 12px/1.3 var(--f-data); font-variant-numeric: tabular-nums; width: 100%; }
-th, td { padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--grid); white-space: nowrap; }
-th { font: 600 11px var(--f-body); text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2); cursor: pointer; position: sticky; top: 0; background: var(--surface); }
-th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); }
-tr.sel td { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
-.nn { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 16px; font-size: 13px; color: var(--ink-2); margin: 0; padding: 0; list-style: none; }
-.nn b { color: var(--ink); font-weight: 600; }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
-.card { border: 1px solid var(--ring); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; background: var(--page); cursor: pointer; }
-.card h3 { font: 600 14px/1.3 var(--f-body); margin: 0; }
-.card .big { font: 500 22px/1.1 var(--f-data); }
-.card .k { font-size: 12px; color: var(--muted); }
-.card p { margin: 0; font-size: 13px; color: var(--ink-2); }
-.assume { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 4px 18px; margin: 0; font-size: 13px; color: var(--ink-2); }
-.assume div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--grid); padding: 3px 0; }
-.assume dd { margin: 0; font: 500 12.5px var(--f-data); color: var(--ink); white-space: nowrap; }
-.assume dt { min-width: 0; }
-.statline { font: 12.5px/1.5 var(--f-data); color: var(--ink-2); margin: 0; }
-td.comps { text-align: left; font-family: var(--f-body); }
-@media (prefers-reduced-motion: no-preference) { circle.dot { transition: r .15s; } }
-.xgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-.xview { margin: 0; display: grid; gap: 6px; justify-items: start; min-width: 0; }
-.xview canvas { cursor: crosshair; }
-.xview figcaption { font-size: 13px; color: var(--ink-2); }
-h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .01em; }
-</style>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%227%22 width=%2212%22 height=%226%22 rx=%221%22 fill=%22%231d4f7a%22/%3E%3Crect x=%225%22 y=%224%22 width=%226%22 height=%224%22 rx=%221%22 fill=%22%231d4f7a%22/%3E%3Crect x=%2210%22 y=%225%22 width=%225%22 height=%221.5%22 fill=%22%231d4f7a%22/%3E%3C/svg%3E">
 
-<div class="wrap">
-  <header>
-    <h1>Tyr <span>Tank Atlas</span></h1>
-    <p class="lede">Every tank in Tyr placed against every other, from the game's own data tables. Dots are tanks. Colour is class. Hollow dots are tanks the files mark as work in progress, which look unreleased. Pick a tank to follow it through every chart.</p>
-    <p class="source" id="source"></p>
-    <div class="controls">
-      <div class="seg" role="group" aria-label="Stat mode">
-        <button id="m-base" aria-pressed="true">Base stats</button>
-        <button id="m-core" aria-pressed="false">31-point core build</button>
+<header class="top">
+  <div class="top-in">
+    <div class="bar">
+      <a class="brand" href="#/" id="brand">Tyr <span><span class="long">Tank </span>Atlas</span></a>
+      <div class="picker" id="picker">
+        <button class="pick-btn" id="pick-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Pick a tank"></button>
+        <div class="pick-pop" id="pick-pop" hidden>
+          <input id="pick-q" type="search" placeholder="Search tanks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="pick-list" aria-label="Search tanks">
+          <ul class="pick-list" id="pick-list" role="listbox" aria-label="Tanks"></ul>
+        </div>
       </div>
-      <div class="legend" id="legend"></div>
+      <a class="tank-link" id="tank-link" href="#/tank">Tank page</a>
+      <div class="seg" role="group" aria-label="Stat mode">
+        <button id="m-base" type="button" aria-pressed="true"><span class="long">Base stats</span><span class="short">Base</span></button>
+        <button id="m-core" type="button" aria-pressed="false"><span class="long">31-point core</span><span class="short">Core</span></button>
+      </div>
     </div>
-    <div class="chips" id="chips" aria-label="Highlight a tank"></div>
-  </header>
+    <nav class="nav" id="nav" aria-label="Pages">
+      <a href="#/" data-page="home">Home</a>
+      <a href="#/stats" data-page="stats">Stats</a>
+      <a href="#/compare" data-page="compare">Compare</a>
+      <a href="#/talents" data-page="talents">Talents</a>
+      <a href="#/components" data-page="components">Components</a>
+      <a href="#/armor" data-page="armor">Armor</a>
+      <a href="#/combat" data-page="combat">Combat</a>
+      <a href="#/tank" data-page="tank">Tank</a>
+      <a href="#/data" data-page="data">Data</a>
+      <a href="#/method" data-page="method">Method</a>
+    </nav>
+  </div>
+</header>
 
+<main class="wrap" id="main">
+<div class="page home" data-page="home" hidden>
+  <div class="page-head">
+    <h1>Tyr <span>Tank Atlas</span></h1>
+    <p class="lede">Every tank in Tyr compared, using numbers pulled from the game's own files: stats, talent trees, components and per-triangle armor. Pick a tank in the header and it stays picked on every page.</p>
+  </div>
+  <section class="panel" aria-labelledby="h-finds">
+    <h2 id="h-finds">Headline findings</h2>
+    <div class="finds" id="finds"></div>
+  </section>
+  <section class="panel" aria-labelledby="h-pages">
+    <h2 id="h-pages">What is where</h2>
+    <ul class="pages">
+      <li><a href="#/stats" data-page="stats">Stats</a>every stat for every tank, how each is spread, one tank against the roster</li>
+      <li><a href="#/compare" data-page="compare">Compare</a>any stat against any stat, the tank map, which tanks and stats go together</li>
+      <li><a href="#/talents" data-page="talents">Talents</a>what 31 talent points add to each stat</li>
+      <li><a href="#/components" data-page="components">Components</a>what each component is worth on each tank, best loadouts</li>
+      <li><a href="#/armor" data-page="armor">Armor</a>armor from every side, x-ray views of every tank</li>
+      <li><a href="#/combat" data-page="combat">Combat</a>who kills whom first, front to front</li>
+      <li><a href="#/tank" data-page="tank">Tank</a>one tank on one page</li>
+      <li><a href="#/data" data-page="data">Data</a>all the numbers in one sortable table</li>
+      <li><a href="#/method" data-page="method">Method</a>where the numbers come from and what the models assume</li>
+    </ul>
+  </section>
+</div>
+
+<div class="page" data-page="stats" hidden>
+  <div class="page-head">
+    <p class="kicker">Stats</p>
+    <h1>Every stat, every tank</h1>
+    <p class="lede">Dots are tanks. Colour is class. Hollow dots are tanks the files mark as work in progress, which look unreleased. The stat mode in the header switches between base stats and the 31-point core talent build.</p>
+    <div class="legend cls-legend"></div>
+  </div>
   <section class="panel" aria-labelledby="h-strips">
     <h2 id="h-strips">Where each tank sits</h2>
     <p>Each row is one stat, and each dot is one tank placed along it. The better end of every row is on the right, so stats where lower is better (reload, dispersion, cost) run reversed. The tank at the far right is named.</p>
     <div class="chart" id="strips"></div>
   </section>
-
   <section class="panel" aria-labelledby="h-dist">
     <h2 id="h-dist">How each stat is spread</h2>
     <p>The smooth curve is a kernel density estimate of the 18 tanks: where the curve is high, many tanks sit close together. The dashed curve is a normal distribution with the same mean and spread, so you can see where the real roster bunches up or leaves gaps. Below, the same values split by class, with each class mean marked.</p>
@@ -131,23 +92,21 @@ h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .
     <p class="statline" id="dist-stats"></p>
     <div class="chart" id="dist"></div>
   </section>
-
   <section class="panel" aria-labelledby="h-z">
     <h2 id="h-z">One tank against the roster</h2>
     <p>Each bar is how many standard deviations the tank sits from the roster mean on that stat. Bars to the right are better, whichever way the stat runs, so a fast reload points right. Bars past ±2 are unusual for this roster.</p>
     <p class="note" id="z-note"></p>
     <div class="chart" id="zprof"></div>
   </section>
+</div>
 
-  <section class="panel" aria-labelledby="h-corr">
-    <h2 id="h-corr">Which stats move together</h2>
-    <p>Pearson correlation of base stats across the 18 tanks. Blue means two stats rise together, red means one rises as the other falls, grey means no straight-line link. Rows are clustered so stats that move together sit next to each other. With 18 tanks, anything under about ±0.47 could be chance.</p>
-    <div class="legend" id="corr-legend"></div>
-    <div class="scroll"><div class="chart" id="corr" style="min-width:680px"></div></div>
-    <p class="note">The bottom block takes the game's own designer ratings (firepower, durability and so on, shown in the tank picker) and correlates each with the real stats, in the same column order. Correlations use raw values, so a positive link with reload means longer reloads.</p>
-    <ul class="nn" id="corr-notes" style="grid-template-columns:1fr"></ul>
-  </section>
-
+<div class="page" data-page="compare" hidden>
+  <div class="page-head">
+    <p class="kicker">Compare</p>
+    <h1>Tanks side by side</h1>
+    <p class="lede">Pick any two stats and see which tanks no other tank beats on both. Then the whole roster squeezed into one map, how alike each pair of tanks is, and which stats rise and fall together.</p>
+    <div class="legend cls-legend"></div>
+  </div>
   <section class="panel" aria-labelledby="h-scatter">
     <h2 id="h-scatter">Any stat against any stat</h2>
     <div class="controls">
@@ -159,53 +118,49 @@ h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .
     <p class="note" id="front-note"></p>
     <p class="note">The axes are plain values, not reversed. Stats where lower is better (reload, cost, dispersion) have their frontier on the low side.</p>
   </section>
-
   <section class="panel" aria-labelledby="h-map">
     <h2 id="h-map">The tank map</h2>
     <p id="map-text">Every base stat squeezed into two dimensions with principal component analysis. Tanks close together play alike on paper. Arrows show which way each stat pulls; longer arrows explain more of the spread.</p>
     <div class="chart" id="map"></div>
   </section>
-
   <section class="panel" aria-labelledby="h-sim">
     <h2 id="h-sim">How alike they are</h2>
     <p>Distance between every pair of tanks across all base stats, scaled so each stat counts equally. Darker means more alike. Rows are grouped so families sit together.</p>
     <div class="scroll"><div class="chart" id="heat" style="min-width:560px"></div></div>
     <ul class="nn" id="nn"></ul>
   </section>
-
-  <section class="panel" aria-labelledby="h-armor">
-    <h2 id="h-armor">Armor from every side</h2>
-    <p>Armor comes from the game's own armor meshes: every triangle carries a thickness in mm, and every shot is decided by the game's rule. Over 80° from the surface always bounces, a gun with four times the plate's thickness goes through at any angle, otherwise thickness ÷ cos(angle) against penetration, with a 50/50 band up to 1.25× penetration. Hits on treads only track you and do no HP damage. Each chart casts a grid of parallel shots every 6 cm across the tank and counts what happens, assuming hits land evenly over the visible silhouette.</p>
-    <div class="controls"><label for="arm-pen">Gun penetration <select id="arm-pen"></select></label></div>
-    <h3 class="sub">Armor shape of every tank</h3>
-    <p class="note">Each rose shows, for level shots from every direction, the share of hits that do no damage. Bigger means tougher from that side. Sorted from toughest all-round.</p>
-    <div class="chart" id="roses"></div>
+  <section class="panel" aria-labelledby="h-corr">
+    <h2 id="h-corr">Which stats move together</h2>
+    <p>Pearson correlation of base stats across the 18 tanks. Blue means two stats rise together, red means one rises as the other falls, grey means no straight-line link. Rows are clustered so stats that move together sit next to each other. With 18 tanks, anything under about ±0.47 could be chance.</p>
+    <div class="legend" id="corr-legend"></div>
+    <div class="scroll"><div class="chart" id="corr" style="min-width:680px"></div></div>
+    <p class="note">The bottom block takes the game's own designer ratings (firepower, durability and so on, shown in the tank picker) and correlates each with the real stats, in the same column order. Correlations use raw values, so a positive link with reload means longer reloads.</p>
+    <ul class="nn" id="corr-notes" style="grid-template-columns:1fr"></ul>
   </section>
+</div>
 
-  <section class="panel" aria-labelledby="h-hemi">
-    <h2 id="h-hemi">One tank, every angle</h2>
-    <p class="note" id="hemi-title"></p>
-    <div class="scroll"><div class="chart" id="hemi" style="min-width:560px"></div></div>
-    <h3 class="sub" id="xray-title"></h3>
-    <div class="legend" id="xray-legend"></div>
-    <div class="chart" id="xray"></div>
-    <p class="note">Pick a tank with the chips at the top. Hover the views to read effective armor at any point. The turret faces forward.</p>
-  </section>
-
-  <section class="panel" aria-labelledby="h-duel">
-    <h2 id="h-duel">Face-off: who kills whom first</h2>
-    <p>Every pair of tanks, both on their 31-point core builds, trading shots front to front. Each cell compares how fast the row tank kills the column tank against the reverse, using damage per second, health, and each gun's penetration against the other's armor from that angle. Blue means the row tank wins. This ignores aiming at weak spots, abilities, components and ammo.</p>
-    <div class="controls"><div class="seg" role="group" aria-label="Angle" id="duel-mode"></div></div>
-    <div class="scroll"><div class="chart" id="duel" style="min-width:600px"></div></div>
-  </section>
-
+<div class="page" data-page="talents" hidden>
+  <div class="page-head">
+    <p class="kicker">Talents</p>
+    <h1>What talents buy</h1>
+    <p class="lede">How far the talent tree can push each stat on each tank.</p>
+    <div class="legend cls-legend"></div>
+  </div>
   <section class="panel" aria-labelledby="h-uplift">
     <h2 id="h-uplift">What 31 talent points buy</h2>
     <p>Base value to the best value the talent tree allows for that stat. On every tank but Fuse, 31 points max damage, reload, health and speed at the same time, so the core build has no trade-off.</p>
     <div class="controls"><label for="us">Stat <select id="us"></select></label></div>
     <div class="chart" id="uplift"></div>
   </section>
+</div>
 
+<div class="page" data-page="components" hidden>
+  <div class="page-head">
+    <p class="kicker">Components</p>
+    <h1>Components and loadouts</h1>
+    <p class="lede">Every tank takes three components. These charts score every component and every three-component loadout in a reference fight. Pick a scenario first; every chart below follows it.</p>
+    <div class="legend cls-legend"></div>
+  </div>
   <section class="panel" aria-labelledby="h-comp">
     <h2 id="h-comp">Components: the reference fight</h2>
     <p>Each tank takes three of 43 components. To compare them, every tank gets its 31-point core talent build and fights a 60 second one on one against a median tank. The duel score is effective damage per second times effective health, and gain is how much a component or loadout raises it over no components. Situational effects only count in scenarios where their trigger happens.</p>
@@ -213,14 +168,12 @@ h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .
     <p id="scen-desc" style="margin:0;color:var(--ink)"></p>
     <dl class="assume" id="assume"></dl>
   </section>
-
   <section class="panel" aria-labelledby="h-cheat">
     <h2 id="h-cheat">What each component is worth on each tank</h2>
     <p>Duel gain from one component on its own. Columns are grouped by the component's category. A ringed cell is an outlier: that component is worth far more on that tank than on the typical tank. Empty columns are components the duel score cannot see on their own: speed, camouflage, aim, module damage, or energy that needs a partner component to spend it.</p>
     <div class="controls"><div class="legend" id="cheat-legend"></div></div>
     <div class="scroll"><div class="chart" id="cheat" style="min-width:860px"></div></div>
   </section>
-
   <section class="panel" aria-labelledby="h-cloud">
     <h2 id="h-cloud">Every loadout for one tank</h2>
     <p>All 12,341 three-component loadouts placed by the damage and health they give. Darker cells hold more loadouts. The dots are the Pareto front: loadouts no other loadout beats on damage, health and speed at once. The line joins the ones that win on damage and health alone. The faint curve is equal duel score through the best loadout.</p>
@@ -228,13 +181,11 @@ h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .
     <div class="chart" id="cloud"></div>
     <p class="note" id="cloud-note"></p>
   </section>
-
   <section class="panel" aria-labelledby="h-ridge">
     <h2 id="h-ridge">How much the loadout matters</h2>
     <p>For each tank, how the duel gain of all 12,341 loadouts is spread. A wide ridge means picking well matters a lot on that tank; a narrow one means most loadouts end up close. Ticks mark the median and the 90th percentile. Heights are square-root scaled so the long tails stay visible.</p>
     <div class="chart" id="ridge"></div>
   </section>
-
   <section class="panel" aria-labelledby="h-notable">
     <h2 id="h-notable">Notable builds</h2>
     <p>Component pairs that are worth more together than apart, and components that are worth far more on one tank than on the rest. Click a card to select the tank.</p>
@@ -243,25 +194,233 @@ h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .
     <h3 style="margin:6px 0 0;font:600 15px var(--f-body)">Components that suit one tank</h3>
     <div class="cards" id="cards-out"></div>
   </section>
-
   <section class="panel" aria-labelledby="h-best">
     <h2 id="h-best">Best loadout per tank</h2>
     <p class="note" id="best-note"></p>
     <div class="scroll"><table id="best"></table></div>
   </section>
+</div>
 
+<div class="page" data-page="armor" hidden>
+  <div class="page-head">
+    <p class="kicker">Armor</p>
+    <h1>How the armor holds up</h1>
+    <p class="lede">Armor read from the game's per-triangle armor meshes and tested with the game's own penetration rule.</p>
+    <div class="legend cls-legend"></div>
+  </div>
+  <section class="panel" aria-labelledby="h-armor">
+    <h2 id="h-armor">Armor from every side</h2>
+    <p>Armor comes from the game's own armor meshes: every triangle carries a thickness in mm, and every shot is decided by the game's rule. Over 80° from the surface always bounces, a gun with four times the plate's thickness goes through at any angle, otherwise thickness ÷ cos(angle) against penetration, with a 50/50 band up to 1.25× penetration. Hits on treads only track you and do no HP damage. Each chart casts a grid of parallel shots every 6 cm across the tank and counts what happens, assuming hits land evenly over the visible silhouette.</p>
+    <div class="controls"><label for="arm-pen">Gun penetration <select id="arm-pen"></select></label></div>
+    <h3 class="sub">Armor shape of every tank</h3>
+    <p class="note">Each rose shows, for level shots from every direction, the share of hits that do no damage. Bigger means tougher from that side. Sorted from toughest all-round.</p>
+    <div class="chart" id="roses"></div>
+  </section>
+  <section class="panel" aria-labelledby="h-hemi">
+    <h2 id="h-hemi">One tank, every angle</h2>
+    <p class="note" id="hemi-title"></p>
+    <div class="scroll"><div class="chart" id="hemi" style="min-width:560px"></div></div>
+    <h3 class="sub" id="xray-title"></h3>
+    <div class="legend" id="xray-legend"></div>
+    <div class="chart" id="xray"></div>
+    <p class="note">Pick a tank in the header. Hover the views to read effective armor at any point. The turret faces forward.</p>
+  </section>
+</div>
+
+<div class="page" data-page="combat" hidden>
+  <div class="page-head">
+    <p class="kicker">Combat</p>
+    <h1>Who wins the fight</h1>
+    <p class="lede">One on one matchups built from stats and armor together.</p>
+    <div class="legend cls-legend"></div>
+  </div>
+  <section class="panel" aria-labelledby="h-duel">
+    <h2 id="h-duel">Face-off: who kills whom first</h2>
+    <p>Every pair of tanks, both on their 31-point core builds, trading shots front to front. Each cell compares how fast the row tank kills the column tank against the reverse, using damage per second, health, and each gun's penetration against the other's armor from that angle. Blue means the row tank wins. This ignores aiming at weak spots, abilities, components and ammo.</p>
+    <div class="controls"><div class="seg" role="group" aria-label="Angle" id="duel-mode"></div></div>
+    <div class="scroll"><div class="chart" id="duel" style="min-width:600px"></div></div>
+  </section>
+  <section class="panel" aria-labelledby="h-stk">
+    <h2 id="h-stk">Shots to kill</h2>
+    <p>How many damaging hits each gun (row) needs to kill each tank (column), on 31-point core builds. Switch to shots fired to fold in armor: with hits spread evenly over the front, or aimed at the best spot with a 0.5 m spread. Hover a cell to see the damage that would save one shot and which components or ammo get there.</p>
+    <div class="controls"><div class="seg" role="group" aria-label="Count" id="stk-mode"></div></div>
+    <div class="scroll"><div class="chart" id="stk" style="min-width:640px"></div></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-breaks">
+    <h2 id="h-breaks">Breakpoints</h2>
+    <p class="note" id="breaks-title"></p>
+    <p>A breakpoint is where a small change moves a matchup by a whole shot. These lists use the selected tank: which components or ammo cut a shot off its kills, and which enemies need an extra hit if it runs Bulkheads or Mobility Surger.</p>
+    <div class="chart" id="breaks"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-aim">
+    <h2 id="h-aim">Aiming for weak spots and crits</h2>
+    <p>Good players aim at weak spots and crit modules at close and mid range. For the selected tank as the target, this is the expected damage chance when aiming at its best spot, against how far your shots land from where you aim (1σ). Misses off the tank count as no damage. Crit modules: a bonus spot adds 50% damage, fire burns 20 per second for 8 s, engine halves speed for 8 s.</p>
+    <div class="controls"><span class="note" style="margin:0">Gun penetration</span><div class="seg" role="group" aria-label="Penetration" id="aim-pen"></div></div>
+    <p class="note" id="aim-title"></p>
+    <div class="chart" id="aim"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-hull">
+    <h2 id="h-hull">Hull-down</h2>
+    <p>Behind a crest only the part above the gun line shows (from 25 cm below the gun up). Bars are the damage chance on that exposed part at the penetration picked above, with how much is showing and the gun depression that decides which slopes you can use.</p>
+    <div class="chart" id="hull"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-ammo">
+    <h2 id="h-ammo">Ammo against each front</h2>
+    <p class="note" id="ammo-title"></p>
+    <p>Expected damage per shot fired at each tank's front for every ammo type the selected tank can load, using the ammo table's damage and penetration modifiers. Bold is the best ammo for that target. Starred types are hidden from the normal loadout.</p>
+    <div class="scroll"><div class="chart" id="ammo" style="min-width:680px"></div></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-yaw">
+    <h2 id="h-yaw">Turret angle</h2>
+    <p>Front damage chance as the turret turns away from the hull, at the penetration picked above. The selected tank is highlighted.</p>
+    <div class="chart" id="yaw"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-tread">
+    <h2 id="h-tread">Tread area</h2>
+    <p>Tread hits only track you and do no HP damage, so tread area is free armor from that side.</p>
+    <div class="chart" id="tread"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-size">
+    <h2 id="h-size">Size against camouflage</h2>
+    <p>Big tanks are easy to hit; camouflage decides how close an enemy must be to spot you. Bottom right is the worst place to be.</p>
+    <div class="chart" id="size"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-ram">
+    <h2 id="h-ram">Ramming energy</h2>
+    <p>Kinetic energy at top speed on the core build. The game's collision damage formula is not in the files we read, so this is the physics only.</p>
+    <div class="chart" id="ram"></div>
+  </section>
+
+</div>
+
+<div class="page" data-page="tank" hidden>
+  <div class="tindex" id="t-index" hidden>
+    <div class="page-head">
+      <p class="kicker">Tank</p>
+      <h1>Pick a tank</h1>
+      <p class="lede">Each tank gets one page with its key numbers, how it sits against the roster, its armor and its best loadouts.</p>
+    </div>
+    <div class="tindex" id="t-cards"></div>
+  </div>
+  <div class="page" id="t-profile" hidden>
+    <div class="page-head">
+      <p class="kicker" id="t-kicker"></p>
+      <h1 id="t-name"></h1>
+      <p class="note" id="t-mode"></p>
+    </div>
+    <div class="tiles" id="t-tiles"></div>
+    <section class="panel" aria-labelledby="h-tz">
+      <h2 id="h-tz">Against the roster</h2>
+      <p>Each bar is how many standard deviations this tank sits from the roster mean on that stat. Bars to the right are better, whichever way the stat runs. Bars past ±2 are unusual for this roster.</p>
+      <div class="chart" id="t-zprof"></div>
+    </section>
+    <section class="panel" aria-labelledby="h-tarm">
+      <h2 id="h-tarm">Armor</h2>
+      <div class="controls"><label for="t-pen">Gun penetration <select id="t-pen"></select></label></div>
+      <div class="t-armor">
+        <div class="chart" id="t-rose"></div>
+        <div><p class="note" id="t-hemi-title"></p><div class="scroll"><div class="chart" id="t-hemi" style="min-width:560px"></div></div></div>
+      </div>
+      <h3 class="sub" id="t-xray-title"></h3>
+      <div class="legend" id="t-xray-legend"></div>
+      <div class="chart" id="t-xray"></div>
+      <p class="note">The rose shows the share of level shots from each direction that do no damage; front is up. Hover the views to read effective armor at any point. Method and rules on the <a href="#/method" data-page="method">Method</a> page.</p>
+    </section>
+    <section class="panel" aria-labelledby="h-tcomp">
+      <h2 id="h-tcomp">Loadouts</h2>
+      <div class="controls"><div class="seg" role="group" aria-label="Scenario" id="t-scen"></div></div>
+      <div class="chart" id="t-cloud"></div>
+      <p class="note" id="t-cloud-note"></p>
+      <h3 class="sub">Best loadout in each scenario</h3>
+      <div class="scroll"><table id="t-best"></table></div>
+    </section>
+  </div>
+</div>
+
+<div class="page" data-page="data" hidden>
+  <div class="page-head">
+    <p class="kicker">Data</p>
+    <h1>All the numbers</h1>
+    <p class="lede">Every stat for every tank. Tanks marked * are work in progress.</p>
+    
+  </div>
   <section class="panel" aria-labelledby="h-table">
     <h2 id="h-table">All the numbers</h2>
-    <p class="note">Click a column to sort. Follows the stat mode above.</p>
+    <p class="note">Click a column to sort. Follows the stat mode in the header.</p>
     <div class="scroll" style="max-height:560px;overflow:auto"><table id="table"></table></div>
   </section>
 </div>
+
+<div class="page" data-page="method" hidden>
+  <div class="page-head">
+    <p class="kicker">Method</p>
+    <h1>Where the numbers come from</h1>
+    <p class="lede">This is an unofficial fan analysis. It is not made or checked by the game's developers, and the numbers can be wrong or out of date after a patch.</p>
+  </div>
+  <section class="panel prose" aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <p>Everything is read from the game's own files, not measured in matches. The current data comes from <span id="meth-build"></span>.</p>
+    <ul>
+      <li><b>Tank stats</b> come from the game's data tables: health, gun, reload, dispersion, mobility, camouflage, ability numbers and the designer ratings shown in the in-game tank picker. Damage per second is shell damage times clip size over the time to fire and reload one clip.</li>
+      <li><b>Talent trees</b> come from the same file the game client downloads from the game's CDN (<span id="meth-trees"></span>). The 31-point core build is the talent build that raises damage per second, shell damage, health and speed as far as 31 points allow. On every tank but Fuse those four max out together; on Fuse damage per second comes first.</li>
+      <li><b>Components</b> and their effects come from the game's component data. The game's descriptions carry placeholders instead of level values, so the site shows N where a number would go.</li>
+      <li><b>Armor</b> comes from each tank's armor mesh: every triangle carries a thickness in mm, and a second texture marks treads and crit modules.</li>
+    </ul>
+  </section>
+  <section class="panel prose" aria-labelledby="h-pen">
+    <h2 id="h-pen">The penetration rule</h2>
+    <ul>
+      <li>A hit more than 80° from the surface normal always bounces.</li>
+      <li>A gun with at least four times the plate's thickness in penetration goes through at any angle.</li>
+      <li>Otherwise the effective armor is thickness ÷ cos(angle), compared with the gun's penetration.</li>
+      <li>Between the gun's penetration and 1.25 times it, a hit is a 50/50. Which side of the gun's number the band sits on is our reading of the game's settings.</li>
+      <li>Hits on treads track the tank and do no HP damage.</li>
+    </ul>
+    <p>The armor charts cast a grid of parallel shots every 6 cm across the tank from 72 directions around it and 8 heights above it, and count what happens. They assume hits land evenly over the visible silhouette, so they ignore aiming at weak spots.</p>
+  </section>
+  <section class="panel prose" aria-labelledby="h-duelm">
+    <h2 id="h-duelm">Face-offs</h2>
+    <p>Each face-off puts two tanks on their 31-point core builds front to front (or both angled 30°). Time to kill comes from damage per second, health, and each gun's chance to do damage against the other's armor from that angle. It ignores aiming at weak spots, abilities, components and ammo.</p>
+  </section>
+  <section class="panel prose" aria-labelledby="h-ref">
+    <h2 id="h-ref">The component reference fight</h2>
+    <p>Components are scored in a 60 second one on one against a median tank, with the tank on its 31-point core build. The duel score is effective damage per second times effective health. Situational effects only count in scenarios where their trigger happens.</p>
+    <dl class="assume" id="meth-ref"></dl>
+    <ul id="meth-scen"></ul>
+  </section>
+  <section class="panel prose" aria-labelledby="h-limits">
+    <h2 id="h-limits">What it leaves out</h2>
+    <ul>
+      <li>Player skill, maps, teams, spotting and aiming at weak spots.</li>
+      <li>Ammo types other than standard shells in the stat charts.</li>
+      <li>Abilities, except where their numbers appear as stats or a component pays out on them.</li>
+      <li>Tanks the files mark as work in progress may change or never ship.</li>
+    </ul>
+  </section>
+</div>
+</main>
+<footer class="foot">
+  <p>Unofficial fan analysis of Tyr. Not affiliated with or endorsed by the game's developers.</p>
+  <p class="source" id="source"></p>
+</footer>
 <div class="tip" id="tip" hidden></div>
 
-<script src="data.js"></script>
-<script src="atlas.js"></script>
-<script src="loadouts.js"></script>
-<script src="dist.js"></script>
-<script src="build.js"></script>
-<script src="armor_data.js"></script>
-<script src="armor.js"></script>
+<script defer src="data.js"></script>
+<script defer src="atlas.js"></script>
+<script defer src="dist.js"></script>
+<script defer src="app.js"></script>
+<script defer src="pages.js"></script>
+<script defer src="loadouts.js"></script>
+<script defer src="build.js"></script>
+<script defer src="armor_data.js"></script>
+<script defer src="armor.js"></script>
+<script defer src="combat_data.js"></script>
+<script defer src="combat.js"></script>

@@ -10,11 +10,18 @@ const anyA = AR[tanks[0].name];
 const pens = anyA.pen;
 
 // controls
-const penSel = document.getElementById('arm-pen');
-for (const p of pens) { const o = document.createElement('option'); o.value = p; o.textContent = `${p} mm`; penSel.append(o); }
-for (const t of sortedTanks) { const o = document.createElement('option'); o.value = `t:${t.name}`; o.textContent = `${t.name}'s gun (${t.base.ShellPenetration} mm)`; penSel.append(o); }
-penSel.value = '70';
-penSel.onchange = () => { const v = penSel.value; pen = v.startsWith('t:') ? tanks.find(t => t.name === v.slice(2)).base.ShellPenetration : +v; drawArmor(); };
+// the armor page and the tank page each have a penetration picker; they share one value
+const penSels = ['arm-pen', 't-pen'].map(id => document.getElementById(id)).filter(Boolean);
+for (const penSel of penSels) {
+  for (const p of pens) { const o = document.createElement('option'); o.value = p; o.textContent = `${p} mm`; penSel.append(o); }
+  for (const t of sortedTanks) { const o = document.createElement('option'); o.value = `t:${t.name}`; o.textContent = `${t.name}'s gun (${t.base.ShellPenetration} mm)`; penSel.append(o); }
+  penSel.value = '70';
+  penSel.onchange = () => {
+    const v = penSel.value; pen = v.startsWith('t:') ? tanks.find(t => t.name === v.slice(2)).base.ShellPenetration : +v;
+    for (const o of penSels) o.value = v;
+    TA.redraw();
+  };
+}
 const dm = document.getElementById('duel-mode');
 for (const [k, l] of [['front', 'Face on'], ['angled', 'Both angled 30°']]) {
   const b = document.createElement('button'); b.textContent = l; b.setAttribute('aria-pressed', String(k === duelMode));
@@ -42,35 +49,45 @@ function drawRoses() {
   });
   const rows = Math.ceil(order.length / cols);
   const svg = el('svg', { viewBox: `0 0 ${W} ${rows * ch}`, role: 'img', 'aria-label': 'Armor rose per tank' }, host);
-  order.forEach((t, i) => {
-    const a = AR[t.name], e = el0(a), cx = (i % cols) * cw + cw / 2, cy = Math.floor(i / cols) * ch + R + 22;
-    for (const r of [0.5, 1]) el('circle', { cx, cy, r: R * r, fill: 'none', stroke: 'var(--grid)' }, svg);
-    el('line', { x1: cx, x2: cx, y1: cy - R, y2: cy + R, stroke: 'var(--grid)' }, svg);
-    el('line', { x1: cx - R, x2: cx + R, y1: cy, y2: cy, stroke: 'var(--grid)' }, svg);
-    const pts = a.az.map((az, ai) => { const v = noDmg(a, e, ai), th = az * Math.PI / 180; return [cx - Math.sin(th) * R * v, cy - Math.cos(th) * R * v]; });
-    const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ') + 'Z';
-    el('path', { d, fill: `var(${TA.CLS[t.cls]})`, 'fill-opacity': 0.18, stroke: `var(${TA.CLS[t.cls]})`, 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
-    const lab = txt(svg, cx, cy - R - 8, t.name + (t.wip ? ' *' : ''), { 'text-anchor': 'middle', fill: TA.selected === t.id ? 'var(--ink)' : 'var(--ink-2)', 'font-weight': TA.selected === t.id ? 600 : 400, 'font-size': 12 });
-    const hit = el('circle', { cx, cy, r: R + 6, fill: 'transparent' }, svg);
-    hit.style.cursor = 'pointer';
-    hit.addEventListener('click', () => TA.select(TA.selected === t.id ? null : t.id));
-    hit.addEventListener('pointermove', ev => {
-      const ang = (Math.atan2(-(ev.offsetX - cx), -(ev.offsetY - cy)) * 180 / Math.PI + 360) % 360;
-      const ai = Math.round(ang / 5) % a.az.length;
-      showTip(ev, [pct(noDmg(a, e, ai)), `${t.name}, shot from ${a.az[ai]}° (${sideName(a.az[ai])})`, `no-damage chance vs ${pen} mm, level shots`]);
-    });
-    hit.addEventListener('pointerleave', hideTip);
-  });
+  order.forEach((t, i) => rose(svg, t, (i % cols) * cw + cw / 2, Math.floor(i / cols) * ch + R + 22, R));
   txt(svg, 0, rows * ch - 4, 'Front is up, the tank\'s left side is left. Outer ring = 100% of hits do no damage.', { fill: 'var(--muted)', 'font-size': 11 });
+}
+// one tank's rose centred at cx, cy with radius R
+function rose(svg, t, cx, cy, R, selectable = true) {
+  const a = AR[t.name], e = el0(a);
+  for (const r of [0.5, 1]) el('circle', { cx, cy, r: R * r, fill: 'none', stroke: 'var(--grid)' }, svg);
+  el('line', { x1: cx, x2: cx, y1: cy - R, y2: cy + R, stroke: 'var(--grid)' }, svg);
+  el('line', { x1: cx - R, x2: cx + R, y1: cy, y2: cy, stroke: 'var(--grid)' }, svg);
+  const pts = a.az.map((az, ai) => { const v = noDmg(a, e, ai), th = az * Math.PI / 180; return [cx - Math.sin(th) * R * v, cy - Math.cos(th) * R * v]; });
+  const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ') + 'Z';
+  el('path', { d, fill: `var(${TA.CLS[t.cls]})`, 'fill-opacity': 0.18, stroke: `var(${TA.CLS[t.cls]})`, 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
+  const lab = txt(svg, cx, cy - R - 8, t.name + (t.wip ? ' *' : ''), { 'text-anchor': 'middle', fill: TA.selected === t.id ? 'var(--ink)' : 'var(--ink-2)', 'font-weight': TA.selected === t.id ? 600 : 400, 'font-size': 12 });
+  const hit = el('circle', { cx, cy, r: R + 6, fill: 'transparent' }, svg);
+  if (selectable) { hit.style.cursor = 'pointer'; hit.addEventListener('click', () => TA.select(TA.selected === t.id ? null : t.id)); }
+  hit.addEventListener('pointermove', ev => {
+    const ang = (Math.atan2(-(ev.offsetX - cx), -(ev.offsetY - cy)) * 180 / Math.PI + 360) % 360;
+    const ai = Math.round(ang / 5) % a.az.length;
+    showTip(ev, [pct(noDmg(a, e, ai)), `${t.name}, shot from ${a.az[ai]}° (${sideName(a.az[ai])})`, `no-damage chance vs ${pen} mm, level shots`]);
+  });
+  hit.addEventListener('pointerleave', hideTip);
+}
+// the tank page's single rose
+function drawRose(hostId) {
+  const host = document.getElementById(hostId); host.replaceChildren();
+  const t = pick(), R = 96, W = 2 * R + 40;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${2 * R + 52}`, role: 'img', 'aria-label': `Armor rose for ${t.name}` }, host);
+  svg.style.width = `${W}px`; svg.style.maxWidth = '100%';   // 1:1 scale so the hover angle maths holds
+  rose(svg, t, W / 2, R + 24, R, false);
+  txt(svg, W / 2, 2 * R + 48, 'Outer ring = 100% no damage', { 'text-anchor': 'middle', fill: 'var(--muted)', 'font-size': 11 });
 }
 const sideName = az => az <= 22 || az >= 338 ? 'front' : az < 68 ? 'front-left' : az <= 112 ? 'left' : az < 158 ? 'rear-left' : az <= 202 ? 'rear' : az < 248 ? 'rear-right' : az <= 292 ? 'right' : 'front-right';
 
 // 2. hemisphere map for the picked tank
-function drawHemi() {
-  const host = document.getElementById('hemi'); host.replaceChildren();
+function drawHemi(hostId = 'hemi', titleId = 'hemi-title') {
+  const host = document.getElementById(hostId); host.replaceChildren();
   const t = pick(), a = AR[t.name];
-  document.getElementById('hemi-title').textContent = `${t.name}: no-damage chance from every direction vs ${pen} mm`;
-  const W = width('hemi'), m = { l: 46, r: 10, t: 10, b: 40 }, H = 260;
+  document.getElementById(titleId).textContent = `${t.name}: no-damage chance from every direction vs ${pen} mm`;
+  const W = width(hostId), m = { l: 46, r: 10, t: 10, b: 40 }, H = 260;
   const n = a.az.length, cw = (W - m.l - m.r) / n, chh = (H - m.t - m.b) / a.el.length;
   const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Hemisphere armor map' }, host);
   // x runs -180..180 with front in the middle
@@ -105,14 +122,14 @@ function catOf(eff, mod) {
   if (eff <= pen * FIFTY) return 'fifty';
   return 'bounce';
 }
-function drawXray() {
-  const host = document.getElementById('xray'); host.replaceChildren();
+function drawXray(hostId = 'xray', titleId = 'xray-title', legendId = 'xray-legend') {
+  const host = document.getElementById(hostId); host.replaceChildren();
   const t = pick(), a = AR[t.name];
-  document.getElementById('xray-title').textContent = `${t.name} under a ${pen} mm gun`;
+  document.getElementById(titleId).textContent = `${t.name} under a ${pen} mm gun`;
   const cs = getComputedStyle(document.documentElement);
   const colours = Object.fromEntries(CAT.map(([k, , v]) => [k, cs.getPropertyValue(v).trim()]));
   const grid = document.createElement('div'); grid.className = 'xgrid'; host.append(grid);
-  const W = width('xray');
+  const W = width(hostId);
   for (const [key, label] of [['front', 'Front'], ['left', 'Left side'], ['rear', 'Rear'], ['top', 'From above']]) {
     const v = a.views[key]; if (!v) continue;
     const fig = document.createElement('figure'); fig.className = 'xview';
@@ -136,7 +153,7 @@ function drawXray() {
     cv.addEventListener('pointerleave', hideTip);
     fig.append(cv, cap); grid.append(fig);
   }
-  const lg = document.getElementById('xray-legend'); lg.replaceChildren();
+  const lg = document.getElementById(legendId); lg.replaceChildren();
   for (const [, label, v] of CAT) { const s = document.createElement('span'); const k = document.createElement('i'); k.className = 'key'; k.style.background = `var(${v})`; k.style.borderRadius = '2px'; s.append(k, label); lg.append(s); }
 }
 
@@ -163,7 +180,9 @@ function drawDuel() {
   });
 }
 
-function drawArmor() { drawRoses(); drawHemi(); drawXray(); }
-TA.onDraw.push(drawArmor, drawDuel);
-drawArmor(); drawDuel();
+TA.chart('armor', drawRoses); TA.chart('armor', () => drawHemi()); TA.chart('armor', () => drawXray());
+TA.chart('combat', drawDuel);
+TA.chart('tank', () => { if (!TA.selected) return; drawRose('t-rose'); drawHemi('t-hemi', 't-hemi-title'); drawXray('t-xray', 't-xray-title', 't-xray-legend'); });
+// this file loads after the router's first draw, so draw now if its page is already showing
+if (['armor', 'combat', 'tank'].includes(TA.page)) TA.redraw();
 })();

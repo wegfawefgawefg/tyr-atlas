@@ -37,13 +37,15 @@ function rampKey(lo, hi) {
 }
 
 // ---------- 4. scenario selector + assumptions ----------
-const seg = document.getElementById('scen');
-for (const s of SCENS) {
+// the components page and the tank page each have a scenario picker; they share one value
+const segs = ['scen', 't-scen'].map(id => document.getElementById(id)).filter(Boolean);
+for (const seg of segs) for (const s of SCENS) {
   const b = document.createElement('button'); b.textContent = L.scenarios[s].label; b.dataset.s = s;
-  b.onclick = () => { scen = s; drawBuild(); }; seg.append(b);
+  b.onclick = () => { scen = s; TA.redraw(); }; seg.append(b);
 }
+const syncSegs = () => { for (const seg of segs) for (const b of seg.children) b.setAttribute('aria-pressed', String(b.dataset.s === scen)); };
 function drawScenario() {
-  for (const b of seg.children) b.setAttribute('aria-pressed', String(b.dataset.s === scen));
+  syncSegs();
   const sc = L.scenarios[scen], r = L.ref;
   document.getElementById('scen-desc').textContent = `${sc.label}: ${sc.desc}` + (sc.flags.length ? ` Triggers that count: ${sc.flags.map(f => f.replace(/_/g, ' ')).join(', ')}.` : '');
   const dl = document.getElementById('assume'); dl.replaceChildren();
@@ -109,11 +111,12 @@ legendItems(document.getElementById('cloud-legend'), [
   [keySvg('dot', 'var(--surface)', { stroke: 'var(--ink)', 'stroke-width': 1.5 }), 'On the front only through speed'],
   [keySvg('dot', 'none', { stroke: 'var(--muted)', 'stroke-width': 1.5, r: 3.5 }), 'No components'],
 ]);
-function drawCloud() {
-  const host = document.getElementById('cloud'); host.replaceChildren();
-  const t = cur(); ct.value = t.id;
+// hostId/noteId/selId let the tank page draw the same chart into its own container; selId may be null
+function drawCloud(hostId = 'cloud', noteId = 'cloud-note', selId = 'cloud-t') {
+  const host = document.getElementById(hostId); host.replaceChildren();
+  const t = cur(); if (selId) document.getElementById(selId).value = t.id;
   const D = LT(t), g = D.grid[scen], F = D.fronts[scen], best = D.best[scen], base = D.single[scen]._base;
-  const W = width('cloud'), H = Math.min(520, Math.max(320, W * 0.58)), m = { l: 54, r: 22, t: 28, b: 46 };
+  const W = width(hostId), H = Math.min(520, Math.max(320, W * 0.58)), m = { l: 54, r: 22, t: 28, b: 46 };
   const padx = (g.x[1] - g.x[0]) * 0.04 || 1, pady = (g.y[1] - g.y[0]) * 0.04 || 10;
   const x0 = g.x[0] - padx, x1 = g.x[1] + padx, y0 = g.y[0] - pady, y1 = g.y[1] + pady;
   const X = v => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r), Y = v => H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
@@ -154,7 +157,7 @@ function drawCloud() {
   const halo = { stroke: 'var(--surface)', 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round' };
   txt(svg, right ? bx - 11 : bx + 11, by - 9, `best ${pct(best.gain, 0)}`, { 'text-anchor': right ? 'end' : 'start', fill: 'var(--ink)', 'font-size': 11.5, 'font-weight': 600, ...halo });
   txt(svg, X(base.dps) + 8, Y(base.ehp) - 8, 'no components', { fill: 'var(--ink-2)', 'font-size': 10.5, ...halo });
-  document.getElementById('cloud-note').textContent = `${t.name}, ${L.scenarios[scen].label.toLowerCase()}. Best duel score: ${best.comps.map(cname).join(' + ')}, ${pct(best.gain)} over no components (DPS ${n1(best.dps)}, health ${n0(best.ehp)}). ${F.length} loadouts on the full front, ${on2.length} of them on the damage and health line.${TA.selected ? '' : ' Pick a tank at the top or in the menu to change it.'}`;
+  document.getElementById(noteId).textContent = `${t.name}, ${L.scenarios[scen].label.toLowerCase()}. Best duel score: ${best.comps.map(cname).join(' + ')}, ${pct(best.gain)} over no components (DPS ${n1(best.dps)}, health ${n0(best.ehp)}). ${F.length} loadouts on the full front, ${on2.length} of them on the damage and health line.${TA.selected ? '' : ' Pick a tank in the header or in the menu to change it.'}`;
 }
 
 // ---------- 7. ridgeline of duel gain per tank ----------
@@ -233,7 +236,7 @@ function drawCards() {
     const adds = g => g > 5e-4 ? `adds ${pct(g)}` : 'adds nothing';
     const sent = [`Apart, ${cname(s.a)} ${adds(ga)} and ${cname(s.b)} ${adds(gb)}; simply stacked that would be ${pct(stacked)}, but together they add ${pct(s.gain)}.`];
     const [u, v] = S[s.a].uses > b0.uses ? [s.a, s.b] : S[s.b].uses > b0.uses ? [s.b, s.a] : [null, null];
-    if (u) sent.push(`${cname(u)} raises ability uses per fight from ${b0.uses} to ${S[u].uses}${/abilit/i.test(C[v].desc) ? `, and ${cname(v)} pays out on each use` : ''}.`);
+    if (u) sent.push(`${cname(u)} raises ability uses per fight from ${n1(b0.uses)} to ${n1(S[u].uses)}${/abilit/i.test(C[v].desc) ? `, and ${cname(v)} pays out on each use` : ''}.`);
     card(hs, t, `${cname(s.a)} + ${cname(s.b)}`, L.scenarios[s.scen].label, pct(s.gain), `duel gain together, vs ${pct(stacked)} stacked`, sent);
   }
   const outs = pickPerTank(L.outliers.map(o => ({ ...o, _score: o.gain - o.median })), o => o.tank + '|' + o.comp,
@@ -272,7 +275,25 @@ function drawBest() {
   tb.append(body);
 }
 
+// tank page: the selected tank's best loadout in every scenario
+function drawTankBest(hostId) {
+  const tb = document.getElementById(hostId); tb.replaceChildren();
+  const t = cur(), head = document.createElement('tr');
+  for (const h of ['Scenario', 'Components', 'Gain', 'DPS', 'Health', 'Speed']) { const th = document.createElement('th'); th.textContent = h; th.scope = 'col'; th.style.cursor = 'default'; if (h === 'Components') th.style.textAlign = 'left'; head.append(th); }
+  const thead = document.createElement('thead'); thead.append(head); tb.append(thead);
+  const body = document.createElement('tbody');
+  for (const sc of SCENS) {
+    const b = LT(t).best[sc], tr = document.createElement('tr'); if (sc === scen) tr.className = 'sel';
+    const cells = [L.scenarios[sc].label, b.comps.map(cname).join(' + '), pct(b.gain), n1(b.dps), n0(b.ehp), n1(b.speed)];
+    cells.forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i === 1) td.className = 'comps'; tr.append(td); });
+    tr.style.cursor = 'pointer'; tr.onclick = () => { scen = sc; TA.redraw(); }; body.append(tr);
+  }
+  tb.append(body);
+}
+
 function drawBuild() { drawScenario(); drawCheat(); drawCloud(); drawRidge(); drawCards(); drawBest(); }
-TA.onDraw.push(drawBuild);
-drawBuild();
+TA.chart('components', drawBuild);
+TA.chart('tank', () => { if (!TA.selected) return; syncSegs(); drawCloud('t-cloud', 't-cloud-note', null); drawTankBest('t-best'); });
+// this file loads after the router's first draw, so draw now if its page is already showing
+if (['components', 'tank'].includes(TA.page)) TA.redraw();
 })();

@@ -81,3 +81,18 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
 - Hull-down: front view above (gun height - 25 cm). Ammo modifiers from DT_AmmunitionUIData (AP x1.35 pen is hidden/non-selectable).
 - Turret yaw: turret-chain vertices rotated about jnt_turret, front view, face normals for rotated turrets.
 - Ram: kinetic energy at top speed (collision damage formula is native TyrCollisionDamageExecution, not recovered).
+
+## Crits (from BPC_Module*Component + GE_Module_* + module textures)
+
+- Module texture B channel = module row: DT_ModuleData row suffix = trunc(B/255*1e5). Types: Track (no HP damage), Bonus
+  (+50% damage on that hit), Fire (20/s until repaired; repair 8/4/2/0 s within a 10 s window), Engine (halves speed/accel/strafe,
+  steering x0.75), Gun, Turret, Ability. All need penetration.
+- Combat page: shots to kill, breakpoints, aimed weak spots + crits, hull-down, ammo, turret yaw, tread area, size vs camo, ram.
+
+## Maps (started)
+
+- `extract.dll map <out> <umap>`: landscape heightmaps (BGRA, h = ((R<<8)|G - 32768)/128 * zscale), every mesh placement with
+  world transform (level instances followed), gameplay actors (capture/heal/ammo/energy zones, spawns, no-go, bushes), coarse LOD
+  geometry. Local CUE4Parse patch: FStaticMeshRenderData keeps LODs when newer Nanite/RT fields fail to parse.
+- `tools/mapdsm.py`: 1 m DTM + DSM (structures >= 1.2 m tall) + bush mask per map. Next: Rust viewshed tool, exposure /
+  coverage / hull-down crest maps, zone coverage, callout naming.
