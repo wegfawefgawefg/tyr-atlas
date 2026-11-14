@@ -1,0 +1,63 @@
+#!/bin/sh
+# Rebuild everything after a game patch: key check, usmap, asset dumps, datasets, armor, combat, site data, maps, art.
+#   tools/update_all.sh            data + armor + site data (fast path, most patches)
+#   MAPS=1 tools/update_all.sh     also re-export maps and rerun spotting (slow; see note on callouts below)
+#   ART=1 tools/update_all.sh      also re-export tank models and re-render them in Blender (slow)
+# Stops at the first failing step. Everything runs at nice 19.
+set -eu
+cd "$(dirname "$0")/.."
+GAME=/path/to/SteamLibrary/steamapps/common/Tyr
+EXE=$GAME/Tyr/Binaries/Win64/TyrClient-Win64-Shipping.exe
+PAK=$(ls "$GAME"/Tyr/Content/Paks/*.pak | head -1)
+X="nice -n 19 dotnet tools/extract/bin/Release/net8.0/extract.dll"
+P="nice -n 19 python3 -I"
+step() { echo "== $*"; }
+
+step "game build"
+grep -E '"buildid"|"LastUpdated"' "$GAME/../../appmanifest_2445260.acf"
+
+step "AES key (stops if the key changed: put the new key in tools/extract/Program.cs and rebuild the extractor)"
+KEY=$(grep -o '0x[0-9A-F]\{64\}' tools/extract/Program.cs | head -1)
+$P tools/find_aes3.py "$EXE" "$PAK" | tee /tmp/tyr_aes.txt | tail -2
+grep -qi "${KEY#0x}" /tmp/tyr_aes.txt || { echo "AES key changed (not $KEY)"; exit 1; }
+
+step "usmap from exe reflection"
+$P tools/reflect_scan.py extract/reflect_stage1.pkl
+$P tools/make_usmap.py extract/reflect_stage1.pkl extract/Tyr.usmap
+
+step "asset dumps"
+$X json extract/json Tyr/Content/DataTables Tyr/Content/DataRegistries Tyr/Content/DataAssets Tyr/Content/Blueprints \
+  Tyr/Content/UI/Menus Tyr/Content/UI/ViewModels Tyr/Plugins/GameFeatures/Vehicles 're:/Maps/[^/]+/Content/DT_MapInfo' 2>&1 | tail -1
+
+step "talent trees from the CDN"
+curl -fsS https://cdn.snapser.com/1d4c-c573-d9pt9gg0/talent-data/talent-trees.json -o "extract/cdn/talent-trees-$(date +%F).json"
+
+step "datasets"
+$P tools/build_dataset.py
+$P tools/loadouts.py
+$X armor extract/armor 2>&1 | grep -v '^tex' | tail -2
+$P tools/armor.py
+$P tools/combat.py
+$P tools/site_data.py
+
+if [ -n "${MAPS:-}" ]; then
+  step "maps (actors, geometry, spotting)"
+  for m in Fields:TyrMapFields/Content/Maps/Map_Fields Divide:TyrMapDivide/Content/Maps/Map_Divide Dunes:TyrMapDunes/Content/Maps/Map_Dunes_Rework \
+           Ravine:TyrMapRavine/Content/Maps/Map_Ravine Scorch:TyrMapScorch/Content/Maps/Map_Scorch WindValley:TyrMapWindValley/Content/Maps/Map_WindValley \
+           Ruins:TyrMapRuins/Content/Maps/Map_Ruins Glade:TyrMapGlade/Content/Map_Glade Core:TyrMapCore/Content/Maps/Map_Core_V2; do
+    n=${m%%:*}; p=${m#*:}
+    timeout 1500 $X map extract/maps/$n Tyr/Plugins/GameFeatures/Maps/$p.umap 2>&1 | grep -E 'umap:' || true
+  done
+  $P tools/mapdsm.py
+  $P tools/maplos.py Fields Divide Ravine Scorch WindValley Core Dunes Ruins Glade
+  # Callout regions are NOT rebuilt here: re-segmenting changes region ids. If the maps changed, run
+  #   tools/callouts.py <maps>; tools/callout_names.py <maps>   (carries names over; name leftovers by hand)
+  $P tools/callouts_web.py Fields Divide Ravine Scorch WindValley Core
+fi
+
+if [ -n "${ART:-}" ]; then
+  step "tank art"
+  ./tools/render_all.sh
+  $P tools/site_art.py
+fi
+echo "UPDATE DONE"

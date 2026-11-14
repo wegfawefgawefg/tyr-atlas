@@ -148,7 +148,16 @@ def duel(angle):
     return M
 D_STATS = {t['name']: t['stats'] for t in D['tanks'].values()}
 out_duel = dict(front=duel(0), angled=duel(30))
-out = dict(duel=out_duel, source=D['source'], stats=[dict(key=k, label=l, unit=u, better=b, group=g) for k, l, u, b, g in STATS],
+def game_build():
+    """Steam build id + update date of the installed game the data was extracted from (shown on the site as 'data as of')."""
+    import re, datetime
+    try: t = open('/path/to/SteamLibrary/steamapps/appmanifest_2445260.acf').read()
+    except OSError: return None
+    b = re.search(r'"buildid"\s+"(\d+)"', t); u = re.search(r'"LastUpdated"\s+"(\d+)"', t)
+    return dict(build=b.group(1) if b else None,
+                updated=datetime.datetime.fromtimestamp(int(u.group(1)), datetime.timezone.utc).strftime('%Y-%m-%d') if u else None)
+
+out = dict(game=game_build(), duel=out_duel, source=D['source'], stats=[dict(key=k, label=l, unit=u, better=b, group=g) for k, l, u, b, g in STATS],
            tanks=tanks, pca=dict(keys=keys, var=[float(v) for v in var[:2]], loadings=[[float(a), float(b)] for a, b in load]),
            dist=[[float(x) for x in row] for row in Dm], order=order)
 # armor detail for the armor charts (big: views are per-pixel effective armor)
