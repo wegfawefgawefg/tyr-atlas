@@ -41,3 +41,18 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
 - Owner thinks the budget is 20 points. At 20, tier 4 needs all 20 spent above it, so builds live in tiers 0-3
   and keystones (tier 6, need 30 spent) are unreachable. Valid exact-20 talent builds: 51k (Valor) to 7.5M (Kestrel),
   37M total (tools/count_builds.py).
+
+## Website
+
+- `site/index.html` + `site/data.js` (built by `tools/site_data.py`). Plain HTML/SVG, no build step.
+- Serve locally with `./serve.sh` -> http://127.0.0.1:8740/. Not published anywhere (owner: no artifact, local hosting).
+- Sections: per-stat strips (base / 31-point core mode), any-vs-any scatter with Pareto frontier staircase,
+  PCA tank map with loadings, similarity heatmap + nearest neighbours, talent uplift dumbbells, sortable table.
+
+## Findings so far
+
+- Core stats (DPS, alpha, HP, speed) are free at 31 points on every tank but Fuse; real choices are keystone,
+  components, ammo, leftover points. Helio has no speed or reload talents, so its core needs only 10 points.
+- Designer ratings in DT_TankData: Durability ~ HP (rank corr +0.96), Scouting ~ camo (+0.91),
+  Firepower vs DPS is -0.62 (rating follows per-shot damage +0.51; Alecto has top DPS but rating 5).
+- PCA: PC1 (29%) light/fast/camo vs heavy/HP/detection; PC2 (14%) turreted vs turretless hover tanks.
