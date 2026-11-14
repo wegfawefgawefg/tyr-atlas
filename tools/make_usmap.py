@@ -61,7 +61,7 @@ def enum_from_fn(f):
 def class_name(cv):
     c = C[cv]
     if 'name' in c: return c['name']
-    name = None
+    name = None; ndepth = 9
     seen = set(); todo = [(c['noreg'], 0)]
     while todo and not name:
         f, depth = todo.pop(0)
@@ -71,9 +71,9 @@ def class_name(cv):
         for op, reg, t in leas:
             if op == 0x8D and reg == 2:
                 s = utf16_ident(t)
-                if s: name = s; break
+                if s: name = s; ndepth = depth; break
         if depth < 2: todo += [(t, depth + 1) for _, t in calls]
-    c['name'] = name
+    c['name'] = name; c['ndepth'] = ndepth
     return name
 
 def struct_name_fn(f):
@@ -116,7 +116,7 @@ def top_props(props):
 types = []  # (name, super, props)
 for v, s in S.items():
     sup = struct_name_fn(s['super']) if s['super'] else None
-    types.append((s['name'], sup, top_props(s['props'])))
+    types.append((s['name'], sup, top_props(s['props']), -1))
 nameless = 0
 for v, c in C.items():
     n = class_name(v)
@@ -125,7 +125,7 @@ for v, c in C.items():
     if c['deps']:
         r = fn_target(c['deps'][0], 'c')
         if r: sup = class_name(r[1])
-    types.append((n, sup, top_props(c['props'])))
+    types.append((n, sup, top_props(c['props']), c['ndepth']))
 print('types', len(types), 'nameless classes', nameless, 'enums', len(enums))
 
 # --- write usmap (version ExplicitEnumValues, uncompressed)
@@ -145,10 +145,13 @@ eb = bytearray(struct.pack('<I', len(enums)))
 for en, vals in enums.items():
     eb += struct.pack('<IH', ni(en), len(vals))
     for val, nm in vals: eb += struct.pack('<QI', val & 0xFFFFFFFFFFFFFFFF, ni(nm or '?'))
-seen = set(); tb = bytearray(); cnt = 0
-for n, sup, props in types:
-    if n in seen: continue
-    seen.add(n); cnt += 1
+best = {}
+for t in types:
+    k = t[0]
+    if k not in best or (t[3], -len(t[2])) < (best[k][3], -len(best[k][2])): best[k] = t
+tb = bytearray(); cnt = 0
+for n, sup, props, _ in best.values():
+    cnt += 1
     body.clear()
     idx = 0
     for pn, dim, t in props:
@@ -164,5 +167,5 @@ with open(sys.argv[2], 'wb') as f:
     f.write(struct.pack('<I', 0))  # no package versioning (UE bool = 4 bytes)
     f.write(b'\0' + struct.pack('<II', len(data), len(data)) + data)
 print('wrote', sys.argv[2], len(data), 'bytes;', cnt, 'types')
-for n, sup, props in types:
+for n, sup, props, _ in types:
     if n in ('TankDataTableStruct',): print(n, sup, props[:8])
