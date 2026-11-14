@@ -79,30 +79,53 @@ fn sweep(g: &Grid, p: &P, ox: usize, oy: usize, mut mark: impl FnMut(usize, usiz
 }
 
 fn main() {
+    use std::sync::atomic::{AtomicU32, Ordering};
     let dir = std::env::args().nth(1).expect("map dir");
     let (g, p) = read(&format!("{dir}/grid.bin"));
-    let n = g.w * g.h; let cell_area = g.res * g.res;
+    let n = g.w * g.h; let cell_area = g.res * g.res; let nk = p.camos.len();
     let obs: Vec<(usize, usize)> = (0..g.h).step_by(p.stride).flat_map(|y| (0..g.w).step_by(p.stride).map(move |x| (x, y)))
         .filter(|&(x, y)| g.play[y * g.w + x] != 0).collect();
     eprintln!("{}x{} cells, {} observers, {} bushes, camo levels {:?}", g.w, g.h, obs.len(), g.bushes.len(), p.camos);
-    let spot_range = |camo: f32, bush: bool| { let c = (camo + if bush { p.bush_camo } else { 0.0 }).min(p.max_camo); p.vision_m * (1.0 - c / 100.0) };
-    for (k, &camo) in p.camos.iter().enumerate() {
-        let results: Vec<(usize, f32, Vec<u32>, Vec<u8>)> = obs.par_iter().map(|&(ox, oy)| {
-            let mut hit = std::collections::HashSet::new();
-            sweep(&g, &p, ox, oy, |x, y, dist, bush| { if dist <= spot_range(camo, bush) { hit.insert((y * g.w + x) as u32); } });
-            let zv: Vec<u8> = p.zones.iter().map(|&(zx, zy)| hit.contains(&((zy * g.w + zx) as u32)) as u8).collect();
-            let cells: Vec<u32> = hit.into_iter().collect();
-            (oy * g.w + ox, cells.len() as f32 * cell_area, cells, zv)
-        }).collect();
-        let mut sees = vec![f32::NAN; n]; let mut seen = vec![0f32; n]; let mut zmap = vec![0u8; p.zones.len() * n];
-        for (o, area, cells, zv) in &results {
-            sees[*o] = *area;
-            for &c in cells { seen[c as usize] += 1.0; }
-            for (z, &v) in zv.iter().enumerate() { zmap[z * n + *o] = v; }
+    let range = |camo: f32, bush: bool| { let c = (camo + if bush { p.bush_camo } else { 0.0 }).min(p.max_camo); p.vision_m * (1.0 - c / 100.0) };
+    let seen: Vec<AtomicU32> = (0..nk * n).map(|_| AtomicU32::new(0)).collect();
+    let mut sees = vec![f32::NAN; nk * n];
+    let mut zmap = vec![0u8; nk * p.zones.len() * n];
+    // one sweep per observer; every camo level is evaluated from the same sight lines
+    let per_obs: Vec<(usize, Vec<f32>, Vec<u8>)> = obs.par_iter().map(|&(ox, oy)| {
+        // cell -> (distance m, reached by a bush-free sight line)
+        let mut vis: std::collections::HashMap<u32, (f32, bool)> = std::collections::HashMap::new();
+        sweep(&g, &p, ox, oy, |x, y, dist, bush| {
+            let e = vis.entry((y * g.w + x) as u32).or_insert((dist, !bush));
+            if !bush { e.1 = true; }
+        });
+        let mut area = vec![0f32; nk];
+        for (&c, &(dist, clear)) in &vis {
+            for k in 0..nk {
+                if dist <= range(p.camos[k], !clear) {
+                    area[k] += cell_area;
+                    seen[k * n + c as usize].fetch_add(1, Ordering::Relaxed);
+                }
+            }
         }
-        let wf = |name: String, v: &[f32]| fs::write(format!("{dir}/{name}"), v.iter().flat_map(|x| x.to_le_bytes()).collect::<Vec<u8>>()).unwrap();
-        wf(format!("sees_{k}.f32"), &sees); wf(format!("seen_{k}.f32"), &seen);
-        fs::write(format!("{dir}/zones_{k}.u8"), &zmap).unwrap();
+        let mut zv = vec![0u8; nk * p.zones.len()];
+        for (zi, &(zx, zy)) in p.zones.iter().enumerate() {
+            if let Some(&(dist, clear)) = vis.get(&((zy * g.w + zx) as u32)) {
+                for k in 0..nk { if dist <= range(p.camos[k], !clear) { zv[k * p.zones.len() + zi] = 1; } }
+            }
+        }
+        (oy * g.w + ox, area, zv)
+    }).collect();
+    for (o, area, zv) in &per_obs {
+        for k in 0..nk {
+            sees[k * n + *o] = area[k];
+            for zi in 0..p.zones.len() { zmap[(k * p.zones.len() + zi) * n + *o] = zv[k * p.zones.len() + zi]; }
+        }
+    }
+    for k in 0..nk {
+        let wf = |name: String, v: Vec<f32>| fs::write(format!("{dir}/{name}"), v.iter().flat_map(|x| x.to_le_bytes()).collect::<Vec<u8>>()).unwrap();
+        wf(format!("sees_{k}.f32"), sees[k * n..(k + 1) * n].to_vec());
+        wf(format!("seen_{k}.f32"), (0..n).map(|i| seen[k * n + i].load(Ordering::Relaxed) as f32).collect());
+        fs::write(format!("{dir}/zones_{k}.u8"), &zmap[k * p.zones.len() * n..(k + 1) * p.zones.len() * n]).unwrap();
     }
     eprintln!("done");
 }

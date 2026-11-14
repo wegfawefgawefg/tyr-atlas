@@ -8,19 +8,20 @@ Game rules used (from the game files):
 Model assumptions (shown on the site):
   2 m cells; spotter eye at 2.5 m; target is a 2.5 m tall column; bushes do not block sight, they add camo to sight lines
   through them; playable area estimated from zones, spawns and bushes plus climbable slopes; observers every 8 m;
-  results for camo 0 / 25 / 40 (heavies / mediums / scouts, before firing)
+  results for camo 0..80 in 10% steps; playable area = drivable ground connected to the zones, outside the out-of-bounds
+  zones (BP_NoGoZone -> GE_OutOfBoundsCountdown, box 32 cm x actor scale) and the invisible walls (BlockingVolume brushes)
 """
 import json, os, sys, struct, subprocess
 import numpy as np
 from scipy.ndimage import distance_transform_edt, label, grey_dilation, binary_fill_holes
 from scipy.spatial import Delaunay
-from PIL import Image
+from PIL import Image, ImageDraw
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 DS = 2
 EYE, TGT, VISION_M, STRIDE = 2.5, 2.5, 400.0, 4
 MAX_CAMO, BUSH_CAMO, BUSH_R_M, SEE_THROUGH_M = 80.0, 40.0, 3.25, 15.0
-CAMOS = [0.0, 25.0, 40.0]
+CAMOS = [float(c) for c in range(0, 81, 10)]
 ZONE_KINDS = ('CaptureZone', 'HealZone', 'AmmunitionZone', 'AbilityResourceZone')
 
 def pool(a, f, how):
@@ -43,13 +44,38 @@ def prepare(name):
         idx = distance_transform_edt(bushm, return_distances=False, return_indices=True)
         ground = ground[tuple(idx)]
     block = np.where(bushm, ground, dsm).astype(np.float32)        # bushes don't block sight
-    anchors = [cell(o) for o in g['objects'] if o['kind'] in ZONE_KINDS + ('Bush', 'PlayerStart', 'SpawnWall')]
-    hull = Delaunay(np.array(anchors))
-    YY, XX = np.mgrid[0:H, 0:W]
-    inside = (hull.find_simplex(np.stack([XX.ravel(), YY.ravel()], 1)) >= 0).reshape(H, W)
-    near = distance_transform_edt(~inside) * res <= 80
+    # boundaries from the map: out-of-bounds boxes and invisible walls
+    ma = os.path.join(d, 'map_actors.json'); acts = json.load(open(ma if os.path.exists(ma) else os.path.join(d, 'map.json')))['actors']
+    def qrot(q, v):
+        x_, y_, z_, w_ = q; u = np.array([x_, y_, z_]); return v + 2 * np.cross(u, np.cross(u, v) + w_ * v)
+    def footprint(pts_local, xf):
+        P = np.array([qrot(xf['q'], np.array(pt) * np.array(xf['s'])) + np.array(xf['t']) for pt in pts_local])
+        from scipy.spatial import ConvexHull
+        xy = P[:, :2]; h_ = ConvexHull(xy)
+        return [((x_ - ox) / 100 / res, (y_ - oy) / 100 / res) for x_, y_ in xy[h_.vertices]]
+    def paint(polys):
+        im = Image.new('1', (W, H), 0); dr = ImageDraw.Draw(im)
+        for poly in polys: dr.polygon(poly, fill=1, outline=1)
+        return np.array(im, bool)
+    nogo_polys, wall_polys = [], []
+    for a in acts:
+        if 'NoGo' in (a.get('cls') or '') and a.get('type') == 'BoxComponent':
+            b = a.get('box') or {'X': 32.0, 'Y': 32.0, 'Z': 32.0}
+            nogo_polys.append(footprint([(sx * b['X'], sy * b['Y'], 0) for sx in (-1, 1) for sy in (-1, 1)], a['xf']))
+        if a.get('cls') == 'BlockingVolume' and a.get('brush'):
+            br = np.array(a['brush']).reshape(-1, 3)
+            P = np.array([qrot(a['xf']['q'], pt * np.array(a['xf']['s'])) + np.array(a['xf']['t']) for pt in br])
+            ext = P.max(0) - P.min(0)
+            if ext[2] < 0.5 * min(ext[0], ext[1]): continue      # floor or ceiling slab, not a wall
+            wall_polys.append(footprint(br, a['xf']))
+    nogo, wall = paint(nogo_polys), paint(wall_polys)
     gy, gx = np.gradient(ground, res)
-    walk = near & (np.degrees(np.arctan(np.hypot(gx, gy))) < 35)
+    walk = (np.degrees(np.arctan(np.hypot(gx, gy))) < 35) & ~nogo & ~wall
+    if not nogo_polys and not wall_polys:          # no boundary data: fall back to the area around the gameplay objects
+        anchors = [cell(o) for o in g['objects'] if o['kind'] in ZONE_KINDS + ('Bush', 'PlayerStart', 'SpawnWall')]
+        hull = Delaunay(np.array(anchors)); YY, XX = np.mgrid[0:H, 0:W]
+        inside = (hull.find_simplex(np.stack([XX.ravel(), YY.ravel()], 1)) >= 0).reshape(H, W)
+        walk &= distance_transform_edt(~inside) * res <= 80
     lab, _ = label(walk)
     zones = [o for o in g['objects'] if o['kind'] in ZONE_KINDS]
     keep = set(); rr = int(15 / res)
@@ -69,7 +95,8 @@ def prepare(name):
         f.write(struct.pack('<I', len(bushes))); f.write(b''.join(struct.pack('<II', f32(x), f32(y)) for x, y in bushes))
         f.write(ground.astype(np.float32).tobytes()); f.write(block.tobytes()); f.write(play.astype(np.uint8).tobytes())
     meta = dict(map=name, res=res, shape=[H, W], origin=g['origin'], zones=[dict(kind=o['kind'], x=x, y=y) for o, (x, y) in zip(zones, zc)],
-                spawns=[cell(o) for o in g['objects'] if o['kind'] == 'PlayerStart'], bushes=bushes, playable_km2=float(play.sum() * res * res / 1e6))
+                spawns=[cell(o) for o in g['objects'] if o['kind'] == 'PlayerStart'], bushes=bushes, playable_km2=float(play.sum() * res * res / 1e6),
+                boundary='map' if (nogo_polys or wall_polys) else 'estimated', n_nogo=len(nogo_polys), n_walls=len(wall_polys))
     return d, ground, dsm, bushm, play, meta
 
 def export_web(name, d, ground, dsm, bushm, play, meta):
@@ -97,6 +124,7 @@ def export_web(name, d, ground, dsm, bushm, play, meta):
     web = dict(map=name, size=[int(x1 - x0), int(y1 - y0)], m_per_px=res, camos=CAMOS,
                zones=[dict(kind=z['kind'], px=to_px(z['x'], z['y'])) for z in meta['zones']],
                spawns=[to_px(x, y) for x, y in meta['spawns']], bushes=[to_px(x, y) for x, y in meta['bushes']], playable_km2=meta['playable_km2'],
+               boundary=meta['boundary'],
                rules=dict(vision_m=VISION_M, max_camo=MAX_CAMO, bush_camo=BUSH_CAMO, bush_radius_m=BUSH_R_M, see_through_m=SEE_THROUGH_M),
                zone_layers=[k for k, z in enumerate(meta['zones']) if z['kind'] == 'CaptureZone'], spots={})
     cell_m2 = (STRIDE * res) ** 2
@@ -136,7 +164,7 @@ def export_web(name, d, ground, dsm, bushm, play, meta):
                 spots.append(dict(kind=kind, px=to_px(x, y), sees_m2=round(float(sees[y, x])), seen_m2=round(float(seen[y, x]) * cell_m2),
                                   ratio=round(float(2 ** adv[y, x]), 2), height_m=round(float(ground[y, x] - np.percentile(ground[play], 50)), 1)))
         web['spots'][str(k)] = spots
-        print(f"  camo {camo:>4.0f}: best open x{next((s['ratio'] for s in spots if s['kind'] == 'open'), '-')}, "
+        if k % 4 == 0: print(f"  camo {camo:>4.0f}: best open x{next((s['ratio'] for s in spots if s['kind'] == 'open'), '-')}, "
               f"best near-bush x{next((s['ratio'] for s in spots if s['kind'] == 'bush'), '-')}")
     json.dump(web, open(os.path.join(out, 'meta.json'), 'w'))
 
@@ -145,6 +173,6 @@ if __name__ == '__main__':
     for name in sys.argv[1:]:
         d, ground, dsm, bushm, play, meta = prepare(name)
         r = subprocess.run(['nice', '-n', '19', exe, d], capture_output=True, text=True, env=dict(os.environ, RAYON_NUM_THREADS='4'))
-        print(name, (r.stderr.strip().splitlines() or [''])[0], f'| playable {meta["playable_km2"]:.2f} km2')
+        print(name, (r.stderr.strip().splitlines() or [''])[0], f'| playable {meta["playable_km2"]:.2f} km2 ({meta["boundary"]}: {meta["n_nogo"]} out-of-bounds, {meta["n_walls"]} walls)')
         if r.returncode: print(r.stderr); continue
         export_web(name, d, ground, dsm, bushm, play, meta)

@@ -7,8 +7,12 @@ if (!TA) return;
 const MAPS = [['fields', 'Fields', 1], ['divide', 'Divide', 1], ['ravine', 'Ravine', 1], ['scorch', 'Scorch', 1], ['windvalley', 'Wind Valley', 1],
   ['core', 'Core', 1], ['dunes', 'Dunes', 0], ['ruins', 'Ruins', 0], ['glade', 'Glade', 0]];
 const LAYERS = [['advantage', 'Spots more than it is spotted'], ['sees', 'Ground it can spot'], ['seen', 'How often it is spotted'], ['zone', 'Who spots a capture zone'], ['none', 'Terrain only']];
-const CAMOS = [[0, 'Camo 0% (most heavies)'], [1, 'Camo 25% (mediums)'], [2, 'Camo 40% (scouts)']];
-let camo = 1;
+const LEVELS = [0, 10, 20, 30, 40, 50, 60, 70, 80];       // camo levels the sweep was run at (meta.camos)
+let camo = 3;                                               // index into LEVELS
+// camo rules from BP_TyrGameMode: cap 80; firing applies GunFireCamoAddition -15 and GunFireCamoScalar -0.4
+const capC = c => Math.max(0, Math.min(80, c));
+const fired = c => capC(c + (-15 + -0.4 * c));
+const nearest = c => LEVELS.reduce((b, v, i) => Math.abs(v - c) < Math.abs(LEVELS[b] - c) ? i : b, 0);
 const ZCOL = { CaptureZone: '#f2c200', HealZone: '#22c55e', AmmunitionZone: '#38bdf8', AbilityResourceZone: '#a78bfa' };
 const ZNAME = { CaptureZone: 'Capture zone', HealZone: 'Heal zone', AmmunitionZone: 'Ammo zone', AbilityResourceZone: 'Energy zone' };
 let cur = 'fields', layer = 'advantage', zoneIdx = 0, view = { s: 1, x: 0, y: 0 };
@@ -44,11 +48,10 @@ function controls() {
     seg.append(b);
   }
   const cs = $('map-camo');
-  if (cs) for (const [k, l] of CAMOS) {
-    const b = document.createElement('button'); b.type = 'button'; b.textContent = l; b.setAttribute('aria-pressed', String(k === camo));
-    b.onclick = () => { camo = k; for (const x of cs.children) x.setAttribute('aria-pressed', String(x === b)); legend(); paint(); };
-    cs.append(b);
-  }
+  if (cs) LEVELS.forEach((v, k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = `${v}%`; b.setAttribute('aria-pressed', String(k === camo));
+    b.onclick = () => setCamo(k); cs.append(b);
+  });
   const cv = $('map-canvas');
   cv.addEventListener('wheel', ev => {
     ev.preventDefault();
@@ -67,11 +70,34 @@ function controls() {
   cv.addEventListener('pointerleave', TA.hideTip);
   $('map-reset') && ($('map-reset').onclick = () => { view = { s: 1, x: 0, y: 0 }; paint(); });
 }
+function setCamo(k) {
+  camo = k;
+  const cs = $('map-camo'); if (cs) [...cs.children].forEach((x, i) => x.setAttribute('aria-pressed', String(i === k)));
+  if (data) { legend(); paint(); }
+}
+// selected tank: its camo before and after talents/components and after firing, as clickable chips
+function tankCamo() {
+  const host = $('map-tank'); if (!host) return; host.replaceChildren();
+  const t = TA.tanks.find(x => x.id === TA.selected);
+  if (!t) { const p = document.createElement('span'); p.className = 'note'; p.textContent = 'Pick a tank in the header to see its camo here.'; host.append(p); return; }
+  const base = t.base.CamoPercentage, tal = t.ceiling.CamoPercentage;
+  const comp = capC((tal + 6) * 1.25);
+  const rows = [[`${t.name} base`, capC(base)], ['with camo talents', capC(tal)], ['+ Shift Cloak, Camo Web, standing still', comp],
+    ['after firing (base)', fired(base)], ['after firing (best build)', fired(comp)]];
+  const lab = document.createElement('span'); lab.className = 'note'; lab.textContent = `${t.name}'s camo:`; host.append(lab);
+  for (const [l, v] of rows) {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = `${l} ${Math.round(v)}%`;
+    b.onclick = () => setCamo(nearest(v)); host.append(b);
+  }
+}
 function clamp() { view.x = Math.min(0, Math.max(1 - view.s, view.x)); view.y = Math.min(0, Math.max(1 - view.s, view.y)); }
 
 let data = null;
+let lastTank = null;
 function draw() {
   controls();
+  tankCamo();
+  if (TA.selected !== lastTank) { lastTank = TA.selected; const t = TA.tanks.find(x => x.id === TA.selected); if (t) camo = nearest(capC(t.base.CamoPercentage)), setCamo(camo); }
   load(cur).then(d => { data = d; if (!d) { $('map-note').textContent = 'No line-of-sight data for this map yet.'; return; } legend(); paint(); });
 }
 
@@ -108,7 +134,7 @@ function paint() {
   ctx.fillStyle = '#fff'; ctx.fillRect(18 * dpr, cv.height - 15 * dpr, px100, 3 * dpr);
   ctx.font = `${10 * dpr}px system-ui, sans-serif`; ctx.textAlign = 'left'; ctx.fillText('100 m', 18 * dpr, cv.height - 20 * dpr);
   const mm = MAPS.find(m => m[0] === cur);
-  $('map-note').textContent = `${mm[1]}${mm[2] ? '' : ' (not seen in real matches)'} · ${meta.playable_km2.toFixed(2)} km² playable · scroll to zoom, drag to pan`;
+  $('map-note').textContent = `${mm[1]}${mm[2] ? '' : ' (not seen in real matches)'} · ${meta.playable_km2.toFixed(2)} km² playable${meta.boundary === 'map' ? '' : ' (estimated boundary)'} · showing ${LEVELS[camo]}% camo · scroll to zoom, drag to pan`;
 }
 
 function spotList() {
