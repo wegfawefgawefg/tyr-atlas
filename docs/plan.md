@@ -109,7 +109,12 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
   The BP overrides camo cap, bush cap and the two firing numbers; nothing overrides GunFireCamoExpireTime, so the firing
   penalty lasts 0.15 s: a flash, not a debuff. Anyone inside the reduced range at that instant spots you, and spotting then
   holds for SpottedTime (7 s). The Maps page's "after firing" camo is that one-moment check. DetectionPointThreshold and
-  MaxSpottingTime use is unknown (no override found; a server ini could still change any of these).
+  MaxSpottingTime: BP_TyrGameMode sets MaxSpottingTime 0.1, so on open ground detection points fill to the threshold in
+  ~0.1 s (instant for our purposes). BPC_TankVisionComponent tracks CurrentDetectionPoints per enemy and switches to a
+  BushSpottingTime when the target is behind a bush (bShouldUseBushSpottingTime); firing (GE_GunDetection) sets
+  BushSpottingTime to 0.1. Drone pulses grant 1e6 points (instant). OPEN: the default BushSpottingTime (not in TankData;
+  an attribute default or GameState.MaxBushSpottingTime set at runtime). If it is seconds, behind-bush spots are stronger
+  than the map model shows: an enemy needs that long of continuous sight before you appear.
 - BP_VisionBlocker (bush): CamoPercentageIncreaseAmount 40, CollisionBounds sphere 325 cm (vision overlap), SeeThroughBounds 1500 cm.
   Smoke cloud: +50 camo. GE_GunDetection on firing: camo AddFinal (set by caller) + BushSpottingTime 0.1.
 - Web guides agree (tyrhq advanced spotting: +40 directional bush camo; spotted 7 s; LoS any part to any part; 400 m).
