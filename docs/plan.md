@@ -96,3 +96,13 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
   geometry. Local CUE4Parse patch: FStaticMeshRenderData keeps LODs when newer Nanite/RT fields fail to parse.
 - `tools/mapdsm.py`: 1 m DTM + DSM (structures >= 1.2 m tall) + bush mask per map. Next: Rust viewshed tool, exposure /
   coverage / hull-down crest maps, zone coverage, callout naming.
+
+## Spotting rules (game files) and the map model
+
+- BP_TyrGameMode: MaxCamoValue 80, MaxBushCamoValue 40, GunFireCamoAddition -15, GunFireCamoScalar -0.4, OutsideVisionRadiusFactor -15.
+- BP_VisionBlocker (bush): CamoPercentageIncreaseAmount 40, CollisionBounds sphere 325 cm (vision overlap), SeeThroughBounds 1500 cm.
+  Smoke cloud: +50 camo. GE_GunDetection on firing: camo AddFinal (set by caller) + BushSpottingTime 0.1.
+- Web guides agree (tyrhq advanced spotting: +40 directional bush camo; spotted 7 s; LoS any part to any part; 400 m).
+- tools/los: spotted if LoS to any part of a 2.5 m column and distance <= 400 * (1 - min(80, camo + 40 if a bush is on the
+  line and the spotter is > 15 m from it)/100). Computed for camo 0/25/40. Result: open-ground spotting is symmetric; the edge is bushes + camo.
+- Live rotation (from match travel in owner's logs): Core, Divide, Fields, Ravine, Scorch, Wind Valley. Dunes, Ruins, Glade never seen.

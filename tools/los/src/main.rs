@@ -1,58 +1,78 @@
-//! Viewshed sweep for Tyr maps.
-//! Input dir: grid.bin (header + f32 dtm, f32 dsm_vision, u8 playable, u8 bush) written by tools/maplos.py.
-//! Output: sees.f32 (per cell, m² of playable ground visible from a tank here), seen.f32 (per cell, number of observer
-//! positions that see a tank here), zones.u8 (per zone, per cell: 1 if a tank here sees the zone centre).
+//! Spotting sweep for Tyr maps, following the game's rules (BP_TyrGameMode, BP_VisionBlocker, TankData):
+//!   a tank is spotted when there is line of sight to any part of it and the distance is within
+//!   VisionRadius * (1 - camo/100); camo is capped at 80. A sight line that passes within 3.25 m of a bush centre
+//!   gives the target +40 camo (bush camo capped at 40), unless the spotter is within 15 m of that bush (see-through).
+//! Input dir: grid.bin written by tools/maplos.py. Output per camo level k: sees_k.f32 (m² of playable ground where an
+//! enemy with that camo would be spotted from here), seen_k.f32 (observer positions that spot a tank with that camo here),
+//! zones_k.u8 (per zone, per observer cell: 1 if a tank here spots an enemy sitting on the zone centre).
 use rayon::prelude::*;
 use std::fs;
 use std::io::Read;
 
-struct Grid { w: usize, h: usize, res: f32, dtm: Vec<f32>, dsm: Vec<f32>, dsm0: Vec<f32>, play: Vec<u8>, bush: Vec<u8> }
+struct Grid { w: usize, h: usize, res: f32, ground: Vec<f32>, block: Vec<f32>, play: Vec<u8>, bush_id: Vec<i32>, bushes: Vec<(f32, f32)> }
+struct P { radius: usize, eye: f32, tgt: f32, stride: usize, vision_m: f32, max_camo: f32, bush_camo: f32, see_through_m: f32, camos: Vec<f32>, zones: Vec<(usize, usize)> }
 
-fn read_grid(path: &str) -> (Grid, Vec<(usize, usize)>, usize, f32, f32, usize, f32) {
-    let mut f = fs::File::open(path).expect("grid.bin");
-    let mut b = Vec::new(); f.read_to_end(&mut b).unwrap();
-    let u = |o: usize| u32::from_le_bytes(b[o..o + 4].try_into().unwrap()) as usize;
-    let fl = |o: usize| f32::from_le_bytes(b[o..o + 4].try_into().unwrap());
-    let (w, h, res) = (u(0), u(4), fl(8));
-    let radius = u(12); let eye = fl(16); let tgt = fl(20); let stride = u(24); let bush_conceal = fl(28);
-    let nz = u(32);
-    let mut o = 36;
-    let mut zones = Vec::new();
-    for _ in 0..nz { zones.push((u(o), u(o + 4))); o += 8; }
+fn read(path: &str) -> (Grid, P) {
+    let mut b = Vec::new(); fs::File::open(path).expect("grid.bin").read_to_end(&mut b).unwrap();
+    let mut o = 0usize;
+    let mut u = || { let v = u32::from_le_bytes(b[o..o + 4].try_into().unwrap()) as usize; o += 4; v };
+    let (w, h) = (u(), u());
+    let res = f32::from_bits(u() as u32);
+    let radius = u(); let eye = f32::from_bits(u() as u32); let tgt = f32::from_bits(u() as u32); let stride = u();
+    let vision_m = f32::from_bits(u() as u32); let max_camo = f32::from_bits(u() as u32); let bush_camo = f32::from_bits(u() as u32);
+    let bush_r_m = f32::from_bits(u() as u32); let see_through_m = f32::from_bits(u() as u32);
+    let nc = u(); let camos: Vec<f32> = (0..nc).map(|_| f32::from_bits(u() as u32)).collect();
+    let nz = u(); let zones: Vec<(usize, usize)> = (0..nz).map(|_| (u(), u())).collect();
+    let nb = u(); let bushes: Vec<(f32, f32)> = (0..nb).map(|_| (f32::from_bits(u() as u32), f32::from_bits(u() as u32))).collect();
     let n = w * h;
-    let rd = |o: &mut usize| { let v: Vec<f32> = (0..n).map(|i| fl(*o + 4 * i)).collect(); *o += 4 * n; v };
-    let dtm = rd(&mut o); let dsm = rd(&mut o); let dsm0 = rd(&mut o);
-    let play = b[o..o + n].to_vec(); o += n;
-    let bush = b[o..o + n].to_vec();
-    (Grid { w, h, res, dtm, dsm, dsm0, play, bush }, zones, radius, eye, tgt, stride, bush_conceal)
+    let rf = |o: &mut usize| { let v: Vec<f32> = (0..n).map(|i| f32::from_le_bytes(b[*o + 4 * i..*o + 4 * i + 4].try_into().unwrap())).collect(); *o += 4 * n; v };
+    let ground = rf(&mut o); let block = rf(&mut o);
+    let play = b[o..o + n].to_vec();
+    // bush footprint: cell -> bush index (nearest bush within its vision-blocker radius)
+    let mut bush_id = vec![-1i32; n];
+    let rc = bush_r_m / res;
+    for (k, &(bx, by)) in bushes.iter().enumerate() {
+        let (x0, x1) = ((bx - rc).floor().max(0.0) as usize, ((bx + rc).ceil() as usize).min(w - 1));
+        let (y0, y1) = ((by - rc).floor().max(0.0) as usize, ((by + rc).ceil() as usize).min(h - 1));
+        for y in y0..=y1 { for x in x0..=x1 {
+            let (dx, dy) = (x as f32 - bx, y as f32 - by);
+            if dx * dx + dy * dy <= rc * rc { bush_id[y * w + x] = k as i32; }
+        } }
+    }
+    (Grid { w, h, res, ground, block, play, bush_id, bushes }, P { radius, eye, tgt, stride, vision_m, max_camo, bush_camo, see_through_m, camos, zones })
 }
 
-/// visibility from observer (ox, oy): calls mark(x, y) for every playable target cell a tank-height target is visible in
-fn sweep(g: &Grid, ox: usize, oy: usize, radius: usize, eye: f32, tgt: f32, bush_conceal_cells: f32, mut mark: impl FnMut(usize, usize, f32)) {
-    let e = g.dtm[oy * g.w + ox] + eye;
-    let r = radius as i64;
+/// sweep sight lines from (ox, oy); for every playable target cell call mark(x, y, dist_m, bush_bonus)
+fn sweep(g: &Grid, p: &P, ox: usize, oy: usize, mut mark: impl FnMut(usize, usize, f32, bool)) {
+    let e = g.ground[oy * g.w + ox] + p.eye;
+    let r = p.radius as i64;
+    let see_through_c2 = (p.see_through_m / g.res).powi(2);
     let mut perim = Vec::with_capacity((8 * r) as usize);
     for i in -r..=r { perim.push((i, -r)); perim.push((i, r)); }
     for i in -r + 1..r { perim.push((-r, i)); perim.push((r, i)); }
     for (px, py) in perim {
-        let steps = px.abs().max(py.abs()) as f32;
+        let steps = px.abs().max(py.abs());
         let mut maxs = f32::NEG_INFINITY;
-        for s in 1..=(steps as i64) {
-            let t = s as f32 / steps;
-            let x = ox as f32 + px as f32 * t; let y = oy as f32 + py as f32 * t;
-            let (xi, yi) = (x.round() as i64, y.round() as i64);
+        let mut bush = false;
+        for s in 1..=steps {
+            let t = s as f32 / steps as f32;
+            let (xi, yi) = ((ox as f32 + px as f32 * t).round() as i64, (oy as f32 + py as f32 * t).round() as i64);
             if xi < 0 || yi < 0 || xi >= g.w as i64 || yi >= g.h as i64 { break; }
             let (xi, yi) = (xi as usize, yi as usize);
             let idx = yi * g.w + xi;
-            let dx = (xi as f32 - ox as f32); let dy = (yi as f32 - oy as f32);
+            let (dx, dy) = (xi as f32 - ox as f32, yi as f32 - oy as f32);
             let d = (dx * dx + dy * dy).sqrt().max(0.5);
-            if d * d > (r * r) as f32 { break; }
-            // lowest point of the target column that clears every obstacle so far
-            let hmin = if maxs == f32::NEG_INFINITY { 0.0 } else { (maxs * d + e - g.dtm[idx]).max(0.0) };
-            let expo = ((tgt - hmin) / tgt).clamp(0.0, 1.0);
-            if expo > 0.0 && g.play[idx] != 0 && (g.bush[idx] == 0 || d <= bush_conceal_cells) { mark(xi, yi, expo); }
-            let top = if d * g.res <= 6.0 { g.dsm0[idx] } else { g.dsm[idx] };   // your own bush doesn't block your view out
-            let os = (top - e) / d;
+            if d > r as f32 { break; }
+            let b = g.bush_id[idx];
+            if b >= 0 && !bush {
+                let (bx, by) = g.bushes[b as usize];
+                let (ddx, ddy) = (bx - ox as f32, by - oy as f32);
+                if ddx * ddx + ddy * ddy > see_through_c2 { bush = true; }   // the spotter is outside this bush's see-through range
+            }
+            // any part of the target column above the highest obstacle so far counts as line of sight
+            let top = (g.ground[idx] + p.tgt - e) / d;
+            if top >= maxs && g.play[idx] != 0 { mark(xi, yi, d * g.res, bush); }
+            let os = (g.block[idx] - e) / d;
             if os > maxs { maxs = os; }
         }
     }
@@ -60,39 +80,29 @@ fn sweep(g: &Grid, ox: usize, oy: usize, radius: usize, eye: f32, tgt: f32, bush
 
 fn main() {
     let dir = std::env::args().nth(1).expect("map dir");
-    let (g, zones, radius, eye, tgt, stride, bush_conceal) = read_grid(&format!("{dir}/grid.bin"));
-    let cell_area = g.res * g.res;
-    let conceal_cells = bush_conceal / g.res;
-    let obs: Vec<(usize, usize)> = (0..g.h).step_by(stride).flat_map(|y| (0..g.w).step_by(stride).map(move |x| (x, y)))
+    let (g, p) = read(&format!("{dir}/grid.bin"));
+    let n = g.w * g.h; let cell_area = g.res * g.res;
+    let obs: Vec<(usize, usize)> = (0..g.h).step_by(p.stride).flat_map(|y| (0..g.w).step_by(p.stride).map(move |x| (x, y)))
         .filter(|&(x, y)| g.play[y * g.w + x] != 0).collect();
-    eprintln!("{}x{} cells, {} observers, radius {} cells", g.w, g.h, obs.len(), radius);
-    // per observer: visible set -> sees count; seen accumulated per target
-    let results: Vec<(usize, f32, Vec<(u32, f32)>, Vec<u8>)> = obs.par_iter().map(|&(ox, oy)| {
-        let mut vis = vec![0u8; 0];
-        let mut best: std::collections::HashMap<u32, f32> = std::collections::HashMap::new();
-        sweep(&g, ox, oy, radius, eye, tgt, conceal_cells, |x, y, e| { let i = (y * g.w + x) as u32; let v = best.entry(i).or_insert(0.0); if e > *v { *v = e; } });
-        let cells: Vec<(u32, f32)> = best.into_iter().collect();
-        let seen_local: std::collections::HashMap<u32, f32> = cells.iter().cloned().collect();
-        // zone coverage: can this observer see each zone centre?
-        let zv: Vec<u8> = zones.iter().map(|&(zx, zy)| {
-            let dx = zx as f32 - ox as f32; let dy = zy as f32 - oy as f32;
-            if (dx * dx + dy * dy).sqrt() > radius as f32 { return 0; }
-            let i = (zy * g.w + zx) as u32; if seen_local.get(&i).copied().unwrap_or(0.0) > 0.25 { 1 } else { 0 }
+    eprintln!("{}x{} cells, {} observers, {} bushes, camo levels {:?}", g.w, g.h, obs.len(), g.bushes.len(), p.camos);
+    let spot_range = |camo: f32, bush: bool| { let c = (camo + if bush { p.bush_camo } else { 0.0 }).min(p.max_camo); p.vision_m * (1.0 - c / 100.0) };
+    for (k, &camo) in p.camos.iter().enumerate() {
+        let results: Vec<(usize, f32, Vec<u32>, Vec<u8>)> = obs.par_iter().map(|&(ox, oy)| {
+            let mut hit = std::collections::HashSet::new();
+            sweep(&g, &p, ox, oy, |x, y, dist, bush| { if dist <= spot_range(camo, bush) { hit.insert((y * g.w + x) as u32); } });
+            let zv: Vec<u8> = p.zones.iter().map(|&(zx, zy)| hit.contains(&((zy * g.w + zx) as u32)) as u8).collect();
+            let cells: Vec<u32> = hit.into_iter().collect();
+            (oy * g.w + ox, cells.len() as f32 * cell_area, cells, zv)
         }).collect();
-        vis.clear();
-        let area: f32 = cells.iter().map(|c| c.1).sum::<f32>() * cell_area;
-        (oy * g.w + ox, area, cells, zv)
-    }).collect();
-    let n = g.w * g.h;
-    let mut sees = vec![f32::NAN; n]; let mut seen = vec![0f32; n];
-    let mut zmap = vec![0u8; zones.len() * n];
-    for (o, area, cells, zv) in &results {
-        sees[*o] = *area;
-        for &(c, e) in cells { seen[c as usize] += e; }
-        for (k, &v) in zv.iter().enumerate() { zmap[k * n + *o] = v; }
+        let mut sees = vec![f32::NAN; n]; let mut seen = vec![0f32; n]; let mut zmap = vec![0u8; p.zones.len() * n];
+        for (o, area, cells, zv) in &results {
+            sees[*o] = *area;
+            for &c in cells { seen[c as usize] += 1.0; }
+            for (z, &v) in zv.iter().enumerate() { zmap[z * n + *o] = v; }
+        }
+        let wf = |name: String, v: &[f32]| fs::write(format!("{dir}/{name}"), v.iter().flat_map(|x| x.to_le_bytes()).collect::<Vec<u8>>()).unwrap();
+        wf(format!("sees_{k}.f32"), &sees); wf(format!("seen_{k}.f32"), &seen);
+        fs::write(format!("{dir}/zones_{k}.u8"), &zmap).unwrap();
     }
-    let wf = |name: &str, v: &[f32]| fs::write(format!("{dir}/{name}"), v.iter().flat_map(|x| x.to_le_bytes()).collect::<Vec<u8>>()).unwrap();
-    wf("sees.f32", &sees); wf("seen.f32", &seen);
-    fs::write(format!("{dir}/zones.u8"), &zmap).unwrap();
     eprintln!("done");
 }

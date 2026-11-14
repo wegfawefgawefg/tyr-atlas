@@ -306,7 +306,7 @@
   <div class="page-head">
     <p class="kicker">Maps</p>
     <h1>Where to stand</h1>
-    <p class="lede">Line of sight over every map, built from the game's terrain and every placed object. For each spot a tank could sit, we sweep sight lines out to 400 m and measure how much enemy tank it can see, and how much of it can be seen.</p>
+    <p class="lede">Spotting over every map, built from the game's terrain, every placed object, and the game's own spotting rules. For each spot a tank could sit, we sweep sight lines out to 400 m and work out which ground it would spot an enemy on, and from where it would be spotted itself.</p>
   </div>
   <section class="panel" aria-labelledby="h-maps">
     <h2 id="h-maps">Sight lines</h2>
@@ -315,12 +315,14 @@
       <div class="seg" role="group" aria-label="Layer" id="map-layer"></div>
       <button type="button" id="map-reset">Reset view</button>
     </div>
+    <div class="controls"><div class="seg" role="group" aria-label="Camouflage" id="map-camo"></div></div>
     <div class="seg" role="group" aria-label="Capture zone" id="map-zone" hidden></div>
     <div class="legend" id="map-legend"></div>
     <div class="chart" id="map-wrap"><canvas id="map-canvas" style="display:block;max-width:100%;touch-action:none;cursor:grab;border-radius:4px"></canvas></div>
     <p class="note" id="map-note"></p>
-    <p>Blue spots see more than they are seen: crests you can fight over hull-down, bush edges, and positions overlooking open ground. Red spots are the opposite. Numbered spots are the strongest open-ground positions that also see a lot of the map; B spots are bushes with the best views, which stay hidden from anyone beyond 50 m (in this model, at least until you fire). Coverage shows every spot that can see a capture zone's centre with at least a quarter of a tank exposed.</p>
-    <p class="note">How it works: 2 m cells; your gun at 2.5 m above the ground; an enemy counts as a 2.5 m column, and each sight line credits the share of that column above the highest obstacle, so a tank behind a crest counts as partly seen. Bushes block sight like a 3 m wall and hide a tank inside them beyond 50 m. The playable area is estimated from where the zones, spawns and bushes are and from slopes a tank can climb; the game's invisible walls are not in the files we read. Camouflage and view range differences between tanks are not applied yet.</p>
+    <p>How spotting works in Tyr, from the game files: you are spotted when an enemy has line of sight to any part of your tank and is within 400 m × (1 − your camo). Camo is capped at 80%, so the closest anyone can stay unspotted is 80 m. A bush gives +40% camo to sight lines that pass through it (within 3.25 m of its centre), but only against spotters more than 15 m from that bush; closer than that they see straight through. Bush camo doesn't stack above 40%. Firing costs camo (−15, scaled by −0.4) for a while.</p>
+    <p>What that means on the map: on open ground spotting is symmetric, so if you can spot them they can spot you, and terrain alone gives no edge. Crests still help when shooting (less of you to hit), but not for spotting. The edge comes from bushes and camo. B spots are the best positions near bushes, where you spot far more than you are spotted; the edge grows with camo. O spots are overlooks: open spots that spot the most ground.</p>
+    <p class="note">Model details: 2 m cells; spotter eye at 2.5 m; a tank is a 2.5 m column and counts as spotted if any part is visible. Bushes don't block sight, they add camo. The playable area is estimated from where zones, spawns and bushes are and from slopes a tank can climb; the game's invisible walls are not in the files we read. Shown before firing; talents and components that change camo or spotted time aren't applied. The "in rotation" list is the maps that came up in our own match logs.</p>
   </section>
 </div>
 
