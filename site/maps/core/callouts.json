@@ -1,0 +1,153 @@
+{
+ "map": "Core",
+ "size": [
+  386,
+  385
+ ],
+ "callouts": [
+  {
+   "id": 0,
+   "name": "Energy",
+   "why": "Energy zone on the crater floor, south half.",
+   "side": "mid",
+   "area_m2": 11744,
+   "height_m": 0.8,
+   "px": [
+    241,
+    236
+   ]
+  },
+  {
+   "id": 1,
+   "name": "West Ammo",
+   "why": "Ammo zone in the west half of the central crater.",
+   "side": "mid",
+   "area_m2": 11248,
+   "height_m": 0.6,
+   "px": [
+    171,
+    165
+   ]
+  },
+  {
+   "id": 2,
+   "name": "East Ammo",
+   "why": "Ammo zone in the low south-east ground beside the long ramp wall.",
+   "side": "mid",
+   "area_m2": 44800,
+   "height_m": -15.8,
+   "px": [
+    341,
+    328
+   ]
+  },
+  {
+   "id": 3,
+   "name": "A Cap",
+   "why": "Capture zone on the A (south-west) side.",
+   "side": "A",
+   "area_m2": 53568,
+   "height_m": -1.0,
+   "px": [
+    148,
+    309
+   ]
+  },
+  {
+   "id": 4,
+   "name": "B Cap",
+   "why": "Capture zone on the B (east) side.",
+   "side": "B",
+   "area_m2": 44880,
+   "height_m": -0.4,
+   "px": [
+    331,
+    110
+   ]
+  },
+  {
+   "id": 5,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, among the north buildings.",
+   "side": "B",
+   "area_m2": 27600,
+   "height_m": 0.9,
+   "px": [
+    288,
+    126
+   ]
+  },
+  {
+   "id": 6,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, south-west of the crater.",
+   "side": "A",
+   "area_m2": 21984,
+   "height_m": 0.9,
+   "px": [
+    131,
+    279
+   ]
+  },
+  {
+   "id": 7,
+   "name": "A Spawn",
+   "why": "A team spawn dome",
+   "side": "A",
+   "area_m2": 19664,
+   "height_m": 1.1,
+   "px": [
+    57,
+    288
+   ]
+  },
+  {
+   "id": 8,
+   "name": "B Spawn",
+   "why": "B team spawn dome",
+   "side": "B",
+   "area_m2": 13664,
+   "height_m": 1.0,
+   "px": [
+    321,
+    32
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Core",
+   "why": "North-east quarter of the crater around the cross-shaped centre structure.",
+   "side": "B",
+   "area_m2": 15280,
+   "height_m": 0.9,
+   "px": [
+    246,
+    194
+   ]
+  },
+  {
+   "id": 10,
+   "name": "Crystals",
+   "why": "Bushy west ground with the crystal clusters.",
+   "side": "A",
+   "area_m2": 33296,
+   "height_m": -0.4,
+   "px": [
+    52,
+    204
+   ]
+  },
+  {
+   "id": 11,
+   "name": "Cliffs",
+   "why": "Steep rocky north-west slope under the big rock slabs.",
+   "side": "B",
+   "area_m2": 34544,
+   "height_m": 1.7,
+   "px": [
+    177,
+    72
+   ]
+  }
+ ]
+}

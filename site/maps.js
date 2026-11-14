@@ -15,7 +15,7 @@ const fired = c => capC(c + (-15 + -0.4 * c));
 const nearest = c => LEVELS.reduce((b, v, i) => Math.abs(v - c) < Math.abs(LEVELS[b] - c) ? i : b, 0);
 const ZCOL = { CaptureZone: '#f2c200', HealZone: '#22c55e', AmmunitionZone: '#38bdf8', AbilityResourceZone: '#a78bfa' };
 const ZNAME = { CaptureZone: 'Capture zone', HealZone: 'Heal zone', AmmunitionZone: 'Ammo zone', AbilityResourceZone: 'Energy zone' };
-let cur = 'fields', layer = 'advantage', zoneIdx = 0, view = { s: 1, x: 0, y: 0 };
+let cur = 'fields', layer = 'advantage', zoneIdx = 0, view = { s: 1, x: 0, y: 0 }, names = true;
 const cache = {};
 const $ = id => document.getElementById(id);
 
@@ -24,12 +24,14 @@ function load(name) {
   const p = fetch(`maps/${name}/meta.json`).then(r => r.ok ? r.json() : null).then(meta => {
     if (!meta) return null;
     const img = src => new Promise(res => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = `maps/${name}/${src}`; });
-    const files = { base: 'base.jpg' };
+    const files = { base: 'base.jpg', regions: 'regions.png' };
     for (let c = 0; c < meta.camos.length; c++) {
       for (const l of ['sees', 'seen', 'advantage']) files[`${l}_${c}`] = `${l}_${c}.png`;
       meta.zone_layers.forEach(k => { files[`zone${k}_${c}`] = `zone${k}_${c}.png`; });
     }
-    return Promise.all(Object.entries(files).map(([k, f]) => img(f).then(i => [k, i]))).then(list => ({ meta, img: Object.fromEntries(list) }));
+    const calls = fetch(`maps/${name}/callouts.json`).then(r => r.ok ? r.json() : { callouts: [] }).catch(() => ({ callouts: [] }));
+    return Promise.all([calls, ...Object.entries(files).map(([k, f]) => img(f).then(i => [k, i]))])
+      .then(([c, ...list]) => ({ meta, callouts: c.callouts, img: Object.fromEntries(list) }));
   });
   cache[name] = p; return p;
 }
@@ -69,6 +71,7 @@ function controls() {
   });
   cv.addEventListener('pointerleave', TA.hideTip);
   $('map-reset') && ($('map-reset').onclick = () => { view = { s: 1, x: 0, y: 0 }; paint(); });
+  $('map-names') && ($('map-names').onclick = ev => { names = !names; ev.currentTarget.setAttribute('aria-pressed', String(names)); paint(); });
 }
 function setCamo(k) {
   camo = k;
@@ -114,6 +117,7 @@ function paint() {
   if (img.base) ctx.drawImage(img.base, dx, dy, dw, dh);
   const ov = layer === 'zone' ? img[`zone${meta.zone_layers[zoneIdx] ?? -1}_${camo}`] : layer !== 'none' ? img[`${layer}_${camo}`] : null;
   if (ov) ctx.drawImage(ov, dx, dy, dw, dh);
+  if (names && img.regions) { ctx.globalAlpha = 0.55; ctx.imageSmoothingEnabled = false; ctx.drawImage(img.regions, dx, dy, dw, dh); ctx.globalAlpha = 1; ctx.imageSmoothingEnabled = view.s < 2; }
   const R = 7 * dpr;
   meta.zones.forEach((z, i) => {
     const [x, y] = toC(cv, z.px); ctx.lineWidth = 3 * dpr; ctx.strokeStyle = ZCOL[z.kind] || '#fff';
@@ -128,6 +132,11 @@ function paint() {
     ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5 * dpr; ctx.stroke();
     ctx.fillStyle = '#fff'; ctx.font = `600 ${10 * dpr}px system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(label, x, y + 0.5 * dpr);
   });
+  if (names) {
+    ctx.font = `700 ${Math.round(11 * dpr * Math.min(1.6, Math.sqrt(view.s)))}px system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round'; ctx.lineWidth = 3 * dpr; ctx.strokeStyle = 'rgba(0,0,0,.85)'; ctx.fillStyle = '#fff';
+    for (const c of data.callouts) { const [x, y] = toC(cv, c.px); ctx.strokeText(c.name, x, y); ctx.fillText(c.name, x, y); }
+  }
   // scale bar: 100 m
   const px100 = 100 / meta.m_per_px / meta.size[0] * cv.width * view.s;
   ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(10 * dpr, cv.height - 26 * dpr, px100 + 16 * dpr, 18 * dpr);
@@ -152,6 +161,8 @@ function hover(ev, r) {
       `${s.height_m >= 0 ? '+' : ''}${s.height_m} m against the map's median ground`]); return; } }
   const z = data.meta.zones.find(z => near(z.px, z.kind === 'CaptureZone' ? 14 : 9));
   if (z) { TA.showTip(ev, [ZNAME[z.kind] || z.kind, 'Pick a capture zone above the map when the coverage layer is on']); return; }
+  const c = names && data.callouts.find(c => near(c.px, 28));
+  if (c) { TA.showTip(ev, [c.name, c.why, `${(c.area_m2 / 1e4).toFixed(1)} ha${c.side && c.side !== 'mid' ? `, ${c.side} side` : ''}`]); return; }
   TA.hideTip();
 }
 

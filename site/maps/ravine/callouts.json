@@ -1,0 +1,297 @@
+{
+ "map": "Ravine",
+ "size": [
+  460,
+  540
+ ],
+ "callouts": [
+  {
+   "id": 0,
+   "name": "B Cap",
+   "why": "Capture zone inside the B spawn dome, north edge.",
+   "side": null,
+   "area_m2": 2848,
+   "height_m": -2.3,
+   "px": [
+    208,
+    49
+   ]
+  },
+  {
+   "id": 1,
+   "name": "A Cap",
+   "why": "Capture zone inside the A spawn dome, south edge.",
+   "side": null,
+   "area_m2": 2864,
+   "height_m": -0.3,
+   "px": [
+    254,
+    459
+   ]
+  },
+  {
+   "id": 2,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, just south of B Cap.",
+   "side": null,
+   "area_m2": 31728,
+   "height_m": -1.1,
+   "px": [
+    226,
+    94
+   ]
+  },
+  {
+   "id": 3,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, just west of A Cap.",
+   "side": null,
+   "area_m2": 20528,
+   "height_m": -0.6,
+   "px": [
+    207,
+    478
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Crystals",
+   "why": "Crystal field in the south-east corner.",
+   "side": null,
+   "area_m2": 28928,
+   "height_m": -1.9,
+   "px": [
+    391,
+    391
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Ruins",
+   "why": "Ruined towers and half arch on the hill west of the centre.",
+   "side": null,
+   "area_m2": 44912,
+   "height_m": 6.6,
+   "px": [
+    147,
+    207
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Arch",
+   "why": "Stone arch on the high north-west ledge.",
+   "side": null,
+   "area_m2": 17296,
+   "height_m": 11.9,
+   "px": [
+    56,
+    159
+   ]
+  },
+  {
+   "id": 7,
+   "name": "A Bridge",
+   "why": "Bridge over the ravine on the A (south) side.",
+   "side": null,
+   "area_m2": 26592,
+   "height_m": -7.6,
+   "px": [
+    178,
+    413
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Tower",
+   "why": "Tower on the highest ledge of the west edge.",
+   "side": null,
+   "area_m2": 15536,
+   "height_m": 34.7,
+   "px": [
+    68,
+    251
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Cliffs",
+   "why": "Steep high ground in the south-west.",
+   "side": null,
+   "area_m2": 58208,
+   "height_m": 18.1,
+   "px": [
+    104,
+    415
+   ]
+  },
+  {
+   "id": 10,
+   "name": "Disk",
+   "why": "Stone disk in the north-west corner.",
+   "side": null,
+   "area_m2": 23024,
+   "height_m": -2.2,
+   "px": [
+    138,
+    47
+   ]
+  },
+  {
+   "id": 11,
+   "name": "Thicket",
+   "why": "Bush and rock cluster south-west of the centre.",
+   "side": null,
+   "area_m2": 16528,
+   "height_m": 3.3,
+   "px": [
+    201,
+    334
+   ]
+  },
+  {
+   "id": 12,
+   "name": "Spine",
+   "why": "Curved bare ridge east of the centre, best view on the map.",
+   "side": null,
+   "area_m2": 17104,
+   "height_m": 11.0,
+   "px": [
+    367,
+    209
+   ]
+  },
+  {
+   "id": 13,
+   "name": "A Yard",
+   "why": "Open ground beside A Cap to the east.",
+   "side": null,
+   "area_m2": 34112,
+   "height_m": -1.5,
+   "px": [
+    299,
+    414
+   ]
+  },
+  {
+   "id": 14,
+   "name": "Trench",
+   "why": "South run of the ravine between Mid and A Bridge.",
+   "side": null,
+   "area_m2": 13008,
+   "height_m": -2.9,
+   "px": [
+    268,
+    330
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Block",
+   "why": "Big square building on the east edge.",
+   "side": null,
+   "area_m2": 23712,
+   "height_m": 1.9,
+   "px": [
+    392,
+    269
+   ]
+  },
+  {
+   "id": 16,
+   "name": "Boulder",
+   "why": "Lone big rock in the south-east dip.",
+   "side": null,
+   "area_m2": 26256,
+   "height_m": -1.9,
+   "px": [
+    345,
+    288
+   ]
+  },
+  {
+   "id": 17,
+   "name": "Mid",
+   "why": "Ravine floor at the map centre.",
+   "side": null,
+   "area_m2": 15568,
+   "height_m": -10.4,
+   "px": [
+    230,
+    292
+   ]
+  },
+  {
+   "id": 18,
+   "name": "Slope",
+   "why": "Ground falling from Spine down to Mid.",
+   "side": null,
+   "area_m2": 19744,
+   "height_m": -2.6,
+   "px": [
+    325,
+    234
+   ]
+  },
+  {
+   "id": 19,
+   "name": "Gully",
+   "why": "North run of the ravine between Mid and B Heal.",
+   "side": null,
+   "area_m2": 19760,
+   "height_m": -4.8,
+   "px": [
+    280,
+    163
+   ]
+  },
+  {
+   "id": 20,
+   "name": "Hedge",
+   "why": "Line of bushes along the north-east edge.",
+   "side": null,
+   "area_m2": 24192,
+   "height_m": 2.0,
+   "px": [
+    419,
+    183
+   ]
+  },
+  {
+   "id": 21,
+   "name": "Bowl",
+   "why": "Wide open hollow in the north-east.",
+   "side": null,
+   "area_m2": 40272,
+   "height_m": -0.7,
+   "px": [
+    348,
+    99
+   ]
+  },
+  {
+   "id": 22,
+   "name": "B Bridge",
+   "why": "Bridge over the ravine on the B (north-west) side.",
+   "side": null,
+   "area_m2": 26848,
+   "height_m": -11.4,
+   "px": [
+    160,
+    128
+   ]
+  },
+  {
+   "id": 23,
+   "name": "B Yard",
+   "why": "Open ground beside B Cap to the east.",
+   "side": null,
+   "area_m2": 22672,
+   "height_m": 1.1,
+   "px": [
+    259,
+    52
+   ]
+  }
+ ]
+}

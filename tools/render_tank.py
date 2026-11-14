@@ -42,7 +42,8 @@ for mat in bpy.data.materials:
     bsdf.inputs['Metallic'].default_value = S.get('Metallic', 0.5)
     bsdf.inputs['Roughness'].default_value = S.get('Roughness', 0.4)
     col = next((T[k] for k in ('Tank_ Color Map', 'PM_Diffuse', 'Diffuse', 'BaseColor') if k in T), None)
-    if col and tex_path(col):
+    generic = col and 'T_Tank_Base_C' in col          # placeholder texture: the material's Color tint carries the paint
+    if col and tex_path(col) and not (generic and 'Color' in C):
         n = nt.nodes.new('ShaderNodeTexImage'); n.image = image(tex_path(col), True)
         nt.links.new(n.outputs['Color'], bsdf.inputs['Base Color'])
     elif 'Color' in C:
@@ -94,10 +95,10 @@ def light(name, kind, loc, energy, colour, size_=None):
     if size_ and kind == 'AREA': L.size = size_
     o = bpy.data.objects.new(name, L); sc.collection.objects.link(o); o.location = loc
     o.rotation_euler = (ctr - o.location).to_track_quat('-Z', 'Y').to_euler(); return o
-light('key', 'AREA', ctr + Vector((rad * 2.2, rad * 1.2, rad * 2.0)), 1500 * rad * rad, (1.0, 0.97, 0.93), rad * 2)
-light('rim_m', 'AREA', ctr + Vector((-rad * 2.4, rad * 1.6, rad * 0.8)), 650 * rad * rad, (1.0, 0.15, 0.85), rad * 0.8)
-light('rim_c', 'AREA', ctr + Vector((-rad * 1.6, -rad * 2.4, rad * 0.6)), 750 * rad * rad, (0.1, 0.85, 1.0), rad * 0.8)
-light('top', 'AREA', ctr + Vector((0, 0, rad * 3.0)), 400 * rad * rad, (0.85, 0.9, 1.0), rad * 3)
+light('key', 'AREA', ctr + Vector((rad * 2.2, rad * 1.2, rad * 2.0)), 550 * rad * rad, (1.0, 0.97, 0.93), rad * 2)
+light('rim_m', 'AREA', ctr + Vector((-rad * 2.4, rad * 1.6, rad * 0.8)), 260 * rad * rad, (1.0, 0.15, 0.85), rad * 0.8)
+light('rim_c', 'AREA', ctr + Vector((-rad * 1.6, -rad * 2.4, rad * 0.6)), 420 * rad * rad, (0.1, 0.85, 1.0), rad * 0.8)
+light('top', 'AREA', ctr + Vector((0, 0, rad * 3.0)), 160 * rad * rad, (0.85, 0.9, 1.0), rad * 3)
 # world: dark gradient for reflections only (background stays transparent)
 w = bpy.data.worlds.new('w'); sc.world = w; w.use_nodes = True
 bg = w.node_tree.nodes['Background']; bg.inputs['Color'].default_value = (0.02, 0.02, 0.035, 1); bg.inputs['Strength'].default_value = 0.6

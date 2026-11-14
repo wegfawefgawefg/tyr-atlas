@@ -1,0 +1,141 @@
+{
+ "map": "Scorch",
+ "size": [
+  319,
+  440
+ ],
+ "callouts": [
+  {
+   "id": 0,
+   "name": "Mid",
+   "why": "Low centre of the map; the energy zone is here.",
+   "side": "B",
+   "area_m2": 32000,
+   "height_m": 21.3,
+   "px": [
+    141,
+    228
+   ]
+  },
+  {
+   "id": 1,
+   "name": "West Ammo",
+   "why": "Ammo zone on the high west side of the centre.",
+   "side": "mid",
+   "area_m2": 3920,
+   "height_m": -15.2,
+   "px": [
+    49,
+    227
+   ]
+  },
+  {
+   "id": 2,
+   "name": "East Ammo",
+   "why": "Ammo zone in the low east side among the towers.",
+   "side": "mid",
+   "area_m2": 17744,
+   "height_m": -3.8,
+   "px": [
+    249,
+    212
+   ]
+  },
+  {
+   "id": 3,
+   "name": "A Cap",
+   "why": "Capture zone on the A (south) side of the centre.",
+   "side": "A",
+   "area_m2": 14672,
+   "height_m": 11.5,
+   "px": [
+    147,
+    264
+   ]
+  },
+  {
+   "id": 4,
+   "name": "B Cap",
+   "why": "Capture zone on the B (north) side, at the mouth of the bushy low ground.",
+   "side": "B",
+   "area_m2": 37552,
+   "height_m": -24.6,
+   "px": [
+    159,
+    159
+   ]
+  },
+  {
+   "id": 5,
+   "name": "A Spawn",
+   "why": "A spawn, south edge.",
+   "side": "A",
+   "area_m2": 25040,
+   "height_m": 20.3,
+   "px": [
+    100,
+    398
+   ]
+  },
+  {
+   "id": 6,
+   "name": "B Spawn",
+   "why": "B team spawn dome",
+   "side": "B",
+   "area_m2": 6112,
+   "height_m": -2.6,
+   "px": [
+    61,
+    108
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Towers",
+   "why": "Low north-east ground dotted with towers.",
+   "side": "B",
+   "area_m2": 21360,
+   "height_m": -16.9,
+   "px": [
+    214,
+    126
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Low Shelf",
+   "why": "Bare flat shelf on the east edge.",
+   "side": "B",
+   "area_m2": 15712,
+   "height_m": -8.9,
+   "px": [
+    251,
+    139
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Cracks",
+   "why": "Cracked ground across the big south-east slope.",
+   "side": "A",
+   "area_m2": 35952,
+   "height_m": 6.4,
+   "px": [
+    213,
+    320
+   ]
+  },
+  {
+   "id": 10,
+   "name": "Peak",
+   "why": "High bushy ground south-west of A Cap.",
+   "side": "A",
+   "area_m2": 14432,
+   "height_m": 27.1,
+   "px": [
+    86,
+    313
+   ]
+  }
+ ]
+}

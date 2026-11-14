@@ -1,0 +1,201 @@
+{
+ "map": "Divide",
+ "size": [
+  439,
+  487
+ ],
+ "callouts": [
+  {
+   "id": 1,
+   "name": "West Energy",
+   "why": "Energy zone in the north-west.",
+   "side": null,
+   "area_m2": 32560,
+   "height_m": 3.9,
+   "px": [
+    119,
+    94
+   ]
+  },
+  {
+   "id": 2,
+   "name": "A Ammo",
+   "why": "Ammo zone on the A (south-west) side.",
+   "side": null,
+   "area_m2": 34288,
+   "height_m": 7.3,
+   "px": [
+    119,
+    303
+   ]
+  },
+  {
+   "id": 3,
+   "name": "B Ammo",
+   "why": "Ammo zone on the B (north-east) side.",
+   "side": null,
+   "area_m2": 23952,
+   "height_m": 4.5,
+   "px": [
+    365,
+    127
+   ]
+  },
+  {
+   "id": 4,
+   "name": "A Cap",
+   "why": "Capture zone inside the A spawn dome, south-west corner.",
+   "side": null,
+   "area_m2": 2880,
+   "height_m": 8.3,
+   "px": [
+    83,
+    409
+   ]
+  },
+  {
+   "id": 5,
+   "name": "B Cap",
+   "why": "Capture zone inside the B spawn dome, north-east corner.",
+   "side": null,
+   "area_m2": 2880,
+   "height_m": 7.2,
+   "px": [
+    363,
+    75
+   ]
+  },
+  {
+   "id": 6,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, east edge by the buildings.",
+   "side": null,
+   "area_m2": 30976,
+   "height_m": 4.6,
+   "px": [
+    403,
+    191
+   ]
+  },
+  {
+   "id": 7,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, west edge.",
+   "side": null,
+   "area_m2": 29648,
+   "height_m": 3.7,
+   "px": [
+    70,
+    256
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Blocks",
+   "why": "Building blocks along the south edge.",
+   "side": null,
+   "area_m2": 20336,
+   "height_m": 5.3,
+   "px": [
+    222,
+    419
+   ]
+  },
+  {
+   "id": 9,
+   "name": "North Field",
+   "why": "Open high ground along the north edge.",
+   "side": null,
+   "area_m2": 40160,
+   "height_m": 8.7,
+   "px": [
+    167,
+    42
+   ]
+  },
+  {
+   "id": 10,
+   "name": "East Energy",
+   "why": "Energy zone among the cliff buildings in the south-east.",
+   "side": null,
+   "area_m2": 21808,
+   "height_m": 14.9,
+   "px": [
+    319,
+    369
+   ]
+  },
+  {
+   "id": 11,
+   "name": "West Rocks",
+   "why": "Big rock mass on the west edge.",
+   "side": null,
+   "area_m2": 16656,
+   "height_m": 0.0,
+   "px": [
+    84,
+    159
+   ]
+  },
+  {
+   "id": 12,
+   "name": "A Gully",
+   "why": "Low bushy ground leading out of A Cap to the east.",
+   "side": null,
+   "area_m2": 39120,
+   "height_m": -4.6,
+   "px": [
+    152,
+    375
+   ]
+  },
+  {
+   "id": 13,
+   "name": "Thicket",
+   "why": "Densest bush belt, south of the centre.",
+   "side": null,
+   "area_m2": 40784,
+   "height_m": -6.1,
+   "px": [
+    166,
+    244
+   ]
+  },
+  {
+   "id": 14,
+   "name": "Mid",
+   "why": "Lowest ground at the map centre.",
+   "side": null,
+   "area_m2": 22304,
+   "height_m": -9.1,
+   "px": [
+    230,
+    228
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Trench",
+   "why": "Deep cut running north-east from Mid.",
+   "side": null,
+   "area_m2": 31856,
+   "height_m": -3.6,
+   "px": [
+    312,
+    195
+   ]
+  },
+  {
+   "id": 16,
+   "name": "B Gully",
+   "why": "Low bushy ground leading out of B Cap to the west.",
+   "side": null,
+   "area_m2": 32560,
+   "height_m": -4.4,
+   "px": [
+    268,
+    96
+   ]
+  }
+ ]
+}

@@ -96,6 +96,9 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
   geometry. Local CUE4Parse patch: FStaticMeshRenderData keeps LODs when newer Nanite/RT fields fail to parse.
 - `tools/mapdsm.py`: 1 m DTM + DSM (structures >= 1.2 m tall) + bush mask per map. Next: Rust viewshed tool, exposure /
   coverage / hull-down crest maps, zone coverage, callout naming.
+- Callouts: `tools/callouts.py` (regions) -> names in `extract/maps/<Map>/callouts.json` (docs/callouts.md; carry names over
+  after re-segmenting with `tools/callout_names.py`) -> `tools/callouts_web.py` writes site/maps/<map>/callouts.json +
+  regions.png (borders between named regions; labels by their zone or spawn). Maps page has a Callouts toggle.
 
 ## Spotting rules (game files) and the map model
 

@@ -1,0 +1,297 @@
+{
+ "map": "WindValley",
+ "size": [
+  515,
+  541
+ ],
+ "callouts": [
+  {
+   "id": 0,
+   "name": "A Cap",
+   "why": "Capture zone inside the A spawn dome, south edge.",
+   "side": null,
+   "area_m2": 2832,
+   "height_m": -0.3,
+   "px": [
+    275,
+    490
+   ]
+  },
+  {
+   "id": 1,
+   "name": "B Cap",
+   "why": "Capture zone inside the B spawn dome, north edge.",
+   "side": null,
+   "area_m2": 2848,
+   "height_m": -0.6,
+   "px": [
+    271,
+    44
+   ]
+  },
+  {
+   "id": 2,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, north-west of the centre.",
+   "side": null,
+   "area_m2": 63664,
+   "height_m": 2.2,
+   "px": [
+    198,
+    169
+   ]
+  },
+  {
+   "id": 3,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, south-west of the centre.",
+   "side": null,
+   "area_m2": 37728,
+   "height_m": -0.5,
+   "px": [
+    188,
+    361
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Mid",
+   "why": "Cluster of structures at the map centre.",
+   "side": null,
+   "area_m2": 14704,
+   "height_m": -0.3,
+   "px": [
+    232,
+    290
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Pillars",
+   "why": "Pillar group on the east edge.",
+   "side": null,
+   "area_m2": 38512,
+   "height_m": 4.5,
+   "px": [
+    468,
+    214
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Hill",
+   "why": "Raised wooded ground on the west edge.",
+   "side": null,
+   "area_m2": 63152,
+   "height_m": 19.7,
+   "px": [
+    66,
+    207
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Ruins",
+   "why": "Ruined walls in the north-east corner.",
+   "side": null,
+   "area_m2": 39424,
+   "height_m": 3.9,
+   "px": [
+    371,
+    75
+   ]
+  },
+  {
+   "id": 8,
+   "name": "B Wall",
+   "why": "Wall ruins beside B Cap to the west.",
+   "side": null,
+   "area_m2": 49792,
+   "height_m": 1.5,
+   "px": [
+    163,
+    58
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Rotunda",
+   "why": "Ring-shaped ruin in the south-west corner.",
+   "side": null,
+   "area_m2": 25776,
+   "height_m": 3.2,
+   "px": [
+    171,
+    458
+   ]
+  },
+  {
+   "id": 10,
+   "name": "A Wall",
+   "why": "Wall ruins beside A Cap to the west.",
+   "side": null,
+   "area_m2": 24384,
+   "height_m": -0.4,
+   "px": [
+    229,
+    471
+   ]
+  },
+  {
+   "id": 11,
+   "name": "Mesa",
+   "why": "Big flat-topped rock south of the centre.",
+   "side": null,
+   "area_m2": 29408,
+   "height_m": -0.4,
+   "px": [
+    252,
+    424
+   ]
+  },
+  {
+   "id": 12,
+   "name": "Grove",
+   "why": "Trees and bushes in the south-east.",
+   "side": null,
+   "area_m2": 21936,
+   "height_m": -0.5,
+   "px": [
+    390,
+    374
+   ]
+  },
+  {
+   "id": 13,
+   "name": "Ramp",
+   "why": "Big pillar with a ramp, east of the centre.",
+   "side": null,
+   "area_m2": 15936,
+   "height_m": -0.2,
+   "px": [
+    357,
+    247
+   ]
+  },
+  {
+   "id": 14,
+   "name": "East Rise",
+   "why": "Rising ground with big pillars in the north-east.",
+   "side": null,
+   "area_m2": 32096,
+   "height_m": 6.8,
+   "px": [
+    380,
+    185
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Basin",
+   "why": "Wide low ground in the north-west.",
+   "side": null,
+   "area_m2": 16416,
+   "height_m": 7.0,
+   "px": [
+    130,
+    104
+   ]
+  },
+  {
+   "id": 16,
+   "name": "A Yard",
+   "why": "Open ground beside A Cap to the east.",
+   "side": null,
+   "area_m2": 24816,
+   "height_m": -0.5,
+   "px": [
+    363,
+    446
+   ]
+  },
+  {
+   "id": 17,
+   "name": "Twin Rocks",
+   "why": "Pair of big rocks in the south-west.",
+   "side": null,
+   "area_m2": 27984,
+   "height_m": 2.9,
+   "px": [
+    93,
+    410
+   ]
+  },
+  {
+   "id": 18,
+   "name": "Thicket",
+   "why": "Densest bush belt, south-east of Mid.",
+   "side": null,
+   "area_m2": 27584,
+   "height_m": 0.5,
+   "px": [
+    309,
+    307
+   ]
+  },
+  {
+   "id": 19,
+   "name": "Field",
+   "why": "Wide open ground west of Mid.",
+   "side": null,
+   "area_m2": 36096,
+   "height_m": 0.6,
+   "px": [
+    178,
+    279
+   ]
+  },
+  {
+   "id": 20,
+   "name": "Brush",
+   "why": "Bush belt north-east of Mid.",
+   "side": null,
+   "area_m2": 18304,
+   "height_m": 0.0,
+   "px": [
+    321,
+    213
+   ]
+  },
+  {
+   "id": 21,
+   "name": "Boulder",
+   "why": "Big rock just north of Mid.",
+   "side": null,
+   "area_m2": 15088,
+   "height_m": 1.1,
+   "px": [
+    256,
+    156
+   ]
+  },
+  {
+   "id": 22,
+   "name": "North Dip",
+   "why": "Low ground between Boulder and East Rise.",
+   "side": null,
+   "area_m2": 16928,
+   "height_m": 3.3,
+   "px": [
+    355,
+    127
+   ]
+  },
+  {
+   "id": 23,
+   "name": "B Yard",
+   "why": "Open ground beside B Cap to the south.",
+   "side": null,
+   "area_m2": 15008,
+   "height_m": 1.1,
+   "px": [
+    257,
+    106
+   ]
+  }
+ ]
+}
