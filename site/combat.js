@@ -167,7 +167,8 @@ function drawTread() {
   const w = W('tread'), cols = w < 520 ? 3 : w < 820 ? 4 : 6, cw = w / cols, R = Math.min(cw, 140) / 2 - 14, ch = R * 2 + 36;
   const mx = Math.max(...tanks.flatMap(t => C.tanks[t.name].tread.area));
   const order = [...tanks].sort((a, b) => Math.max(...C.tanks[b.name].tread.area) - Math.max(...C.tanks[a.name].tread.area));
-  const svg = el('svg', { viewBox: `0 0 ${w} ${Math.ceil(order.length / cols) * ch + 14}`, role: 'img', 'aria-label': 'Tread area by direction' }, host);
+  const narrow = w < 520;   // phones: the caption takes two lines
+  const svg = el('svg', { viewBox: `0 0 ${w} ${Math.ceil(order.length / cols) * ch + 14 + (narrow ? 14 : 0)}`, role: 'img', 'aria-label': 'Tread area by direction' }, host);
   order.forEach((t, i) => {
     const d = C.tanks[t.name].tread, cx = (i % cols) * cw + cw / 2, cy = Math.floor(i / cols) * ch + R + 20;
     el('circle', { cx, cy, r: R, fill: 'none', stroke: 'var(--grid)' }, svg); el('circle', { cx, cy, r: R / 2, fill: 'none', stroke: 'var(--grid)' }, svg);
@@ -175,7 +176,8 @@ function drawTread() {
     el('path', { d: pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ') + 'Z', fill: 'var(--x-tread)', 'fill-opacity': 0.25, stroke: 'var(--x-tread)', 'stroke-width': 1.5 }, svg);
     txt(svg, cx, cy - R - 6, `${t.name} · ${Math.max(...d.area).toFixed(1)} m²`, { 'text-anchor': 'middle', fill: 'var(--ink-2)', 'font-size': 11 });
   });
-  txt(svg, 0, Math.ceil(order.length / cols) * ch + 10, `Tread area visible from each direction, level shots. Front is up. Outer ring = ${mx.toFixed(1)} m².`, { fill: 'var(--muted)', 'font-size': 11 });
+  const cap = ['Tread area visible from each direction, level shots.', `Front is up. Outer ring = ${mx.toFixed(1)} m².`];
+  (narrow ? cap : [cap.join(' ')]).forEach((s, i) => txt(svg, 0, Math.ceil(order.length / cols) * ch + 10 + i * 14, s, { fill: 'var(--muted)', 'font-size': 11 }));
 }
 
 // 8. ram energy + 9. size vs camo (two small bar/scatter charts)

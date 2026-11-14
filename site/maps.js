@@ -1,5 +1,6 @@
 // Maps page: line-of-sight layers per map (tools/maplos.py -> site/maps/<map>/).
-// Canvas with base terrain + one overlay, zone/spawn/top-spot markers, wheel zoom and drag pan.
+// Canvas with base terrain + one overlay, zone/spawn/top-spot markers, wheel or pinch or button zoom, drag pan.
+// Touch: at full view one finger scrolls the page (touch-action pan-y); once zoomed in, one finger pans the map.
 (() => {
 const TA = window.TA;
 if (!TA) return;
@@ -55,22 +56,51 @@ function controls() {
     b.onclick = () => setCamo(k); cs.append(b);
   });
   const cv = $('map-canvas');
+  // zoom by factor f around a point given as a fraction of the canvas (mx, my)
+  const zoomAt = (f, mx = 0.5, my = 0.5) => {
+    const ns = Math.min(8, Math.max(1, view.s * f));
+    view.x = mx - (mx - view.x) * ns / view.s; view.y = my - (my - view.y) * ns / view.s; view.s = ns; clamp(); paint();
+  };
   cv.addEventListener('wheel', ev => {
     ev.preventDefault();
-    const r = cv.getBoundingClientRect(), mx = (ev.clientX - r.left) / r.width, my = (ev.clientY - r.top) / r.height;
-    const ns = Math.min(8, Math.max(1, view.s * (ev.deltaY < 0 ? 1.2 : 1 / 1.2)));
-    view.x = mx - (mx - view.x) * ns / view.s; view.y = my - (my - view.y) * ns / view.s; view.s = ns; clamp(); paint();
+    const r = cv.getBoundingClientRect();
+    zoomAt(ev.deltaY < 0 ? 1.2 : 1 / 1.2, (ev.clientX - r.left) / r.width, (ev.clientY - r.top) / r.height);
   }, { passive: false });
-  let drag = null;
-  cv.addEventListener('pointerdown', ev => { drag = { x: ev.clientX, y: ev.clientY, vx: view.x, vy: view.y }; cv.setPointerCapture(ev.pointerId); });
-  cv.addEventListener('pointerup', () => { drag = null; });
+  const ptrs = new Map();   // active pointers: one pans, two pinch
+  let drag = null, pinch = null;
+  const startDrag = p => { drag = { x: p.x, y: p.y, vx: view.x, vy: view.y, moved: false }; };
+  const pinchState = () => { const [a, b] = [...ptrs.values()]; return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 }; };
+  cv.addEventListener('pointerdown', ev => {
+    ptrs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    try { cv.setPointerCapture(ev.pointerId); } catch {}
+    if (ptrs.size === 2) { drag = null; pinch = { ...pinchState(), s: view.s, vx: view.x, vy: view.y }; TA.hideTip(true); }
+    else if (ptrs.size === 1) startDrag(ptrs.get(ev.pointerId));
+  });
+  const up = ev => {
+    ptrs.delete(ev.pointerId);
+    if (ptrs.size < 2) pinch = null;
+    if (ptrs.size === 1) startDrag([...ptrs.values()][0]); else if (!ptrs.size) drag = null;
+  };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
   cv.addEventListener('pointermove', ev => {
     const r = cv.getBoundingClientRect();
-    if (drag) { view.x = drag.vx + (ev.clientX - drag.x) / r.width; view.y = drag.vy + (ev.clientY - drag.y) / r.height; clamp(); paint(); return; }
+    if (ptrs.has(ev.pointerId)) ptrs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    if (pinch && ptrs.size === 2) {
+      const p = pinchState(), ns = Math.min(8, Math.max(1, pinch.s * p.d / pinch.d));
+      const mx0 = (pinch.cx - r.left) / r.width, my0 = (pinch.cy - r.top) / r.height, mx = (p.cx - r.left) / r.width, my = (p.cy - r.top) / r.height;
+      view.x = mx - (mx0 - pinch.vx) * ns / pinch.s; view.y = my - (my0 - pinch.vy) * ns / pinch.s; view.s = ns; clamp(); paint(); return;
+    }
+    if (drag && ptrs.has(ev.pointerId)) {
+      if (!drag.moved && Math.hypot(ev.clientX - drag.x, ev.clientY - drag.y) < 4) return;
+      if (!drag.moved) { drag.moved = true; TA.hideTip(true); }
+      view.x = drag.vx + (ev.clientX - drag.x) / r.width; view.y = drag.vy + (ev.clientY - drag.y) / r.height; clamp(); paint(); return;
+    }
     hover(ev, r);
   });
   cv.addEventListener('pointerleave', TA.hideTip);
-  $('map-reset') && ($('map-reset').onclick = () => { view = { s: 1, x: 0, y: 0 }; paint(); });
+  $('map-zin').onclick = () => zoomAt(1.5);
+  $('map-zout').onclick = () => zoomAt(1 / 1.5);
+  $('map-reset').onclick = () => { view = { s: 1, x: 0, y: 0 }; paint(); };
   $('map-names') && ($('map-names').onclick = ev => { names = !names; ev.currentTarget.setAttribute('aria-pressed', String(names)); paint(); });
 }
 function setCamo(k) {
@@ -109,7 +139,8 @@ const toC = (cv, p) => [(view.x + p[0] / data.meta.size[0] * view.s) * cv.width,
 
 function paint() {
   const cv = $('map-canvas'); if (!cv || !data) return;
-  const { meta, img } = data, w = Math.min(TA.width('map-wrap'), 1100);
+  const { meta, img } = data, w = Math.min($('map-wrap').clientWidth || 320, 1100);
+  cv.style.touchAction = view.s > 1 ? 'none' : 'pan-y';   // full view: one finger scrolls the page; zoomed: it pans the map
   const ratio = meta.size[1] / meta.size[0], dpr = window.devicePixelRatio || 1;
   cv.style.width = `${w}px`; cv.style.height = `${w * ratio}px`; cv.width = Math.round(w * dpr); cv.height = Math.round(w * ratio * dpr);
   const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = view.s < 2;
@@ -143,7 +174,7 @@ function paint() {
   ctx.fillStyle = '#fff'; ctx.fillRect(18 * dpr, cv.height - 15 * dpr, px100, 3 * dpr);
   ctx.font = `${10 * dpr}px system-ui, sans-serif`; ctx.textAlign = 'left'; ctx.fillText('100 m', 18 * dpr, cv.height - 20 * dpr);
   const mm = MAPS.find(m => m[0] === cur);
-  $('map-note').textContent = `${mm[1]}${mm[2] ? '' : ' (not seen in real matches)'} · ${meta.playable_km2.toFixed(2)} km² playable${meta.boundary === 'map' ? '' : ' (estimated boundary)'} · showing ${LEVELS[camo]}% camo · scroll to zoom, drag to pan`;
+  $('map-note').textContent = `${mm[1]}${mm[2] ? '' : ' (not seen in real matches)'} · ${meta.playable_km2.toFixed(2)} km² playable${meta.boundary === 'map' ? '' : ' (estimated boundary)'} · showing ${LEVELS[camo]}% camo · ${matchMedia('(pointer: coarse)').matches ? 'pinch or use + and − to zoom, then drag to pan' : 'scroll or use + and − to zoom, drag to pan'}`;
 }
 
 function spotList() {

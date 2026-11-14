@@ -11,14 +11,15 @@
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%227%22 width=%2212%22 height=%226%22 rx=%221%22 fill=%22%231d4f7a%22/%3E%3Crect x=%225%22 y=%224%22 width=%226%22 height=%224%22 rx=%221%22 fill=%22%231d4f7a%22/%3E%3Crect x=%2210%22 y=%225%22 width=%225%22 height=%221.5%22 fill=%22%231d4f7a%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="art.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%227%22 width=%2212%22 height=%226%22 rx=%221%22 fill=%22%2308739a%22/%3E%3Crect x=%225%22 y=%224%22 width=%226%22 height=%224%22 rx=%221%22 fill=%22%2308739a%22/%3E%3Crect x=%2210%22 y=%225%22 width=%225%22 height=%221.5%22 fill=%22%23c4157f%22/%3E%3C/svg%3E">
 
 <header class="top">
   <div class="top-in">
     <div class="bar">
-      <a class="brand" href="#/" id="brand">Tyr <span><span class="long">Tank </span>Atlas</span></a>
+      <a class="brand" href="#/" id="brand" aria-label="Tyr Tank Atlas, home"><svg class="mark" viewBox="0 0 30 22" aria-hidden="true"><path d="M6 0h24l-6 9H0z" fill="var(--accent)"/><path d="M4 12h16l-6 10H-2z" fill="var(--hot)" transform="translate(2 0)"/></svg><b>TYR</b><span class="long">Tank Atlas</span></a>
       <div class="picker" id="picker">
         <button class="pick-btn" id="pick-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Pick a tank"></button>
         <div class="pick-pop" id="pick-pop" hidden>
@@ -50,10 +51,24 @@
 
 <main class="wrap" id="main">
 <div class="page home" data-page="home" hidden>
-  <div class="page-head">
-    <h1>Tyr <span>Tank Atlas</span></h1>
-    <p class="lede">Every tank in Tyr compared, using numbers pulled from the game's own files: stats, talent trees, components and per-triangle armor. Pick a tank in the header and it stays picked on every page.</p>
-  </div>
+  <section class="hero" aria-labelledby="h-home">
+    <div class="hero-txt">
+      <p class="kicker">Unofficial tank data</p>
+      <h1 id="h-home"><span class="hero-tyr">Tyr</span><span class="hero-sub">Tank Atlas</span></h1>
+      <p class="lede">Every tank in Tyr compared, using numbers pulled from the game's own files: stats, talent trees, components and per-triangle armor. Pick a tank in the header and it stays picked on every page.</p>
+      <div class="cta"><a class="btn go" href="#/tank" data-page="tank">Browse the tanks</a><a class="btn" href="#/stats" data-page="stats">Every stat</a></div>
+      <p class="asof"></p>
+    </div>
+    <a class="hero-art" id="hero-art" href="#/tank">
+      <span class="hero-ghost" id="hero-ghost" aria-hidden="true"></span>
+      <img id="hero-img" alt="" fetchpriority="high" decoding="async">
+      <span class="hero-cap" id="hero-cap"></span>
+    </a>
+  </section>
+  <section class="roster-wrap" aria-labelledby="h-roster">
+    <div class="roster-head"><h2 id="h-roster">The roster</h2><p class="note">All 18 tanks, light to heavy. Pick one to open its page.</p></div>
+    <div class="roster" id="roster"></div>
+  </section>
   <section class="panel" aria-labelledby="h-finds">
     <h2 id="h-finds">Headline findings</h2>
     <div class="finds" id="finds"></div>
@@ -122,7 +137,7 @@
   <section class="panel" aria-labelledby="h-map">
     <h2 id="h-map">The tank map</h2>
     <p id="map-text">Every base stat squeezed into two dimensions with principal component analysis. Tanks close together play alike on paper. Arrows show which way each stat pulls; longer arrows explain more of the spread.</p>
-    <div class="chart" id="map"></div>
+    <div class="scroll"><div class="chart" id="map" style="min-width:640px"></div></div>
   </section>
   <section class="panel" aria-labelledby="h-sim">
     <h2 id="h-sim">How alike they are</h2>
@@ -314,13 +329,13 @@
       <label for="map-pick">Map <select id="map-pick"></select></label>
       <div class="seg" role="group" aria-label="Layer" id="map-layer"></div>
       <button type="button" id="map-names" aria-pressed="true">Callouts</button>
-      <button type="button" id="map-reset">Reset view</button>
     </div>
     <div class="controls"><span class="note" style="margin:0">Your camo</span><div class="seg" role="group" aria-label="Camouflage" id="map-camo"></div></div>
     <div class="controls chips" id="map-tank"></div>
     <div class="seg" role="group" aria-label="Capture zone" id="map-zone" hidden></div>
     <div class="legend" id="map-legend"></div>
-    <div class="chart" id="map-wrap"><canvas id="map-canvas" style="display:block;max-width:100%;touch-action:none;cursor:grab;border-radius:4px"></canvas></div>
+    <div class="chart map-wrap" id="map-wrap"><canvas id="map-canvas"></canvas>
+      <div class="map-zoom" role="group" aria-label="Zoom"><button type="button" id="map-zin" aria-label="Zoom in">+</button><button type="button" id="map-zout" aria-label="Zoom out">−</button><button type="button" id="map-reset">Reset</button></div></div>
     <p class="note" id="map-note"></p>
     <p>How spotting works in Tyr, from the game files: you are spotted when an enemy has line of sight to any part of your tank and is within 400 m × (1 − your camo). Camo is capped at 80%, so the closest anyone can stay unspotted is 80 m. A bush gives +40% camo to sight lines that pass through it (within 3.25 m of its centre), but only against spotters more than 15 m from that bush; closer than that they see straight through. Bush camo doesn't stack above 40%. Firing costs camo (−15, scaled by −0.4) for a while.</p>
     <p>What that means on the map: on open ground spotting is symmetric, so if you can spot them they can spot you, and terrain alone gives no edge. Crests still help when shooting (less of you to hit), but not for spotting. The edge comes from bushes and camo. B spots are the best positions near bushes, where you spot far more than you are spotted; the edge grows with camo. O spots are overlooks: open spots that spot the most ground.</p>
@@ -338,10 +353,14 @@
     <div class="tindex" id="t-cards"></div>
   </div>
   <div class="page" id="t-profile" hidden>
-    <div class="page-head">
-      <p class="kicker" id="t-kicker"></p>
-      <h1 id="t-name"></h1>
-      <p class="note" id="t-mode"></p>
+    <div class="page-head t-head">
+      <div class="t-id">
+        <p class="kicker" id="t-kicker"></p>
+        <h1 id="t-name"></h1>
+        <p class="note" id="t-mode"></p>
+      </div>
+      <figure class="t-art"><span class="t-ghost" id="t-ghost" aria-hidden="true"></span><img id="t-img" alt="" decoding="async"></figure>
+      <figure class="t-side"><img id="t-side" alt="" loading="lazy" decoding="async"><figcaption>Side profile</figcaption></figure>
     </div>
     <div class="tiles" id="t-tiles"></div>
     <section class="panel" aria-labelledby="h-tz">
@@ -435,6 +454,7 @@
 </main>
 <footer class="foot">
   <p>Unofficial fan analysis of Tyr. Not affiliated with or endorsed by the game's developers.</p>
+  <p class="asof"></p>
   <p class="source" id="source"></p>
 </footer>
 <div class="tip" id="tip" hidden></div>

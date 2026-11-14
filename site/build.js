@@ -213,7 +213,7 @@ function card(host, t, title, scenLabel, big, sub, sentences) {
   const b = document.createElement('div'); b.className = 'big'; b.textContent = big;
   const sb = document.createElement('div'); sb.className = 'k'; sb.textContent = sub;
   const p = document.createElement('p'); p.textContent = sentences.join(' ');
-  c.append(h, k, b, sb, p);
+  c.append(TA.thumb(t), h, k, b, sb, p);
   const go = () => TA.select(TA.selected === t.id ? null : t.id);
   c.addEventListener('click', go); c.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(); } });
   if (TA.selected === t.id) c.style.borderColor = 'var(--ink)';

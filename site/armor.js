@@ -48,9 +48,11 @@ function drawRoses() {
     return m(B) - m(A);
   });
   const rows = Math.ceil(order.length / cols);
-  const svg = el('svg', { viewBox: `0 0 ${W} ${rows * ch}`, role: 'img', 'aria-label': 'Armor rose per tank' }, host);
+  const narrow = W < 520;   // phones: the caption takes two lines
+  const svg = el('svg', { viewBox: `0 0 ${W} ${rows * ch + (narrow ? 14 : 0)}`, role: 'img', 'aria-label': 'Armor rose per tank' }, host);
   order.forEach((t, i) => rose(svg, t, (i % cols) * cw + cw / 2, Math.floor(i / cols) * ch + R + 22, R));
-  txt(svg, 0, rows * ch - 4, 'Front is up, the tank\'s left side is left. Outer ring = 100% of hits do no damage.', { fill: 'var(--muted)', 'font-size': 11 });
+  const cap = ['Front is up, the tank\'s left side is left.', 'Outer ring = 100% of hits do no damage.'];
+  (narrow ? cap : [cap.join(' ')]).forEach((s, i) => txt(svg, 0, rows * ch - 4 + i * 14, s, { fill: 'var(--muted)', 'font-size': 11 }));
 }
 // one tank's rose centred at cx, cy with radius R
 function rose(svg, t, cx, cy, R, selectable = true) {
@@ -137,7 +139,8 @@ function drawXray(hostId = 'xray', titleId = 'xray-title', legendId = 'xray-lege
     const counts = {}; let tot = 0;
     v.eff.forEach((e, i) => { if (e < 0) return; tot++; const c = catOf(e, v.mod[i]); counts[c] = (counts[c] || 0) + 1; });
     cap.textContent = `${label} · ${pct(((counts.pen || 0) + (counts.crit || 0) + 0.5 * (counts.fifty || 0)) / Math.max(tot, 1))} of hits do damage`;
-    const scale = Math.max(1, Math.min(Math.floor(Math.min(W / 2 - 20, 520) / v.w), Math.floor(300 / v.h)));
+    const avail = W < 560 ? W : W / 2 - 20;   // phones show one view per row
+    const scale = Math.max(1, Math.min(Math.floor(Math.min(avail, 520) / v.w), Math.floor(300 / v.h)));
     const cv = document.createElement('canvas'); cv.width = v.w; cv.height = v.h;
     cv.style.width = `${v.w * scale}px`; cv.style.maxWidth = '100%'; cv.style.imageRendering = 'pixelated';
     const ctx = cv.getContext('2d'), img = ctx.createImageData(v.w, v.h);

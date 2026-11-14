@@ -25,10 +25,21 @@ function showTip(ev, rows) {
   tip.replaceChildren();
   for (const [i, r] of rows.entries()) { const d = document.createElement(i === 0 ? 'strong' : 'div'); d.textContent = r; if (i > 1) d.className = 'k'; tip.append(d); }
   tip.hidden = false;
-  const x = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8), y = Math.min(ev.clientY + 14, innerHeight - tip.offsetHeight - 8);
+  const x = Math.min(ev.clientX + 14, document.documentElement.clientWidth - tip.offsetWidth - 8), y = Math.min(ev.clientY + 14, innerHeight - tip.offsetHeight - 8);
   tip.style.left = x + 'px'; tip.style.top = y + 'px';
 }
-const hideTip = () => { tip.hidden = true; };
+// touch and pen: a tap shows the tooltip of whatever is under the finger (by replaying the chart's own pointermove handler)
+// and keeps it until the next tap or a scroll, since the finger 'leaves' as soon as it lifts. hideTip(true) always hides.
+let pinned = false;
+const hideTip = force => { if (pinned && force !== true) return; pinned = false; tip.hidden = true; };
+document.addEventListener('pointerdown', ev => {
+  if (ev.pointerType === 'mouse') return;
+  pinned = false; tip.hidden = true;
+  if (!ev.target.closest || !ev.target.closest('#main')) return;
+  ev.target.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, clientX: ev.clientX, clientY: ev.clientY, pointerId: ev.pointerId, pointerType: ev.pointerType, isPrimary: ev.isPrimary }));
+  pinned = !tip.hidden;
+}, true);
+addEventListener('scroll', () => hideTip(true), { passive: true });
 function dot(svg, t, cx, cy, r, rows) {
   const g = el('g', { 'data-id': t.id }, svg);
   el('circle', { cx, cy, r: 12, fill: 'transparent' }, g);
@@ -44,7 +55,8 @@ function dot(svg, t, cx, cy, r, rows) {
 // strips
 function drawStrips() {
   const host = document.getElementById('strips'); host.replaceChildren(); hideTip();
-  const W = width('strips'), labelW = W < 560 ? 118 : 190, padR = 70, rowH = 30;
+  // phones: each stat's name sits on its own line above its axis, so the axis gets the full width
+  const W = width('strips'), narrow = W < 560, labelW = narrow ? 34 : 190, padR = 70, rowH = narrow ? 46 : 30;
   const groups = [...new Set(stats.map(s => s.group))];
   let H = 0; const rows = [];
   for (const g of groups) { rows.push({ g }); H += 28; for (const s of stats.filter(s => s.group === g)) { rows.push({ s, h: rowH }); H += rowH; } }
@@ -54,14 +66,14 @@ function drawStrips() {
     if (r.g) { txt(svg, 0, y + 20, r.g.toUpperCase(), { 'font-size': 11, 'font-weight': 600, fill: 'var(--muted)', 'letter-spacing': '.06em' }); y += 28; continue; }
     const s = r.s, vals = tanks.map(t => val(t, s.key)), rh = r.h;
     let lo = Math.min(...vals), hi = Math.max(...vals);
-    const x0 = labelW, x1 = W - padR, cy = y + rh / 2;
+    const x0 = labelW, x1 = W - padR, cy = narrow ? y + 32 : y + rh / 2, ly = narrow ? y + 12 : cy + 4;
     if (hi === lo) {
-      txt(svg, 0, cy + 4, s.label, { fill: 'var(--ink)', 'font-size': 12.5 });
+      txt(svg, 0, ly, s.label, { fill: 'var(--ink)', 'font-size': 12.5 });
       txt(svg, x0, cy + 4, `Same for every tank in this mode: ${fmt(s.key, lo)} ${s.unit}`.trim(), { fill: 'var(--muted)', 'font-size': 11.5 });
       y += rh; continue;
     }
     const X = v => s.better > 0 ? x0 + (v - lo) / (hi - lo) * (x1 - x0) : x1 - (v - lo) / (hi - lo) * (x1 - x0);
-    txt(svg, 0, cy + 4, s.label, { fill: 'var(--ink)', 'font-size': 12.5 });
+    txt(svg, 0, ly, s.label, { fill: 'var(--ink)', 'font-size': 12.5 });
     el('line', { x1: x0, x2: x1, y1: cy, y2: cy, stroke: 'var(--grid)', 'stroke-width': 1 }, svg);
     const worst = s.better > 0 ? lo : hi, best = s.better > 0 ? hi : lo;
     txt(svg, x0 - 6, cy + 4, fmt(s.key, worst), { 'text-anchor': 'end', fill: 'var(--muted)', 'font-size': 10, 'font-family': 'var(--f-data)' });
@@ -188,7 +200,9 @@ function drawMap() {
   for (const g of groups) {
     const ex = X(g.a[0] * scale), ey = Y(g.a[1] * scale);
     el('line', { x1: X(0), y1: Y(0), x2: ex, y2: ey, stroke: 'var(--axis)', 'stroke-width': 1.5 }, svg);
-    g.labels.forEach((l, i) => txt(svg, ex + (g.a[0] >= 0 ? 4 : -4), ey + (g.a[1] >= 0 ? -4 - (g.labels.length - 1 - i) * 12 : 12 + i * 12), l,
+    // keep arrow labels inside the chart (about 5.6 px per character at 10.5 px)
+    const lx = l => g.a[0] >= 0 ? Math.min(ex + 4, W - l.length * 5.6) : Math.max(ex - 4, l.length * 5.6);
+    g.labels.forEach((l, i) => txt(svg, lx(l), ey + (g.a[1] >= 0 ? -4 - (g.labels.length - 1 - i) * 12 : 12 + i * 12), l,
       { 'text-anchor': g.a[0] >= 0 ? 'start' : 'end', fill: 'var(--muted)', 'font-size': 10.5 }));
   }
   const pts = tanks.map(t => ({ t, x: X(t.pca[0]), y: Y(t.pca[1]), name: t.name, sel: selected === t.id }));

@@ -3,7 +3,7 @@
 (() => {
 const TA = window.TA, T = window.TYR;
 if (!TA) return;
-const { tanks, sortedTanks, statBy, CLASSES, CLS, fmt, make, keyEl, hashFor } = TA;
+const { tanks, sortedTanks, statBy, CLASSES, CLS, fmt, make, keyEl, hashFor, artSrc, thumb } = TA;
 const $ = id => document.getElementById(id);
 const val = (t, k) => t[TA.mode][k];
 const signed = (v, d = 2) => `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(d)}`;
@@ -62,6 +62,35 @@ function drawFinds() {
     text: `On every tank but Fuse, 31 points max damage, reload, health and speed at once, so the core build has no trade-off. ${cheap.name} needs only ${cheap.core_points}.` });
 }
 
+// ---------- home: hero render and the roster ----------
+const n0 = v => Math.round(v).toLocaleString('en-US');
+const quick = t => [[n0(val(t, 'MaxHealth')), 'HP'], [fmt('DPS', val(t, 'DPS')), 'dmg/s'], [fmt('MaxSpeed', val(t, 'MaxSpeed')), 'kph']];
+function heroShow(t) {
+  const img = $('hero-img'), src = artSrc(t);
+  if (!img.src.endsWith(src)) img.src = src;   // set here, not in the HTML, so other pages never fetch it
+  const a = $('hero-art'); a.href = hashFor('tank', t.id); a.setAttribute('aria-label', `${t.name}, ${t.cls.toLowerCase()} tank: open its page`);
+  $('hero-ghost').textContent = t.name;
+  const cap = $('hero-cap'); cap.replaceChildren(make('b', null, t.name), make('span', 'cls', `${t.cls} tank`));
+  const nums = make('span', 'nums');
+  for (const [v, u] of quick(t)) { const s = make('span', null, v); s.append(make('small', null, u)); nums.append(s); }
+  cap.append(nums);
+}
+function drawHome() {
+  const sel = tanks.find(x => x.id === TA.selected);
+  heroShow(sel || tanks.find(x => x.id === 'Brawler') || tanks[0]);
+  const host = $('roster'); host.replaceChildren();
+  for (const t of sortedTanks) {
+    const a = make('a', 'rcard'); a.href = hashFor('tank', t.id);
+    if (sel && sel.id === t.id) a.setAttribute('aria-current', 'true');
+    const nm = make('b'); nm.append(keyEl(t), t.name);
+    a.append(thumb(t), nm, make('span', null, t.cls));
+    a.addEventListener('pointerenter', ev => { if (ev.pointerType === 'mouse') heroShow(t); });
+    a.addEventListener('focus', () => heroShow(t));
+    host.append(a);
+  }
+  host.onpointerleave = () => heroShow(sel || tanks.find(x => x.id === 'Brawler') || tanks[0]);
+}
+
 // ---------- tank page ----------
 const TILES = [
   ['MaxHealth', 'Health'], ['ShellDamage', 'Shell damage'], ['DPS', 'Damage per second'], ['ShellPenetration', 'Penetration'],
@@ -84,6 +113,10 @@ function drawTankHead() {
   if (!t) return drawIndex();
   const kick = $('t-kicker'); kick.replaceChildren(keyEl(t), `${t.cls} tank`);
   $('t-name').textContent = t.name;
+  $('t-ghost').textContent = t.name;
+  const im = $('t-img'), side = $('t-side');
+  if (!im.src.endsWith(artSrc(t))) { im.src = artSrc(t); im.alt = `${t.name}, three-quarter view`; }
+  if (!side.src.endsWith(artSrc(t, 90))) { side.src = artSrc(t, 90); side.alt = `${t.name}, side profile`; }
   $('t-mode').textContent = `Numbers follow the stat mode in the header: ${TA.mode === 'base' ? 'base stats, no talents' : '31-point core talent build'}. Ranks run best to worst.`;
   const host = $('t-tiles'); host.replaceChildren();
   for (const d of TILES) tile(host, t, d);
@@ -97,7 +130,7 @@ function drawIndex() {
     for (const t of sortedTanks.filter(x => x.cls === c)) {
       const a = make('a', 'tcard'); a.href = hashFor('tank', t.id);
       const b = make('b'); b.append(keyEl(t), t.name);
-      a.append(b, make('span', null, `${fmt('MaxHealth', val(t, 'MaxHealth'))} HP · ${fmt('DPS', val(t, 'DPS'))} dmg/s · ${fmt('MaxSpeed', val(t, 'MaxSpeed'))} kph`));
+      a.append(thumb(t), b, make('span', null, `${fmt('MaxHealth', val(t, 'MaxHealth'))} HP · ${fmt('DPS', val(t, 'DPS'))} dmg/s · ${fmt('MaxSpeed', val(t, 'MaxSpeed'))} kph`));
       cards.append(a);
     }
     g.append(cards); host.append(g);
@@ -124,6 +157,7 @@ function drawMethod() {
   for (const sc of Object.values(L.scenarios)) { const li = make('li'); li.append(make('b', null, sc.label + '. '), sc.desc); ul.append(li); }
 }
 
+TA.chart('home', drawHome);
 TA.chart('home', drawFinds);
 TA.chart('tank', drawTankHead);
 TA.chart('method', drawMethod);

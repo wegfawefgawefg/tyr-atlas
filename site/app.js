@@ -40,7 +40,19 @@ function keyEl(t) {
   return k;
 }
 function make(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-TA.keyEl = keyEl; TA.make = make;
+// tank renders (tools/site_art.py): art/<id>_35.webp three-quarter, _90 side profile, _s 280 px thumbnails
+const artSrc = (t, angle = 35, small = false) => `art/${t.id}_${angle}${small ? '_s' : ''}.webp`;
+function thumb(t, lazy = true) {
+  const i = make('img', 'thumb'); i.alt = ''; i.decoding = 'async'; if (lazy) i.loading = 'lazy';
+  i.addEventListener('error', () => { i.style.visibility = 'hidden'; }); i.src = artSrc(t, 35, true);
+  return i;
+}
+TA.keyEl = keyEl; TA.make = make; TA.artSrc = artSrc; TA.thumb = thumb;
+
+// "data as of" lines (footer, home hero); nothing when the data file has no game info
+const G = window.TYR && window.TYR.game;
+const asof = G && G.build ? `Data from game build ${G.build}${G.updated ? `, updated ${G.updated}` : ''}` : '';
+for (const e of document.querySelectorAll('.asof')) { e.textContent = asof; e.hidden = !asof; }
 
 // class legends at the top of each chart page
 for (const lg of document.querySelectorAll('.cls-legend')) {
@@ -52,7 +64,7 @@ const btn = $('pick-btn'), pop = $('pick-pop'), q = $('pick-q'), list = $('pick-
 let items = [], active = -1;
 function renderBtn() {
   const t = tankById(TA.selected); btn.replaceChildren();
-  if (t) btn.append(keyEl(t));
+  if (t) btn.append(thumb(t, false));
   btn.append(make('span', 'nm' + (t ? '' : ' ph'), t ? t.name : 'Pick a tank'), make('span', 'car', '▼'));
   btn.setAttribute('aria-label', t ? `Tank: ${t.name}. Change tank` : 'Pick a tank');
 }
@@ -60,7 +72,7 @@ function addOpt(t) {
   const li = make('li'), i = items.length;
   li.setAttribute('role', 'option'); li.id = 'opt-' + (t ? t.id : 'none');
   li.setAttribute('aria-selected', String((t ? t.id : null) === TA.selected));
-  if (t) li.append(keyEl(t), make('span', null, t.name));
+  if (t) li.append(thumb(t), keyEl(t), make('span', null, t.name));
   else li.append(make('span', 'sub', 'No tank (clear the pick)'));
   li.addEventListener('click', () => choose(t ? t.id : null));
   li.addEventListener('pointermove', () => { if (active !== i) { active = i; highlight(); } });
@@ -89,7 +101,7 @@ function highlight() {
 function place() {
   const r = btn.getBoundingClientRect();
   pop.style.top = `${r.bottom + 6}px`;
-  pop.style.left = `${Math.max(8, Math.min(r.left, innerWidth - pop.offsetWidth - 8))}px`;
+  pop.style.left = `${Math.max(8, Math.min(r.left, document.documentElement.clientWidth - pop.offsetWidth - 8))}px`;
 }
 function openPop() { pop.hidden = false; btn.setAttribute('aria-expanded', 'true'); q.value = ''; renderList(); place(); q.focus(); }
 function closePop(refocus) { if (pop.hidden) return; pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); if (refocus) btn.focus(); }
