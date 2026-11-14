@@ -103,6 +103,13 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
 ## Spotting rules (game files) and the map model
 
 - BP_TyrGameMode: MaxCamoValue 80, MaxBushCamoValue 40, GunFireCamoAddition -15, GunFireCamoScalar -0.4, OutsideVisionRadiusFactor -15.
+- ATyrGameMode C++ defaults (constructor at 0x146152140 in TyrClient-Win64-Shipping.exe, stores to the GameMode at 0x348..0x374):
+  DetectionPointThreshold 100, MaxSpottingTime 1.0, MaxCamoValue 70, MaxBushCamoValue 60, GunFireCamoAddition -5,
+  GunFireCamoScalar -0.6, GunFireCamoExpireTime 0.15, OutsideVisionRadiusFactor -10, capture ints 1 / -2 / 3 / 20.
+  The BP overrides camo cap, bush cap and the two firing numbers; nothing overrides GunFireCamoExpireTime, so the firing
+  penalty lasts 0.15 s: a flash, not a debuff. Anyone inside the reduced range at that instant spots you, and spotting then
+  holds for SpottedTime (7 s). The Maps page's "after firing" camo is that one-moment check. DetectionPointThreshold and
+  MaxSpottingTime use is unknown (no override found; a server ini could still change any of these).
 - BP_VisionBlocker (bush): CamoPercentageIncreaseAmount 40, CollisionBounds sphere 325 cm (vision overlap), SeeThroughBounds 1500 cm.
   Smoke cloud: +50 camo. GE_GunDetection on firing: camo AddFinal (set by caller) + BushSpottingTime 0.1.
 - Web guides agree (tyrhq advanced spotting: +40 directional bush camo; spotted 7 s; LoS any part to any part; 400 m).
