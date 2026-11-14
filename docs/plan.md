@@ -32,3 +32,12 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
 - Total talent point budget per tank (server-side inventory item Gameplay.Item.Talent.Point). Ask owner / treat as parameter.
 - Whether only one keystone can be taken.
 - Event-triggered effects need uptime assumptions; mark them conditional.
+
+## Tree rules (from VM_TechTree / VM_TechTree_Node bytecode, tools/kismet_pp.py)
+
+- Tier t unlocks when points in tiers < t >= 5*t (MinPointsToUnlock = RequiredMinTierPoints * tier).
+- Prerequisite nodes must be maxed (AreRequiredNodesActivated -> HasMaxPoints).
+- No keystone exclusivity in the client UI.
+- Owner thinks the budget is 20 points. At 20, tier 4 needs all 20 spent above it, so builds live in tiers 0-3
+  and keystones (tier 6, need 30 spent) are unreachable. Valid exact-20 talent builds: 51k (Valor) to 7.5M (Kestrel),
+  37M total (tools/count_builds.py).
