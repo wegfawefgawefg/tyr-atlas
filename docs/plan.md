@@ -68,3 +68,16 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
 - Ray casting: orthographic z-buffer per direction, 6 cm rays, 72 azimuths x 8 elevations; hits assumed uniform over silhouette.
 - Site: armor roses, hemisphere map, x-ray views, frontal TTK duel matrix (front / 30 deg angled); armor + size stats feed
   the strips, scatter, correlations and PCA (front armor now loads -0.94 on PC1 next to HP).
+
+## Combat (tools/combat.py)
+
+- Soft armor normals: BP_BaseTank sets bUseSoftArmorNormals = true, so impact angles use barycentric-interpolated
+  vertex normals (exported TangentZ). Armor meshes are hard-edged, so this differs from face normals by ~0.3 deg median, ~4 deg p90.
+- Shots to kill on core builds; expected shots = hits / damage chance (even spread over the silhouette, or aimed).
+- Aimed model is unit-free: best aim point on the Gaussian-blurred damage map for spread sigma 0.1-2 m (dispersion units
+  in the native ShellFiringComponent are not recovered yet, so no distance mapping).
+- Breakpoint levers: Duplicator +5, Shell Stabilizer +10, Shell Charger +25.5 (3 stacks), Momentum Imparter +30 (>40 kph),
+  Hot Chamber x1.12, ammo x1.1/1.2/1.3; defender levers Bulkheads x1.085, Mobility Surger +100.
+- Hull-down: front view above (gun height - 25 cm). Ammo modifiers from DT_AmmunitionUIData (AP x1.35 pen is hidden/non-selectable).
+- Turret yaw: turret-chain vertices rotated about jnt_turret, front view, face normals for rotated turrets.
+- Ram: kinetic energy at top speed (collision damage formula is native TyrCollisionDamageExecution, not recovered).
