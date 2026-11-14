@@ -42,6 +42,10 @@ def prepare(name):
     inside = inside.reshape(H, W)
     near = distance_transform_edt(~inside) * res <= 80
     ground = dsm.copy()                                            # tanks drive on terrain and on top of meshes
+    if bush.any():                                                 # ...and into bushes: use the ground just outside the bush
+        idx = distance_transform_edt(bush, return_distances=False, return_indices=True)
+        ground = ground[tuple(idx)]
+        dsm = np.where(bush, ground, dsm).astype(np.float32)
     gy, gx = np.gradient(ground, res)
     slope = np.degrees(np.arctan(np.hypot(gx, gy)))
     walk = near & (slope < 35)
@@ -168,7 +172,8 @@ def export_web(name, d, dtm, dsm, bush, play, meta, sees, seen, adv, obs, base):
                spawns=[to_px(x, y) for x, y in meta['spawns']], playable_km2=meta['playable_km2'], assumptions=meta['assumptions'])
     oy_, ox_ = np.where(obs)
     floor = np.percentile(sees[obs], 60)      # a strong spot has to see a lot as well as be seen little
-    inner = distance_transform_edt(play) * res >= 40   # edge spots have fewer possible viewers and may be out of bounds
+    from scipy.ndimage import binary_fill_holes
+    inner = distance_transform_edt(binary_fill_holes(play)) * res >= 40   # edge spots have fewer viewers and may be out of bounds
     def pick(cond, n=8):
         cand = sorted(((adv[y, x], x, y) for y, x in zip(oy_, ox_) if sees[y, x] >= floor and inner[y, x] and cond(x, y)), reverse=True)
         out_ = []
