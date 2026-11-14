@@ -10,7 +10,7 @@ const TA = window.TA;
 if (!TA) return;
 const { tanks, sortedTanks, CLASSES, CLS } = TA;
 const PAGES = { home: 'Home', stats: 'Stats', compare: 'Compare', talents: 'Talents', components: 'Components', armor: 'Armor',
-  combat: 'Combat', tank: 'Tank', data: 'Data', method: 'Method' };
+  combat: 'Combat', maps: 'Maps', tank: 'Tank', data: 'Data', method: 'Method' };
 const SITE = 'Tyr Tank Atlas';
 const $ = id => document.getElementById(id);
 const slug = t => t.name.toLowerCase();

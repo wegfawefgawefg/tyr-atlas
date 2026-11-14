@@ -40,6 +40,7 @@
       <a href="#/components" data-page="components">Components</a>
       <a href="#/armor" data-page="armor">Armor</a>
       <a href="#/combat" data-page="combat">Combat</a>
+      <a href="#/maps" data-page="maps">Maps</a>
       <a href="#/tank" data-page="tank">Tank</a>
       <a href="#/data" data-page="data">Data</a>
       <a href="#/method" data-page="method">Method</a>
@@ -301,6 +302,28 @@
 
 </div>
 
+<div class="page" data-page="maps" hidden>
+  <div class="page-head">
+    <p class="kicker">Maps</p>
+    <h1>Where to stand</h1>
+    <p class="lede">Line of sight over every map, built from the game's terrain and every placed object. For each spot a tank could sit, we sweep sight lines out to 400 m and measure how much enemy tank it can see, and how much of it can be seen.</p>
+  </div>
+  <section class="panel" aria-labelledby="h-maps">
+    <h2 id="h-maps">Sight lines</h2>
+    <div class="controls">
+      <label for="map-pick">Map <select id="map-pick"></select></label>
+      <div class="seg" role="group" aria-label="Layer" id="map-layer"></div>
+      <button type="button" id="map-reset">Reset view</button>
+    </div>
+    <div class="seg" role="group" aria-label="Capture zone" id="map-zone" hidden></div>
+    <div class="legend" id="map-legend"></div>
+    <div class="chart" id="map-wrap"><canvas id="map-canvas" style="display:block;max-width:100%;touch-action:none;cursor:grab;border-radius:4px"></canvas></div>
+    <p class="note" id="map-note"></p>
+    <p>Blue spots see more than they are seen: crests you can fight over hull-down, bush edges, and positions overlooking open ground. Red spots are the opposite. Numbered spots are the strongest open-ground positions that also see a lot of the map; B spots are bushes with the best views, which stay hidden from anyone beyond 50 m (in this model, at least until you fire). Coverage shows every spot that can see a capture zone's centre with at least a quarter of a tank exposed.</p>
+    <p class="note">How it works: 2 m cells; your gun at 2.5 m above the ground; an enemy counts as a 2.5 m column, and each sight line credits the share of that column above the highest obstacle, so a tank behind a crest counts as partly seen. Bushes block sight like a 3 m wall and hide a tank inside them beyond 50 m. The playable area is estimated from where the zones, spawns and bushes are and from slopes a tank can climb; the game's invisible walls are not in the files we read. Camouflage and view range differences between tanks are not applied yet.</p>
+  </section>
+</div>
+
 <div class="page" data-page="tank" hidden>
   <div class="tindex" id="t-index" hidden>
     <div class="page-head">
@@ -424,3 +447,4 @@
 <script defer src="armor.js"></script>
 <script defer src="combat_data.js"></script>
 <script defer src="combat.js"></script>
+<script defer src="maps.js"></script>

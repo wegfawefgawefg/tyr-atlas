@@ -58,7 +58,7 @@ def raster_max(grid, origin, res, tris):
     tx = (tris[:, :, 0] - origin[0]) / res; ty = (tris[:, :, 1] - origin[1]) / res; tz = tris[:, :, 2]
     bx0 = np.floor(tx.min(1)).astype(int); bx1 = np.ceil(tx.max(1)).astype(int)
     by0 = np.floor(ty.min(1)).astype(int); by1 = np.ceil(ty.max(1)).astype(int)
-    keep = (bx1 >= 0) & (by1 >= 0) & (bx0 < W) & (by0 < H)
+    keep = (bx1 >= 0) & (by1 >= 0) & (bx0 < W) & (by0 < H) & ((bx1 - bx0) < 600) & ((by1 - by0) < 600)   # drop absurd footprints (sky domes, bad scales)
     tx, ty, tz, bx0, bx1, by0, by1 = tx[keep], ty[keep], tz[keep], bx0[keep], bx1[keep], by0[keep], by1[keep]
     bw = bx1 - bx0 + 1; bh = by1 - by0 + 1; n = bw * bh
     if not len(n): return
@@ -105,11 +105,11 @@ def build(name):
             geo[p['mesh']] = (np.array(g['pos'], float).reshape(-1, 3), np.array(g['idx'], int).reshape(-1, 3)) if g.get('idx') else None
         if geo[p['mesh']] is None: continue
         P, I = geo[p['mesh']]
-        xfs = p.get('inst') or [p['xf']]
+        xfs = p['inst'] if 'inst' in p else [p['xf']]
         for xf in xfs:
             WP = apply(xf, P)
             ext = WP.max(0) - WP.min(0)
-            if not is_obstacle(p['mesh'], ext): n_skip += 1; continue
+            if not is_obstacle(p['mesh'], ext) or ext[0] > 300000 or ext[1] > 300000: n_skip += 1; continue
             raster_max(dsm, (x0, y0), RES, WP[I]); n_obs += 1
     # gameplay objects
     acts = {}
