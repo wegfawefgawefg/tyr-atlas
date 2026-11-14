@@ -8,6 +8,7 @@
 <style>
 /* Layout: one reading column of stacked instrument panels; controls sit in a row above each chart. */
 :root {
+  --x-pen: #d03b3b; --x-fifty: #eda100; --x-bounce: #6da7ec; --x-auto: #184f95; --x-tread: #9085e9; --x-crit: #eb6834;
   --page: #f3f5f6; --surface: #fcfcfb; --ink: #0d1114; --ink-2: #4b5258; --muted: #858b90;
   --grid: #e1e3e3; --axis: #c2c6c8; --ring: rgba(13,17,20,.10); --accent: #1d4f7a;
   --c-light: #2a78d6; --c-medium: #eb6834; --c-heavy: #1baf7a;
@@ -19,6 +20,7 @@
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --x-pen: #e66767; --x-fifty: #c98500; --x-bounce: #2a78d6; --x-auto: #0d366b; --x-tread: #9085e9; --x-crit: #d95926;
   --page: #0e1113; --surface: #171a1c; --ink: #eef0f1; --ink-2: #bfc4c7; --muted: #8a9094;
   --grid: #2a2e31; --axis: #3a3f42; --ring: rgba(255,255,255,.10); --accent: #8cb8e6;
   --c-light: #3987e5; --c-medium: #d95926; --c-heavy: #199e70;
@@ -26,6 +28,7 @@
   --div-n3: #f08a70; --div-n2: #b84a32; --div-n1: #5a2c23; --div-0: #303437; --div-p1: #1d3d63; --div-p2: #2d6dbd; --div-p3: #86b8f0;
   color-scheme: dark; } }
 :root[data-theme="dark"] {
+  --x-pen: #e66767; --x-fifty: #c98500; --x-bounce: #2a78d6; --x-auto: #0d366b; --x-tread: #9085e9; --x-crit: #d95926;
   --page: #0e1113; --surface: #171a1c; --ink: #eef0f1; --ink-2: #bfc4c7; --muted: #8a9094;
   --grid: #2a2e31; --axis: #3a3f42; --ring: rgba(255,255,255,.10); --accent: #8cb8e6;
   --c-light: #3987e5; --c-medium: #d95926; --c-heavy: #199e70;
@@ -93,6 +96,11 @@ tr.sel td { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
 .statline { font: 12.5px/1.5 var(--f-data); color: var(--ink-2); margin: 0; }
 td.comps { text-align: left; font-family: var(--f-body); }
 @media (prefers-reduced-motion: no-preference) { circle.dot { transition: r .15s; } }
+.xgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.xview { margin: 0; display: grid; gap: 6px; justify-items: start; min-width: 0; }
+.xview canvas { cursor: crosshair; }
+.xview figcaption { font-size: 13px; color: var(--ink-2); }
+h3.sub { font: 700 19px/1.2 var(--f-display); margin: 6px 0 0; letter-spacing: .01em; }
 </style>
 
 <div class="wrap">
@@ -165,6 +173,32 @@ td.comps { text-align: left; font-family: var(--f-body); }
     <ul class="nn" id="nn"></ul>
   </section>
 
+  <section class="panel" aria-labelledby="h-armor">
+    <h2 id="h-armor">Armor from every side</h2>
+    <p>Armor comes from the game's own armor meshes: every triangle carries a thickness in mm, and every shot is decided by the game's rule. Over 80° from the surface always bounces, a gun with four times the plate's thickness goes through at any angle, otherwise thickness ÷ cos(angle) against penetration, with a 50/50 band up to 1.25× penetration. Hits on treads only track you and do no HP damage. Each chart casts a grid of parallel shots every 6 cm across the tank and counts what happens, assuming hits land evenly over the visible silhouette.</p>
+    <div class="controls"><label for="arm-pen">Gun penetration <select id="arm-pen"></select></label></div>
+    <h3 class="sub">Armor shape of every tank</h3>
+    <p class="note">Each rose shows, for level shots from every direction, the share of hits that do no damage. Bigger means tougher from that side. Sorted from toughest all-round.</p>
+    <div class="chart" id="roses"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-hemi">
+    <h2 id="h-hemi">One tank, every angle</h2>
+    <p class="note" id="hemi-title"></p>
+    <div class="scroll"><div class="chart" id="hemi" style="min-width:560px"></div></div>
+    <h3 class="sub" id="xray-title"></h3>
+    <div class="legend" id="xray-legend"></div>
+    <div class="chart" id="xray"></div>
+    <p class="note">Pick a tank with the chips at the top. Hover the views to read effective armor at any point. The turret faces forward.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-duel">
+    <h2 id="h-duel">Face-off: who kills whom first</h2>
+    <p>Every pair of tanks, both on their 31-point core builds, trading shots front to front. Each cell compares how fast the row tank kills the column tank against the reverse, using damage per second, health, and each gun's penetration against the other's armor from that angle. Blue means the row tank wins. This ignores aiming at weak spots, abilities, components and ammo.</p>
+    <div class="controls"><div class="seg" role="group" aria-label="Angle" id="duel-mode"></div></div>
+    <div class="scroll"><div class="chart" id="duel" style="min-width:600px"></div></div>
+  </section>
+
   <section class="panel" aria-labelledby="h-uplift">
     <h2 id="h-uplift">What 31 talent points buy</h2>
     <p>Base value to the best value the talent tree allows for that stat. On every tank but Fuse, 31 points max damage, reload, health and speed at the same time, so the core build has no trade-off.</p>
@@ -229,3 +263,5 @@ td.comps { text-align: left; font-family: var(--f-body); }
 <script src="loadouts.js"></script>
 <script src="dist.js"></script>
 <script src="build.js"></script>
+<script src="armor_data.js"></script>
+<script src="armor.js"></script>

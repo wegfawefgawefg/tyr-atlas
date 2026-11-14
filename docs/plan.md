@@ -56,3 +56,15 @@ After a game patch: rerun find_aes3 (key may change), reflect_scan, make_usmap, 
 - Designer ratings in DT_TankData: Durability ~ HP (rank corr +0.96), Scouting ~ camo (+0.91),
   Firepower vs DPS is -0.62 (rating follows per-shot damage +0.51; Alecto has top DPS but rating 5).
 - PCA: PC1 (29%) light/fast/camo vs heavy/HP/detection; PC2 (14%) turreted vs turretless hover tanks.
+
+## Armor (tools/armor.py)
+
+- Armor lives on `SK_<Veh>_Base_Armor_01` (armor-only skeletal mesh) + `T_<Veh>_Base_Armor_01_Armor` (BGRA, one pixel
+  per triangle: B = thickness mm, A = plate id; a few stray pixels on wheel triangles of Seeker/Recall/Vtol/Blink are dropped).
+  `_Module` texture: A = 0 none, 1-2 treads (track you, no HP damage), 3+ crit modules. `_Color_Id` 1024 DXT5 maps are the viewer art.
+- Penetration rule from TyrArmorRuntimeSettings (constructor 0x145fa9ea0 + DefaultGame.ini): auto-bounce over 80 deg,
+  overmatch at pen >= 4x thickness, eff = t/cos(angle), fifty-fifty band 1.25 (direction of the band assumed: pen < eff <= 1.25 pen).
+  Effective-armor formula confirmed against an in-game viewer readout (21 mm @ 62.98 deg = 46.2 mm).
+- Ray casting: orthographic z-buffer per direction, 6 cm rays, 72 azimuths x 8 elevations; hits assumed uniform over silhouette.
+- Site: armor roses, hemisphere map, x-ray views, frontal TTK duel matrix (front / 30 deg angled); armor + size stats feed
+  the strips, scatter, correlations and PCA (front armor now loads -0.94 on PC1 next to HP).
