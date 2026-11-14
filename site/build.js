@@ -268,7 +268,7 @@ function drawBest() {
   const body = document.createElement('tbody');
   for (const t of [...tanks].sort((a, b) => LT(b).best[scen].gain - LT(a).best[scen].gain)) {
     const b = LT(t).best[scen], tr = document.createElement('tr'); if (TA.selected === t.id) tr.className = 'sel';
-    const cells = [t.name + (t.wip ? ' *' : ''), b.comps.map(cname).join(' + '), pct(b.gain), n1(b.dps), n0(b.ehp), n1(b.speed)];
+    const cells = [t.name, b.comps.map(cname).join(' + '), pct(b.gain), n1(b.dps), n0(b.ehp), n1(b.speed)];
     cells.forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i === 1) td.className = 'comps'; tr.append(td); });
     tr.style.cursor = 'pointer'; tr.onclick = () => TA.select(TA.selected === t.id ? null : t.id); body.append(tr);
   }

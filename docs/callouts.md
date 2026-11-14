@@ -24,19 +24,19 @@ every region one short name to say in voice chat, plus a one-line reason.
 | A Heal / B Heal | heal zone on that team's side |
 | A Ammo / B Ammo, West/East/North Ammo | ammo zone, sided or neutral |
 | Energy | energy zone (West/East Energy when there are two) |
-| A Spawn / B Spawn | spawn area, where it is its own region |
-| Mid | the central region |
+| Mid | the central region (on Scorch it also holds the energy zone) |
 | A Yard / B Yard | open ground right beside a cap |
 | A Wall / B Wall, A Bridge / B Bridge, A Gully / B Gully | identical mirrored approach to each cap |
 | Thicket | the densest bush cluster on the map |
 | Ruins | broken walls or towers |
-| Field | wide open ground with little cover |
 | Corner, Shelf, Basin, Dip | edge regions with no landmark, named by shape |
 
 ## Notes
 
 - On Divide, Ravine and WindValley the capture zone is inside the spawn dome,
   so "A Cap" is also where A spawns.
-- On Scorch the energy zone is in the central region; it is called Mid.
-- Core only has four regions because most of its ground was not detected as
-  playable. Its names are placeholders until the region data is fixed.
+- Core's centre is a sunken crater: "Core" is its north-east quarter around the
+  cross-shaped structure, West Ammo and Energy share the rest of the crater floor.
+- After re-segmentation, tools/callout_names.py carries names over by overlap
+  (callouts_v1.json + regions_v1.npy); regions it can't match are named by hand
+  (source "hand" in callouts.json).

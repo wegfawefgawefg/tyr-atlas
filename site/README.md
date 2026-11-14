@@ -14,6 +14,9 @@ all paths are relative. Locally: `../serve.sh` -> http://127.0.0.1:8740/.
 - `app.js`: hash router and header (tank picker, stat mode, nav, page titles).
 - `pages.js`: home findings, tank page header, stat tiles and index, method page details.
 - `build.js`: component charts. `armor.js`: armor roses, hemisphere map, x-ray, face-off matrix.
+- `findings.js`, `findings_fight.js`: the numbered "What this shows" takeaways on every page and under chart panels, computed
+  from the data at draw time. `TA.F.add(page, fn)` registers a function that fills a `.findings` block with `TA.F.show(anchor, key, items)`;
+  they run after the page's charts and again when a chart-local control changes. Load last.
 
 All scripts load with `defer` in that order, so the page paints before the large data files arrive.
 `build.js` and `armor.js` load after the first draw and draw their charts when they arrive.

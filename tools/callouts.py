@@ -50,8 +50,8 @@ def build(name):
     seeds = []
     def add(kind, cx, cy, **kw):
         if 0 <= cx < W and 0 <= cy < H and pl[cy, cx]: seeds.append(dict(kind=kind, cx=cx, cy=cy, **kw))
-        elif 0 <= cx < W and 0 <= cy < H:   # snap to the nearest playable cell within 30 m
-            r = int(30 / res); ys, xs = np.where(pl[max(0, cy - r):cy + r + 1, max(0, cx - r):cx + r + 1])
+        elif 0 <= cx < W and 0 <= cy < H:   # snap to the nearest playable cell (30 m; 80 m for spawns)
+            r = int((80 if kind == 'spawn' else 30) / res); ys, xs = np.where(pl[max(0, cy - r):cy + r + 1, max(0, cx - r):cx + r + 1])
             if len(ys):
                 k = np.argmin((ys - min(cy, r)) ** 2 + (xs - min(cx, r)) ** 2)
                 seeds.append(dict(kind=kind, cx=int(max(0, cx - r) + xs[k]), cy=int(max(0, cy - r) + ys[k]), **kw))
@@ -107,7 +107,7 @@ def build(name):
     # merge small regions into the neighbour they share the longest border with
     for _ in range(8):
         areas = {k: int((reg == k).sum()) * res * res for k in range(len(seeds))}
-        small = [k for k, a in areas.items() if 0 < a < MIN_AREA_M2 and seeds[k]['kind'] not in ('zone', 'spawn')]
+        small = [k for k, a in areas.items() if 0 < a < MIN_AREA_M2 and (seeds[k]['kind'] not in ('zone', 'spawn') or a < 1500)]
         if not small: break
         for k in small:
             m = reg == k

@@ -32,7 +32,7 @@ const hideTip = () => { tip.hidden = true; };
 function dot(svg, t, cx, cy, r, rows) {
   const g = el('g', { 'data-id': t.id }, svg);
   el('circle', { cx, cy, r: 12, fill: 'transparent' }, g);
-  const c = el('circle', { class: 'dot', cx, cy, r, fill: t.wip ? 'var(--surface)' : col(t), stroke: t.wip ? col(t) : 'var(--surface)', 'stroke-width': 2 }, g);
+  const c = el('circle', { class: 'dot', cx, cy, r, fill: col(t), stroke: 'var(--surface)', 'stroke-width': 2 }, g);
   if (selected === t.id) { c.setAttribute('r', r + 2.5); c.setAttribute('stroke', 'var(--ink)'); }
   g.addEventListener('pointermove', ev => showTip(ev, rows()));
   g.addEventListener('pointerleave', hideTip);
@@ -192,7 +192,7 @@ function drawMap() {
       { 'text-anchor': g.a[0] >= 0 ? 'start' : 'end', fill: 'var(--muted)', 'font-size': 10.5 }));
   }
   const pts = tanks.map(t => ({ t, x: X(t.pca[0]), y: Y(t.pca[1]), name: t.name, sel: selected === t.id }));
-  for (const p of pts) dot(svg, p.t, p.x, p.y, 6, () => [p.t.name, `${p.t.cls}${p.t.wip ? ' · work in progress' : ''}`]);
+  for (const p of pts) dot(svg, p.t, p.x, p.y, 6, () => [p.t.name, p.t.cls]);
   labelPoints(svg, pts);
 }
 
@@ -260,7 +260,7 @@ function drawTable() {
   const body = document.createElement('tbody');
   for (const t of [...tanks].sort((a, b) => { const x = get(a, sortKey), y = get(b, sortKey); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; })) {
     const tr = document.createElement('tr'); if (selected === t.id) tr.className = 'sel';
-    for (const c of cols) { const td = document.createElement('td'); td.textContent = c.key === 'name' ? t.name + (t.wip ? ' *' : '') : c.key === 'cls' ? t.cls : fmt(c.key, val(t, c.key)); tr.append(td); }
+    for (const c of cols) { const td = document.createElement('td'); td.textContent = c.key === 'name' ? t.name : c.key === 'cls' ? t.cls : fmt(c.key, val(t, c.key)); tr.append(td); }
     tr.onclick = () => select(selected === t.id ? null : t.id); body.append(tr);
   }
   tb.append(body);

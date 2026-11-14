@@ -61,7 +61,7 @@ function rose(svg, t, cx, cy, R, selectable = true) {
   const pts = a.az.map((az, ai) => { const v = noDmg(a, e, ai), th = az * Math.PI / 180; return [cx - Math.sin(th) * R * v, cy - Math.cos(th) * R * v]; });
   const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ') + 'Z';
   el('path', { d, fill: `var(${TA.CLS[t.cls]})`, 'fill-opacity': 0.18, stroke: `var(${TA.CLS[t.cls]})`, 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
-  const lab = txt(svg, cx, cy - R - 8, t.name + (t.wip ? ' *' : ''), { 'text-anchor': 'middle', fill: TA.selected === t.id ? 'var(--ink)' : 'var(--ink-2)', 'font-weight': TA.selected === t.id ? 600 : 400, 'font-size': 12 });
+  const lab = txt(svg, cx, cy - R - 8, t.name, { 'text-anchor': 'middle', fill: TA.selected === t.id ? 'var(--ink)' : 'var(--ink-2)', 'font-weight': TA.selected === t.id ? 600 : 400, 'font-size': 12 });
   const hit = el('circle', { cx, cy, r: R + 6, fill: 'transparent' }, svg);
   if (selectable) { hit.style.cursor = 'pointer'; hit.addEventListener('click', () => TA.select(TA.selected === t.id ? null : t.id)); }
   hit.addEventListener('pointermove', ev => {

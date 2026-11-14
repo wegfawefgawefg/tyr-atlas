@@ -14,7 +14,7 @@ size = int(argv[3]) if len(argv) > 3 else 1400
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 sc = bpy.context.scene
-glb = sorted(glob.glob(os.path.join(art, '**', 'SK_*_Visual_01.glb'), recursive=True))[0]
+glb = sorted(glob.glob(os.path.join(art, '**', 'SK_*Visual*.glb'), recursive=True))[0]
 bpy.ops.import_scene.gltf(filepath=glb)
 root = os.path.dirname(os.path.dirname(glb))          # <veh>/<veh>
 art_top = os.path.dirname(root)

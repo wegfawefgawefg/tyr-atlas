@@ -83,7 +83,6 @@ function drawTankHead() {
   const t = tanks.find(x => x.id === TA.selected);
   if (!t) return drawIndex();
   const kick = $('t-kicker'); kick.replaceChildren(keyEl(t), `${t.cls} tank`);
-  if (t.wip) kick.append(make('span', 'wip-tag', 'work in progress'));
   $('t-name').textContent = t.name;
   $('t-mode').textContent = `Numbers follow the stat mode in the header: ${TA.mode === 'base' ? 'base stats, no talents' : '31-point core talent build'}. Ranks run best to worst.`;
   const host = $('t-tiles'); host.replaceChildren();
@@ -97,7 +96,7 @@ function drawIndex() {
     const cards = make('div', 'tcards');
     for (const t of sortedTanks.filter(x => x.cls === c)) {
       const a = make('a', 'tcard'); a.href = hashFor('tank', t.id);
-      const b = make('b'); b.append(keyEl(t), t.name); if (t.wip) b.append(make('span', 'wip-tag', 'WIP'));
+      const b = make('b'); b.append(keyEl(t), t.name);
       a.append(b, make('span', null, `${fmt('MaxHealth', val(t, 'MaxHealth'))} HP · ${fmt('DPS', val(t, 'DPS'))} dmg/s · ${fmt('MaxSpeed', val(t, 'MaxSpeed'))} kph`));
       cards.append(a);
     }

@@ -13,7 +13,7 @@ static class ArtExport
     {
         TextureDecoder.UseAssetRipperTextureDecoder = true;   // managed BC decoders (no native Detex on Linux)
         var opts = new ExporterOptions { MeshFormat = EMeshFormat.Gltf2, LodFormat = ELodFormat.FirstLod, ExportMaterials = true, TextureFormat = ETextureFormat.Png };
-        var pattern = new System.Text.RegularExpressions.Regex(@"^Tyr/Plugins/GameFeatures/Vehicles/([^/]+)/Content/Meshes/(SK_[A-Za-z]+_Visual_01|SM_[A-Za-z]+_Base_Visual|SM_[A-Za-z]+_SingleTread_[LR]_01)\.uasset$");
+        var pattern = new System.Text.RegularExpressions.Regex(@"^Tyr/Plugins/GameFeatures/Vehicles/([^/]+)/Content/Meshes/(SK_[A-Za-z]+_[A-Za-z_]*Visual[A-Za-z0-9_]*)\.uasset$");
         foreach (var path in provider.Files.Keys.Where(p => pattern.IsMatch(p)).OrderBy(p => p))
         {
             var veh = pattern.Match(path).Groups[1].Value;

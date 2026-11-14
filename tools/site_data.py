@@ -73,7 +73,8 @@ ALL = ['MovementDispersionPenalty', 'FiringDispersionPenalty', 'HullTraverseDisp
        'MaxStrafingSpeed', 'ShellSwapTime', 'MaxHealth', 'ShellDamage', 'ReloadTime', 'IntraClipReloadTime', 'MaxSpeed', 'MaxReverseSpeed', 'CamoPercentage',
        'BaseDispersionPenalty', 'DispersionReductionSpeed', 'PreciseDispersionTime', 'GunMaxDepression', 'TurretTraverseSpeed',
        'AccelerationTime', 'HullTraverseSpeed', 'ShellVelocity', 'AbilityCost', 'InitialAbilityResource']
-OBJ = {k: ([k], (lambda k: lambda st: st[k])(k)) for k in ALL}
+# ceilings: lower-is-better stats are minimised (objectives must rise as each oriented channel improves)
+OBJ = {k: ([k], (lambda k, sgn: lambda st: sgn * st[k])(k, -1 if k in O.LOWER_BETTER else 1)) for k in ALL}
 O.OBJECTIVES.update(OBJ)
 ARM = json.load(open(os.path.join(O.ROOT, 'data/armor.json')))
 def armor_stats(name, hp):

@@ -55,7 +55,6 @@ button[aria-pressed="true"] { background: var(--ink); color: var(--surface); bor
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .key { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.key.hollow { background: transparent !important; border: 2px solid var(--muted); }
 svg { display: block; width: 100%; height: auto; overflow: visible; }
 svg text { font-family: var(--f-body); }
 .chart { position: relative; min-width: 0; }
@@ -128,7 +127,6 @@ a { color: var(--accent); }
 .pick-list [role="option"] { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
 .pick-list [role="option"].active { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
 .pick-list [role="option"][aria-selected="true"] { font-weight: 600; }
-.pick-list .wip, .wip-tag { font: 500 10.5px var(--f-body); color: var(--muted); border: 1px solid var(--axis); border-radius: 3px; padding: 0 4px; }
 .pick-list .sub { color: var(--muted); font-size: 12px; margin-left: auto; }
 .pick-empty { color: var(--muted); font-size: 13px; padding: 6px 8px; }
 
@@ -200,3 +198,11 @@ a { color: var(--accent); }
 .bk h4 { margin: 0 0 6px; font: 600 14px var(--f-body); }
 .bk ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; color: var(--ink-2); }
 .bk b { color: var(--ink); font-weight: 600; }
+
+/* findings: numbered takeaways on every page and under chart panels (findings.js) */
+.findings { display: grid; gap: 6px; max-width: 80ch; padding: 10px 14px 12px; border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0;
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+.findings h3 { font: 600 11.5px var(--f-body); text-transform: uppercase; letter-spacing: .07em; color: var(--ink-2); margin: 0; }
+.findings ol { margin: 0; padding-left: 22px; display: grid; gap: 5px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.findings li::marker { font: 600 12.5px var(--f-data); color: var(--accent); }
+.page-head .findings { margin-top: 6px; }

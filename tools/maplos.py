@@ -43,6 +43,16 @@ def prepare(name):
     if bushm.any():
         idx = distance_transform_edt(bushm, return_distances=False, return_indices=True)
         ground = ground[tuple(idx)]
+    # spawn domes are hollow: inside their walls use the terrain, not the dome roof
+    dtm = pool(z['dtm'] / 100, DS, 'mean').astype(np.float32)
+    YYd, XXd = np.mgrid[0:H, 0:W]
+    dome = np.zeros((H, W), bool)
+    for o in g['objects']:
+        if o['kind'] == 'SpawnWall' and o['r']:
+            cx, cy = cell(o); rr_ = o['r'] / 100 / res
+            dome |= (XXd - cx) ** 2 + (YYd - cy) ** 2 <= rr_ ** 2
+    ground = np.where(dome, dtm, ground).astype(np.float32)
+    dsm = np.where(dome, dtm, dsm).astype(np.float32)
     block = np.where(bushm, ground, dsm).astype(np.float32)        # bushes don't block sight
     # boundaries from the map: out-of-bounds boxes and invisible walls
     ma = os.path.join(d, 'map_actors.json'); acts = json.load(open(ma if os.path.exists(ma) else os.path.join(d, 'map.json')))['actors']

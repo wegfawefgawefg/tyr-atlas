@@ -35,8 +35,8 @@ TA.hashFor = hashFor;
 
 // small DOM helpers shared with pages.js
 function keyEl(t) {
-  const k = document.createElement('i'); k.className = 'key' + (t.wip ? ' hollow' : '');
-  if (t.wip) k.style.borderColor = TA.col(t); else k.style.background = TA.col(t);
+  const k = document.createElement('i'); k.className = 'key';
+  k.style.background = TA.col(t);
   return k;
 }
 function make(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
@@ -45,7 +45,6 @@ TA.keyEl = keyEl; TA.make = make;
 // class legends at the top of each chart page
 for (const lg of document.querySelectorAll('.cls-legend')) {
   for (const c of CLASSES) { const s = make('span'), k = make('i', 'key'); k.style.background = `var(${CLS[c]})`; s.append(k, c); lg.append(s); }
-  const s = make('span'), k = make('i', 'key hollow'); s.append(k, 'Work in progress'); lg.append(s);
 }
 
 // ---------- tank picker: button + searchable listbox grouped by class ----------
@@ -61,7 +60,7 @@ function addOpt(t) {
   const li = make('li'), i = items.length;
   li.setAttribute('role', 'option'); li.id = 'opt-' + (t ? t.id : 'none');
   li.setAttribute('aria-selected', String((t ? t.id : null) === TA.selected));
-  if (t) { li.append(keyEl(t), make('span', null, t.name)); if (t.wip) li.append(make('span', 'wip', 'WIP')); }
+  if (t) li.append(keyEl(t), make('span', null, t.name));
   else li.append(make('span', 'sub', 'No tank (clear the pick)'));
   li.addEventListener('click', () => choose(t ? t.id : null));
   li.addEventListener('pointermove', () => { if (active !== i) { active = i; highlight(); } });
@@ -69,7 +68,7 @@ function addOpt(t) {
 }
 function renderList() {
   const f = q.value.trim().toLowerCase(); list.replaceChildren(); items = [];
-  const match = t => !f || t.name.toLowerCase().includes(f) || t.cls.toLowerCase().startsWith(f) || (f === 'wip' && t.wip);
+  const match = t => !f || t.name.toLowerCase().includes(f) || t.cls.toLowerCase().startsWith(f);
   if (!f && TA.selected) addOpt(null);
   for (const c of CLASSES) {
     const ts = sortedTanks.filter(t => t.cls === c && match(t)); if (!ts.length) continue;

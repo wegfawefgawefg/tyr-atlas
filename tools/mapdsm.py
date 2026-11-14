@@ -52,7 +52,9 @@ def is_obstacle(path, ext):
     if any(k in p for k in ('/foliages/grass', 'wildgrass', 'tallflower', '/decal', 'skysphere', 'engine/engine', 'capturezone', 'symbol', 'glow', '/vfx/')): return False
     return ext[2] >= 120          # at least 1.2 m tall in world scale
 
-def raster_max(grid, origin, res, tris):
+CAP_CM = 6000   # ignore geometry more than 60 m above the terrain (roofs, overhead structures)
+
+def raster_max(grid, origin, res, tris, cap=None):
     """rasterize world triangles (T,3,3) top-down, keep the max z per cell (sampled at cell centres)"""
     H, W = grid.shape
     tx = (tris[:, :, 0] - origin[0]) / res; ty = (tris[:, :, 1] - origin[1]) / res; tz = tris[:, :, 2]
@@ -77,6 +79,8 @@ def raster_max(grid, origin, res, tris):
         w2 = 1 - w0 - w1
         ins = ok & (w0 >= -0.02) & (w1 >= -0.02) & (w2 >= -0.02) & (px >= 0) & (py >= 0) & (px < W) & (py < H)
         z = w0 * tz[tri, 0] + w1 * tz[tri, 1] + w2 * tz[tri, 2]
+        if cap is not None:
+            ins = ins & (z <= cap[np.clip(py, 0, H - 1), np.clip(px, 0, W - 1)])
         np.maximum.at(grid, (py[ins], px[ins]), z[ins])
 
 def build(name):
@@ -110,7 +114,7 @@ def build(name):
             WP = apply(xf, P)
             ext = WP.max(0) - WP.min(0)
             if not is_obstacle(p['mesh'], ext) or ext[0] > 300000 or ext[1] > 300000: n_skip += 1; continue
-            raster_max(dsm, (x0, y0), RES, WP[I]); n_obs += 1
+            raster_max(dsm, (x0, y0), RES, WP[I], cap=dtm + CAP_CM); n_obs += 1
     # gameplay objects
     acts = {}
     for a in m['actors']:
