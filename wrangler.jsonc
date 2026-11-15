@@ -1,6 +1,0 @@
-{
-  // Cloudflare Workers static assets: the site is plain files in site/ (no worker code). Deploy: tools/deploy.sh
-  "name": "tyr-atlas",
-  "compatibility_date": "2026-11-13",
-  "assets": { "directory": "./site"}
-}
