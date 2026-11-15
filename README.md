@@ -42,3 +42,18 @@ automatically. To run the extractor by hand, set `TYR_AES_KEY` or run that step 
 
 `tools/deploy.sh` uploads `site/` to the Cloudflare Pages project (needs `npx wrangler login`). It is a classic Pages
 project: do not use `wrangler deploy`, which makes a Worker on the account's workers.dev subdomain instead.
+
+## Memes
+
+`tools/memes/` makes short animated tank memes: Blender scenes built in Python from the exported tank rigs, with a
+sound mix of game audio and CC0 clips. Everything is generated, so only the finished videos are worth keeping.
+
+- `meme_lib.py` loads a tank rig (materials as in the site renders), poses bones in the tank's own frame and has small
+  prop helpers. `mixlib.py` is the offline mixer. Each meme is a scene script plus a `mix_<name>.py` cue sheet:
+  `alecto_atlas` (Alecto circles, humps and kisses Atlas, Atlas smokes), `maul_valors` (the couch format: one Maul,
+  five Valors), `chase_fields` (Benny Hill laps on the Fields minimap, flushed away by `flush.py`).
+- Inputs: tank rigs (`extract.dll art extract/art`), game audio (`extract.dll audio extract/audio <regex>`, then decode
+  the BINKA files with vgmstream-cli into `extract/audio_wav/`), minimaps (`extract.dll tex extract/tex
+  'Textures/Minimap/T_Minimap_'`). `tools/memes/sounds/` holds the CC0 clips from Openverse, credited in `CREDITS.txt`.
+- Render: `blender -b -t 16 -P tools/memes/<name>.py -- <frame dir> final` (`preview <frames>` for quick low-res stills),
+  then `python3 tools/memes/mix_<name>.py <out.wav>` and mux with ffmpeg (`tools/memes/encode.sh` for a GIF).

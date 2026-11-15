@@ -34,6 +34,54 @@ if (args[0] == "list")
 if (args[0] == "art") { ArtExport.Run(provider, args[1], args.Length > 2 ? args[2] : null); return; }
 if (args[0] == "map") { MapExport.Run(provider, args[1], args[2]); return; }
 if (args[0] == "armor") { ArmorExport.Run(provider, args[1]); return; }
+if (args[0] == "audio")
+{
+    // audio <out dir> <regex...>: every matching SoundWave, raw codec bytes as <name>.<format lowercased>
+    var outDir = args[1]; int n = 0; var formats = new Dictionary<string, int>();
+    foreach (var path in provider.Files.Keys.Where(p => p.EndsWith(".uasset") && args.Skip(2).Any(r => System.Text.RegularExpressions.Regex.IsMatch(p, r))).OrderBy(p => p))
+    {
+        try
+        {
+            foreach (var e in provider.LoadPackage(path).GetExports())
+            {
+                if (e is not CUE4Parse.UE4.Assets.Exports.Sound.USoundWave sw) continue;
+                CUE4Parse_Conversion.Sounds.SoundDecoder.Decode(sw, true, out var fmt, out var data);
+                if (data == null) { Console.WriteLine($"FAIL nodata {path}"); continue; }
+                var o = Path.Combine(outDir, Path.ChangeExtension(path, null) + "." + fmt.ToLowerInvariant());
+                Directory.CreateDirectory(Path.GetDirectoryName(o)!); File.WriteAllBytes(o, data); n++;
+                formats[fmt] = formats.GetValueOrDefault(fmt) + 1;
+            }
+        }
+        catch (Exception ex) { Console.WriteLine($"FAIL {path}: {ex.Message}"); }
+    }
+    Console.WriteLine($"audio {n} " + string.Join(" ", formats.Select(kv => $"{kv.Key}={kv.Value}")));
+    return;
+}
+if (args[0] == "tex")
+{
+    // tex <out dir> <regex...>: every matching Texture2D as PNG (full-size mip)
+    CUE4Parse_Conversion.Textures.TextureDecoder.UseAssetRipperTextureDecoder = true;
+    var outDir = args[1]; int n = 0;
+    foreach (var path in provider.Files.Keys.Where(p => p.EndsWith(".uasset") && args.Skip(2).Any(r => System.Text.RegularExpressions.Regex.IsMatch(p, r))).OrderBy(p => p))
+    {
+        try
+        {
+            foreach (var e in provider.LoadPackage(path).GetExports())
+            {
+                if (e is not CUE4Parse.UE4.Assets.Exports.Texture.UTexture2D tex) continue;
+                var c = CUE4Parse_Conversion.Textures.TextureDecoder.Decode(tex);
+                if (c == null) { Console.WriteLine($"FAIL nodata {path}"); continue; }
+                var bytes = CUE4Parse_Conversion.Textures.TextureEncoder.Encode(c, CUE4Parse_Conversion.Textures.ETextureFormat.Png, false, out var ext);
+                var o = Path.Combine(outDir, Path.ChangeExtension(path, null) + "." + ext);
+                Directory.CreateDirectory(Path.GetDirectoryName(o)!); File.WriteAllBytes(o, bytes); n++;
+                Console.WriteLine($"{o} {c.Width}x{c.Height}");
+            }
+        }
+        catch (Exception ex) { Console.WriteLine($"FAIL {path}: {ex.Message}"); }
+    }
+    Console.WriteLine($"tex {n}");
+    return;
+}
 if (args[0] == "raw")
 {
     var outDir = args[1]; int n = 0;

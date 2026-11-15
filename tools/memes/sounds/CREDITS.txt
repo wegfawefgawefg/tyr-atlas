@@ -1,0 +1,55 @@
+Sound effects for the tank memes, found through the Openverse API (api.openverse.org), all CC0 1.0
+(public domain, no credit needed; credited anyway). Freesound preview files.
+
+file: "title" by author, licence, address
+ahhh.mp3: "Ahhh.wav" by HenKonen, CC0 1.0, https://freesound.org/people/HenKonen/sounds/682087
+bass_impact.mp3: "Bass Impact - Ki_01.mp3" by Kievinay, CC0 1.0, https://freesound.org/people/Kievinay/sounds/512389
+boing_funny.mp3: "Funny Boing" by se2001, CC0 1.0, https://freesound.org/people/se2001/sounds/543641
+boing_harp.mp3: "Boing Spring Mouth harp downward 1.wav" by pan14, CC0 1.0, https://freesound.org/people/pan14/sounds/334031
+boom_impact2.mp3: "BOOM IMPACT 2" by XHALE303, CC0 1.0, https://freesound.org/people/XHALE303/sounds/535592
+boom_metallic.mp3: "Cinematic Impact Boom Metalic" by EminYILDIRIM, CC0 1.0, https://freesound.org/people/EminYILDIRIM/sounds/535413
+breathing_heavy.mp3: "Heavy Breathing" by Under7dude, CC0 1.0, https://freesound.org/people/Under7dude/sounds/163383
+breathing_heavy2.mp3: "Heavy Breathing" by Shinplaster, CC0 1.0, https://freesound.org/people/Shinplaster/sounds/240867
+chime_gleam.mp3: "GLEAM-GLOW-SFX-CHIME.wav" by newagesoup, CC0 1.0, https://freesound.org/people/newagesoup/sounds/351408
+cig_drag.mp3: "Cigarette Drag" by Storm_Crow, CC0 1.0, https://freesound.org/people/Storm_Crow/sounds/790482
+cig_inhale.mp3: "Cigarette inhale.wav" by kczub, CC0 1.0, https://freesound.org/people/kczub/sounds/268963
+comedy_marching.mp3: "FX comedy marching.wav" by v0idation, CC0 1.0, https://freesound.org/people/v0idation/sounds/115144
+cow_moan.mp3: "Cow - Moan 2 - 96kHz.wav" by JarredGibb, CC0 1.0, https://freesound.org/people/JarredGibb/sounds/233146
+dog_panting.mp3: "Dog Panting" by onehugeeye, CC0 1.0, https://freesound.org/people/onehugeeye/sounds/511319
+exhale_blow.mp3: "blowing_smoke_3.wav" by ivanmilic, CC0 1.0, https://freesound.org/people/ivanmilic/sounds/513854
+exhale_smoking2.mp3: "smoking2.wav" by lmr9, CC0 1.0, https://freesound.org/people/lmr9/sounds/265363
+flash_powder.mp3: "Vintage Camera Flash Powder and Shutter" by Werra, CC0 1.0, https://freesound.org/people/Werra/sounds/232130
+glimmer.mp3: "Glimmer.wav" by opticaillusions, CC0 1.0, https://freesound.org/people/opticaillusions/sounds/521873
+gulp_cartoon.mp3: "Cartoon - Gulp!" by Breviceps, CC0 1.0, https://freesound.org/people/Breviceps/sounds/450624
+gulp_owl.mp3: "Gulp (1)" by OwlStorm, CC0 1.0, https://freesound.org/people/OwlStorm/sounds/151234
+kiss12.mp3: "Kiss 12.wav" by deleted_user_2104797, CC0 1.0, https://freesound.org/people/deleted_user_2104797/sounds/166153
+kiss_long.mp3: "Kiss & Smooches" by mariusdahl, CC0 1.0, https://freesound.org/people/mariusdahl/sounds/388737
+kiss_short.mp3: "Short kiss" by Vospi, CC0 1.0, https://freesound.org/people/Vospi/sounds/344209
+lighter_flick.mp3: "lighterflick.wav" by DeezSoundzTho, CC0 1.0, https://freesound.org/people/DeezSoundzTho/sounds/407427
+moan_female1.mp3: "Female Moaning 1.wav" by NeFarIous_NeeDs, CC0 1.0, https://freesound.org/people/NeFarIous_NeeDs/sounds/565696
+moan_female4b.mp3: "Female Moaning 4b (wav file).wav" by NeFarIous_NeeDs, CC0 1.0, https://freesound.org/people/NeFarIous_NeeDs/sounds/565695 (cut to 2:10-2:25 of the original)
+moan_iloveyou.mp3: "Moaning I love you - vocal one shot.wav" by Duisterwho, CC0 1.0, https://freesound.org/people/Duisterwho/sounds/643231
+moan_lx.mp3: "moan.wav" by Lovecraft_Xavier, CC0 1.0, https://freesound.org/people/Lovecraft_Xavier/sounds/660305
+moan_m.mp3: "MoanM.ogg" by egomassive, CC0 1.0, https://freesound.org/people/egomassive/sounds/536798
+numskull.mp3: "Numskull" by Beetlemuse, CC0 1.0, https://freesound.org/people/Beetlemuse/sounds/650939
+oh_yeah_f.mp3: "f 'oh yeah...'" by storyofthelie, CC0 1.0, https://freesound.org/people/storyofthelie/sounds/652156
+oh_yeah_low.mp3: "OH YEAH LOW 4.WAV" by metrostock99, CC0 1.0, https://freesound.org/people/metrostock99/sounds/345086
+oh_yeah_m.mp3: "m 'oh yeah'" by storyofthelie, CC0 1.0, https://freesound.org/people/storyofthelie/sounds/651088
+oh_yeah_pb.mp3: "Oh yeah!" by pbrechler, CC0 1.0, https://freesound.org/people/pbrechler/sounds/250097
+poof_pop2.mp3: "cartoon poppyup appearances -0002.aiff" by martian, CC0 1.0, https://freesound.org/people/martian/sounds/19285
+poof_pop4.mp3: "cartoon poppyup appearances -0004.aiff" by martian, CC0 1.0, https://freesound.org/people/martian/sounds/19287
+rag_rogue_strings.mp3: "Rogue Strings Rag" by code_box, CC0 1.0, https://freesound.org/people/code_box/sounds/520931
+ragtime_eashby.mp3: "ragtime.wav" by Eashby, CC0 1.0, https://freesound.org/people/Eashby/sounds/518721
+sax_bad.mp3: "R17-05-Bad Saxophone.wav" by craigsmith, CC0 1.0, https://freesound.org/people/craigsmith/sounds/486245
+sax_riff_2a.mp3: "Sax riff 2a.wav" by HenKonen, CC0 1.0, https://freesound.org/people/HenKonen/sounds/682335
+sigh_valkyrie.mp3: "Valkyrie pleasural sigh.wav" by nemaavla, CC0 1.0, https://freesound.org/people/nemaavla/sounds/508020
+slide_whistle.mp3: "SLIDE WHISTLE - 1" by SamuelGremaud, CC0 1.0, https://freesound.org/people/SamuelGremaud/sounds/517633
+squeaky_bed.mp3: "Squeaky Bed Action" by Breviceps, CC0 1.0, https://freesound.org/people/Breviceps/sounds/450623
+swoosh_fast.mp3: "Fast Swoosh.wav" by swidmark, CC0 1.0, https://freesound.org/people/swidmark/sounds/171321
+toilet_flush.mp3: "Toilet Flushing" by lorenzgillner, CC0 1.0, https://freesound.org/people/lorenzgillner/sounds/274448
+toilet_flush2.mp3: "Toilet Flush" by cocaine, CC0 1.0, https://freesound.org/people/cocaine/sounds/185908
+toon_spin_swoosh.mp3: "TOONMisc-CU_Spin, Slide Whistle, Windy Swooshes_Nicholas Judy_TDC" by designerschoice, CC0 1.0, https://freesound.org/people/designerschoice/sounds/805111
+whoosh_electronic.mp3: "hi speed electronic whoosh 1.wav" by martian, CC0 1.0, https://freesound.org/people/martian/sounds/19307
+wolf_whistle.mp3: "whistle .wav" by ripper351, CC0 1.0, https://freesound.org/people/ripper351/sounds/151091
+zip_in_out.mp3: "zip in and out marti cartoon 2.C.clip.wav" by martian, CC0 1.0, https://freesound.org/people/martian/sounds/181803
+zippo_open.mp3: "zippoopen.wav" by DeezSoundzTho, CC0 1.0, https://freesound.org/people/DeezSoundzTho/sounds/407428
