@@ -151,7 +151,7 @@ out_duel = dict(front=duel(0), angled=duel(30))
 def game_build():
     """Steam build id + update date of the installed game the data was extracted from (shown on the site as 'data as of')."""
     import re, datetime
-    try: t = open('/path/to/SteamLibrary/steamapps/appmanifest_2445260.acf').read()
+    try: t = open(os.path.join(os.environ.get('TYR_GAME', os.path.expanduser('~/.local/share/Steam/steamapps/common/Tyr')), '../../appmanifest_2445260.acf')).read()
     except OSError: return None
     b = re.search(r'"buildid"\s+"(\d+)"', t); u = re.search(r'"LastUpdated"\s+"(\d+)"', t)
     return dict(build=b.group(1) if b else None,

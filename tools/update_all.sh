@@ -6,9 +6,9 @@
 # Stops at the first failing step. Everything runs at nice 19.
 set -eu
 cd "$(dirname "$0")/.."
-GAME=/path/to/SteamLibrary/steamapps/common/Tyr
+export TYR_GAME="${TYR_GAME:-$HOME/.local/share/Steam/steamapps/common/Tyr}"
+GAME=$TYR_GAME
 EXE=$GAME/Tyr/Binaries/Win64/TyrClient-Win64-Shipping.exe
-PAK=$(ls "$GAME"/Tyr/Content/Paks/*.pak | head -1)
 X="nice -n 19 dotnet tools/extract/bin/Release/net8.0/extract.dll"
 P="nice -n 19 python3 -I"
 step() { echo "== $*"; }
@@ -16,10 +16,8 @@ step() { echo "== $*"; }
 step "game build"
 grep -E '"buildid"|"LastUpdated"' "$GAME/../../appmanifest_2445260.acf"
 
-step "AES key (stops if the key changed: put the new key in tools/extract/Program.cs and rebuild the extractor)"
-KEY=$(grep -o '0x[0-9A-F]\{64\}' tools/extract/Program.cs | head -1)
-$P tools/find_aes3.py "$EXE" "$PAK" | tee /tmp/tyr_aes.txt | tail -2
-grep -qi "${KEY#0x}" /tmp/tyr_aes.txt || { echo "AES key changed (not $KEY)"; exit 1; }
+step "AES key (TYR_AES_KEY or extract/aes.key; a game patch can change it, and the dumps below then fail)"
+[ -n "${TYR_AES_KEY:-}" ] || [ -s extract/aes.key ] || { echo "no AES key: set TYR_AES_KEY or write it to extract/aes.key"; exit 1; }
 
 step "usmap from exe reflection"
 $P tools/reflect_scan.py extract/reflect_stage1.pkl

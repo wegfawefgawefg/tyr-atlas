@@ -19,7 +19,8 @@ how map callouts were made is in `docs/callouts.md`.
 
 ## Rebuilding from scratch
 
-Needs: Tyr installed through Steam (the paths at the top of `tools/update_all.sh`), .NET 8 SDK, Python 3 with
+Needs: Tyr installed through Steam (set `TYR_GAME` to its `steamapps/common/Tyr` folder; the default is
+`~/.local/share/Steam/steamapps/common/Tyr`), the game's pak AES key, .NET 8 SDK, Python 3 with
 numpy, scipy and Pillow, Rust (cargo), Blender 4.0 for the renders, and objdump for the reflection scan.
 
 1. CUE4Parse: `git clone https://github.com/FabianFG/CUE4Parse third_party/CUE4Parse-net8`, then
@@ -32,8 +33,8 @@ numpy, scipy and Pillow, Rust (cargo), Blender 4.0 for the renders, and objdump 
 4. `tools/update_all.sh` rebuilds the usmap, dumps, datasets, armor, combat and site data.
    `MAPS=1` also re-exports the maps and reruns spotting (slow). `ART=1` also re-renders the tanks in Blender (slow).
 
-The AES key is in `tools/extract/Program.cs`. `update_all.sh` checks it against the game exe first and stops if a
-patch changed it. Keep this repo private: the key and the extracted game data should not be published.
+The pak AES key is not in this repo. Put it in `extract/aes.key` (one line, `0x` plus 64 hex digits) or the
+`TYR_AES_KEY` environment variable. A game patch can change it; if the dumps start failing, that is the first thing to check.
 
 ## Deploying
 

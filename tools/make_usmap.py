@@ -5,7 +5,8 @@ sys.path.insert(0, __file__.rsplit('/', 1)[0])
 from pe import PE
 import xfunc
 
-EXE = '/path/to/SteamLibrary/steamapps/common/Tyr/Tyr/Binaries/Win64/TyrClient-Win64-Shipping.exe'
+import os
+EXE = os.path.join(os.environ.get('TYR_GAME', os.path.expanduser('~/.local/share/Steam/steamapps/common/Tyr')), 'Tyr/Binaries/Win64/TyrClient-Win64-Shipping.exe')
 p = PE(EXE); d = p.d
 R = pickle.load(open(sys.argv[1], 'rb'))
 S, C = R['structs'], R['classes']

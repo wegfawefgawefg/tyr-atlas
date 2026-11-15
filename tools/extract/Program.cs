@@ -9,8 +9,11 @@ using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Versions;
 using Newtonsoft.Json;
 
-const string Game = "/path/to/SteamLibrary/steamapps/common/Tyr/Tyr/Content/Paks";
-const string Key = "***REMOVED-AES-KEY***";
+// TYR_GAME: the game folder (steamapps/common/Tyr). The pak AES key comes from TYR_AES_KEY or extract/aes.key (not in the repo).
+var Game = Path.Combine(Environment.GetEnvironmentVariable("TYR_GAME") ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".local/share/Steam/steamapps/common/Tyr"), "Tyr/Content/Paks");
+var keyFile = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../extract/aes.key"));
+var Key = (Environment.GetEnvironmentVariable("TYR_AES_KEY") ?? (File.Exists(keyFile) ? File.ReadAllText(keyFile) : null))?.Trim()
+    ?? throw new Exception("no AES key: set TYR_AES_KEY or write it to extract/aes.key");
 if (Environment.GetEnvironmentVariable("TYR_LOG") == "1") Log.Logger = new LoggerConfiguration().MinimumLevel.Warning().WriteTo.Console().CreateLogger();
 var here = AppContext.BaseDirectory;
 OodleHelper.Initialize(Path.GetFullPath(Path.Combine(here, "../../../../../third_party/oodle/lib/liboodle-data-shared.so")));

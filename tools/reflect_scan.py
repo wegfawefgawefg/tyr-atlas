@@ -4,7 +4,8 @@ import sys, struct, re, collections, pickle
 sys.path.insert(0, __file__.rsplit('/', 1)[0])
 from pe import PE
 
-EXE = '/path/to/SteamLibrary/steamapps/common/Tyr/Tyr/Binaries/Win64/TyrClient-Win64-Shipping.exe'
+import os
+EXE = os.path.join(os.environ.get('TYR_GAME', os.path.expanduser('~/.local/share/Steam/steamapps/common/Tyr')), 'Tyr/Binaries/Win64/TyrClient-Win64-Shipping.exe')
 p = PE(EXE)
 d = p.d
 _, tva, tvs, _, _ = p.sec('.text')
