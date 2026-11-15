@@ -197,7 +197,7 @@ td.comps { text-align: left; font-family: var(--f-body); }
 .pick-btn { display: inline-flex; align-items: center; gap: 8px; min-width: 170px; max-width: 240px; justify-content: space-between; padding: 3px 10px 3px 6px; min-height: 40px; }
 .pick-btn .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: left; font: 700 14px/1 var(--f-display); letter-spacing: .04em; text-transform: uppercase; }
 .pick-btn .car { color: var(--muted); font-size: 10px; }
-.pick-btn .ph { color: var(--ink-2); }
+.pick-btn .ph { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: left; }
 .pick-btn .thumb { width: 52px; height: 30px; }
 .pick-pop { position: fixed; z-index: 40; width: min(320px, calc(100vw - 16px)); background: var(--surface); padding: 8px; display: grid; gap: 6px;
   clip-path: var(--cut-panel); box-shadow: inset 0 0 0 1px var(--line); filter: drop-shadow(0 12px 28px rgba(0,0,0,.3)); }
@@ -225,13 +225,19 @@ td.comps { text-align: left; font-family: var(--f-body); }
 .foot { max-width: 1160px; margin: 0 auto; padding: 18px max(16px, env(safe-area-inset-right, 0px)) max(32px, env(safe-area-inset-bottom, 0px)) var(--pad);
   display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); }
 .foot p { margin: 0; }
-.foot .kofi a { color: var(--hot); font-weight: 600; }
-.nav a.support { margin-left: auto; color: var(--hot); }
-.nav a.support:hover { color: var(--ink); }
+.foot .kofi { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 4px 0 6px; color: var(--ink-2); }
+.foot .kofi img { display: block; height: 40px; width: auto; }
+.foot .kofi a:hover img { filter: brightness(1.05); transform: translateY(-1px); }
+.kofi-btn { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 12px 0 9px; background: #ffda6e; color: #202020;
+  font: 700 12px/1 var(--f-display); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; white-space: nowrap;
+  clip-path: var(--cut-btn); }
+.kofi-btn:hover { background: #ffe28c; }
+.kofi-btn img { display: block; width: 26px; height: auto; }
 .asof { font: 500 12px/1.4 var(--f-data); color: var(--muted); margin: 0; }
 .foot .asof { color: var(--ink-2); }
 
 /* ---------- touch and narrow screens ---------- */
+@media (max-width: 400px) { .brand b { display: none; } }
 @media (max-width: 760px), (pointer: coarse) {
   select, button, .btn { min-height: 40px; }
   .seg button { min-width: 44px; }
@@ -247,10 +253,13 @@ td.comps { text-align: left; font-family: var(--f-body); }
   .brand b { font-size: 21px; }
   .seg .long { display: none; }
   .seg .short { display: inline; }
+  .kofi-btn { padding: 0 8px; }
+  .kofi-btn .long { display: none; }
   .bar { gap: 8px; }
   .pick-btn { min-width: 0; max-width: none; flex: 1; }
   .picker { flex: 1; }
   .pick-btn .thumb { width: 44px; height: 26px; }
+  .pick-btn { overflow: hidden; }
   .wrap { padding-block: 0 48px; gap: 22px; }
   .panel { padding: 16px 14px 18px; }
   h2 { font-size: 22px; }
