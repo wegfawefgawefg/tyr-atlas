@@ -12,6 +12,7 @@ how map callouts were made is in `docs/callouts.md`.
   `site/armor_data.js` is generated and not committed (7 MB): run `tools/armor.py` before serving or deploying.
 - `site_hidden/maps/` spotting layers for Dunes, Ruins and Glade, which ship in the files but were not in rotation.
 - `data/` processed datasets (stats, loadouts, armor, combat) that the site data is built from.
+  `data/callouts/<Map>/` holds the callout regions and their hand-picked names (see `docs/callouts.md`).
 - `tools/` the extractor (`tools/extract`, C#), dataset builders (Python), line-of-sight sweep (`tools/los`, Rust),
   Blender renders, and the update and deploy scripts.
 - `extract/` (not committed) raw asset dumps, map geometry, renders. Rebuilt by the steps below.

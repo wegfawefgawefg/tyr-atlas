@@ -1,0 +1,77 @@
+{
+ "map": "Core",
+ "callouts": [
+  {
+   "id": 0,
+   "name": "Energy",
+   "why": "Energy zone on the crater floor, south half.",
+   "source": "hand"
+  },
+  {
+   "id": 1,
+   "name": "West Ammo",
+   "why": "Ammo zone in the west half of the central crater.",
+   "source": "hand"
+  },
+  {
+   "id": 2,
+   "name": "East Ammo",
+   "why": "Ammo zone in the low south-east ground beside the long ramp wall.",
+   "source": "hand"
+  },
+  {
+   "id": 3,
+   "name": "A Cap",
+   "why": "Capture zone on the A (south-west) side.",
+   "source": "carried"
+  },
+  {
+   "id": 4,
+   "name": "B Cap",
+   "why": "Capture zone on the B (east) side.",
+   "source": "hand"
+  },
+  {
+   "id": 5,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, among the north buildings.",
+   "source": "hand"
+  },
+  {
+   "id": 6,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, south-west of the crater.",
+   "source": "hand"
+  },
+  {
+   "id": 7,
+   "name": "A Spawn",
+   "why": "A team spawn dome",
+   "source": "spawn"
+  },
+  {
+   "id": 8,
+   "name": "B Spawn",
+   "why": "B team spawn dome",
+   "source": "spawn"
+  },
+  {
+   "id": 9,
+   "name": "Core",
+   "why": "North-east quarter of the crater around the cross-shaped centre structure.",
+   "source": "hand"
+  },
+  {
+   "id": 10,
+   "name": "Crystals",
+   "why": "Bushy west ground with the crystal clusters.",
+   "source": "hand"
+  },
+  {
+   "id": 11,
+   "name": "Cliffs",
+   "why": "Steep rocky north-west slope under the big rock slabs.",
+   "source": "hand"
+  }
+ ]
+}

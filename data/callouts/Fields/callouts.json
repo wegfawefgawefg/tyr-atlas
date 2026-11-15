@@ -1,0 +1,155 @@
+{
+ "map": "Fields",
+ "callouts": [
+  {
+   "id": 0,
+   "name": "Energy",
+   "why": "Energy zone on the west edge.",
+   "source": "carried"
+  },
+  {
+   "id": 1,
+   "name": "A Ammo",
+   "why": "Ammo zone on the A side, tucked under the south flank of the main ship hull.",
+   "source": "carried"
+  },
+  {
+   "id": 2,
+   "name": "B Ammo",
+   "why": "Ammo zone on the B side, north of the main ship hull.",
+   "source": "carried"
+  },
+  {
+   "id": 3,
+   "name": "B Cap",
+   "why": "Capture zone on the B (north) side, beside the small ship thruster wreck.",
+   "source": "carried"
+  },
+  {
+   "id": 4,
+   "name": "A Cap",
+   "why": "Capture zone on the A (south) side; the A heal zone sits on its north edge.",
+   "source": "carried"
+  },
+  {
+   "id": 5,
+   "name": "A Spawn",
+   "why": "A team spawn dome",
+   "source": "spawn"
+  },
+  {
+   "id": 6,
+   "name": "Ridge",
+   "why": "Raised ground behind the ridge wall leading out of B spawn.",
+   "source": "carried"
+  },
+  {
+   "id": 7,
+   "name": "Wreck",
+   "why": "Broken-off ship section lying in the south-west.",
+   "source": "carried"
+  },
+  {
+   "id": 8,
+   "name": "Shelf",
+   "why": "East edge strip north of the A spawn dome, among the comm spires.",
+   "source": "hand"
+  },
+  {
+   "id": 9,
+   "name": "Teeth",
+   "why": "Row of dragon's teeth tank traps west of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 10,
+   "name": "Turrets",
+   "why": "Raised strip east of the ridge wall with the row of turret bases.",
+   "source": "carried"
+  },
+  {
+   "id": 11,
+   "name": "East Lane",
+   "why": "Strip between the ridge wall and the east edge, south of Turrets.",
+   "source": "hand"
+  },
+  {
+   "id": 12,
+   "name": "Ship",
+   "why": "Open ground along the south-west side of the big crashed ship hull.",
+   "source": "carried"
+  },
+  {
+   "id": 13,
+   "name": "Knoll",
+   "why": "Small hill between Wreck and A Cap.",
+   "source": "carried"
+  },
+  {
+   "id": 14,
+   "name": "Mound",
+   "why": "Low hill on the west side, between Teeth and Energy.",
+   "source": "carried"
+  },
+  {
+   "id": 15,
+   "name": "Rock",
+   "why": "Rock outcrop in the middle of the north-west rise.",
+   "source": "carried"
+  },
+  {
+   "id": 16,
+   "name": "Hump",
+   "why": "Bushy hill north of Mid, between B Ammo and Rock.",
+   "source": "hand"
+  },
+  {
+   "id": 17,
+   "name": "Spires",
+   "why": "Comm spires in the south-east corner, around the A spawn dome.",
+   "source": "carried"
+  },
+  {
+   "id": 18,
+   "name": "Wall",
+   "why": "West foot of the ridge wall, south half.",
+   "source": "carried"
+  },
+  {
+   "id": 19,
+   "name": "Thicket",
+   "why": "Biggest bush cluster on the map, south-west.",
+   "source": "carried"
+  },
+  {
+   "id": 20,
+   "name": "Mid",
+   "why": "Bare low ground at the map centre, north-west of the ship hull.",
+   "source": "carried"
+  },
+  {
+   "id": 21,
+   "name": "West Basin",
+   "why": "Low ground on the west edge north of Energy.",
+   "source": "carried"
+  },
+  {
+   "id": 22,
+   "name": "Arch",
+   "why": "Arched section of the ridge wall, north half.",
+   "source": "carried"
+  },
+  {
+   "id": 23,
+   "name": "B Yard",
+   "why": "Open ground on the west side of B Cap (the B heal zone sits inside the B Cap region).",
+   "source": "hand"
+  },
+  {
+   "id": 24,
+   "name": "Corner",
+   "why": "North-west corner of the map.",
+   "source": "carried"
+  }
+ ]
+}

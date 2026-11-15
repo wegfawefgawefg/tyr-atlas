@@ -1,0 +1,828 @@
+{
+ "map": "Fields",
+ "res_m": 4.0,
+ "shape": [
+  445,
+  445
+ ],
+ "origin": [
+  -88600.0,
+  -45198.99919633551
+ ],
+ "regions": [
+  {
+   "id": 0,
+   "seed": 0,
+   "area_m2": 8848,
+   "centre": [
+    123.3,
+    225.0
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 369,
+   "side": "mid",
+   "height_m": -1.6,
+   "relief_m": 17.7,
+   "structure_share": 0.12,
+   "bushes": 58,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AbilityResourceZone"
+    }
+   ],
+   "neighbours": [
+    14,
+    15,
+    19,
+    21
+   ],
+   "sight": {
+    "spots_ha": 5.28,
+    "spotted_by": 804.1
+   }
+  },
+  {
+   "id": 1,
+   "seed": 1,
+   "area_m2": 11328,
+   "centre": [
+    241.6,
+    200.0
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 133,
+   "side": "A",
+   "height_m": 0.3,
+   "relief_m": 9.9,
+   "structure_share": 0.01,
+   "bushes": 38,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    }
+   ],
+   "neighbours": [
+    12,
+    18,
+    20
+   ],
+   "sight": {
+    "spots_ha": 6.65,
+    "spotted_by": 1018.5
+   }
+  },
+  {
+   "id": 2,
+   "seed": 2,
+   "area_m2": 28080,
+   "centre": [
+    246.0,
+    251.0
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 173,
+   "side": "B",
+   "height_m": -0.6,
+   "relief_m": 16.3,
+   "structure_share": 0.02,
+   "bushes": 91,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    },
+    {
+     "kind": "landmark",
+     "word": "TurretBase",
+     "src": "SM_CrashedSpaceShip_01_Turret_Base_01_01"
+    }
+   ],
+   "neighbours": [
+    16,
+    20,
+    22
+   ],
+   "sight": {
+    "spots_ha": 3.93,
+    "spotted_by": 604.4
+   }
+  },
+  {
+   "id": 3,
+   "seed": 3,
+   "area_m2": 17424,
+   "centre": [
+    216.0,
+    317.5
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 388,
+   "side": "B",
+   "height_m": 1.5,
+   "relief_m": 32.5,
+   "structure_share": 0.03,
+   "bushes": 89,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [
+    22,
+    23
+   ],
+   "sight": {
+    "spots_ha": 4.17,
+    "spotted_by": 633.8
+   }
+  },
+  {
+   "id": 4,
+   "seed": 4,
+   "area_m2": 52592,
+   "centre": [
+    201.0,
+    132.5
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 356,
+   "side": "A",
+   "height_m": -0.2,
+   "relief_m": 29.4,
+   "structure_share": 0.03,
+   "bushes": 106,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [
+    5,
+    12,
+    13,
+    18,
+    19
+   ],
+   "sight": {
+    "spots_ha": 6.35,
+    "spotted_by": 989.9
+   }
+  },
+  {
+   "id": 5,
+   "seed": 5,
+   "area_m2": 19200,
+   "centre": [
+    258.8,
+    140.7
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 363,
+   "side": "A",
+   "height_m": 2.8,
+   "relief_m": 24.5,
+   "structure_share": 0.01,
+   "bushes": 14,
+   "contains": [
+    {
+     "kind": "spawn",
+     "team": "A"
+    }
+   ],
+   "neighbours": [
+    4,
+    17,
+    18
+   ],
+   "sight": {
+    "spots_ha": 4.41,
+    "spotted_by": 693.3
+   }
+  },
+  {
+   "id": 6,
+   "seed": 6,
+   "area_m2": 25824,
+   "centre": [
+    288.8,
+    300.9
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 436,
+   "side": "B",
+   "height_m": 7.1,
+   "relief_m": 16.6,
+   "structure_share": 0.02,
+   "bushes": 51,
+   "contains": [
+    {
+     "kind": "spawn",
+     "team": "B"
+    }
+   ],
+   "neighbours": [
+    10,
+    22
+   ],
+   "sight": {
+    "spots_ha": 3.43,
+    "spotted_by": 526.6
+   }
+  },
+  {
+   "id": 7,
+   "seed": 7,
+   "area_m2": 17440,
+   "centre": [
+    187.1,
+    173.0
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 221,
+   "side": "A",
+   "height_m": 0.4,
+   "relief_m": 28.7,
+   "structure_share": 0.01,
+   "bushes": 21,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "CrashedSpaceShip",
+     "src": "BP_LI_CrashedSpaceShip_01_03"
+    }
+   ],
+   "neighbours": [
+    9,
+    12,
+    13,
+    14,
+    19
+   ],
+   "sight": {
+    "spots_ha": 7.64,
+    "spotted_by": 1190.8
+   }
+  },
+  {
+   "id": 8,
+   "seed": 8,
+   "area_m2": 17648,
+   "centre": [
+    318.7,
+    172.9
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 455,
+   "side": "A",
+   "height_m": 8.9,
+   "relief_m": 16.5,
+   "structure_share": 0.0,
+   "bushes": 9,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "CommSpires",
+     "src": "BP_LI_Fields_CommSpires_02"
+    }
+   ],
+   "neighbours": [
+    11,
+    17
+   ],
+   "sight": {
+    "spots_ha": 2.96,
+    "spotted_by": 457.3
+   }
+  },
+  {
+   "id": 9,
+   "seed": 9,
+   "area_m2": 28528,
+   "centre": [
+    179.2,
+    219.7
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 145,
+   "side": "mid",
+   "height_m": -3.9,
+   "relief_m": 13.8,
+   "structure_share": 0.02,
+   "bushes": 80,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "DragonTeeth",
+     "src": "BP_LI_Fields_DragonTeeth_01"
+    }
+   ],
+   "neighbours": [
+    7,
+    12,
+    14,
+    15,
+    16,
+    20
+   ],
+   "sight": {
+    "spots_ha": 6.98,
+    "spotted_by": 1098.7
+   }
+  },
+  {
+   "id": 10,
+   "seed": 10,
+   "area_m2": 31792,
+   "centre": [
+    312.3,
+    258.7
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 417,
+   "side": "B",
+   "height_m": 8.3,
+   "relief_m": 19.6,
+   "structure_share": 0.02,
+   "bushes": 37,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "RidgeWall",
+     "src": "BP_LI_Fields_RidgeWallDebris_02"
+    }
+   ],
+   "neighbours": [
+    6,
+    11
+   ],
+   "sight": {
+    "spots_ha": 3.75,
+    "spotted_by": 577.9
+   }
+  },
+  {
+   "id": 11,
+   "seed": 12,
+   "area_m2": 15632,
+   "centre": [
+    315.3,
+    213.4
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 401,
+   "side": "A",
+   "height_m": 9.1,
+   "relief_m": 22.3,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "WallSection",
+     "src": "BP_LI_RidgeWall_WallSection_02"
+    }
+   ],
+   "neighbours": [
+    8,
+    10
+   ],
+   "sight": {
+    "spots_ha": 3.39,
+    "spotted_by": 516.3
+   }
+  },
+  {
+   "id": 12,
+   "seed": 16,
+   "area_m2": 24832,
+   "centre": [
+    220.1,
+    186.6
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 137,
+   "side": "A",
+   "height_m": -0.0,
+   "relief_m": 12.1,
+   "structure_share": 0.02,
+   "bushes": 84,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "TurretBase",
+     "src": "SM_CrashedSpaceShip_01_Turret_Base_01_01"
+    }
+   ],
+   "neighbours": [
+    1,
+    4,
+    7,
+    9,
+    13,
+    18,
+    20
+   ],
+   "sight": {
+    "spots_ha": 9.22,
+    "spotted_by": 1429.6
+   }
+  },
+  {
+   "id": 13,
+   "seed": 17,
+   "area_m2": 13712,
+   "centre": [
+    192.6,
+    152.5
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 287,
+   "side": "A",
+   "height_m": 2.8,
+   "relief_m": 19.5,
+   "structure_share": 0.04,
+   "bushes": 58,
+   "contains": [
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    4,
+    7,
+    12,
+    19
+   ],
+   "sight": {
+    "spots_ha": 7.69,
+    "spotted_by": 1200.4
+   }
+  },
+  {
+   "id": 14,
+   "seed": 18,
+   "area_m2": 21632,
+   "centre": [
+    156.4,
+    197.5
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 253,
+   "side": "A",
+   "height_m": 1.1,
+   "relief_m": 16.9,
+   "structure_share": 0.03,
+   "bushes": 73,
+   "contains": [
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    0,
+    7,
+    9,
+    15,
+    19
+   ],
+   "sight": {
+    "spots_ha": 8.01,
+    "spotted_by": 1241.6
+   }
+  },
+  {
+   "id": 15,
+   "seed": 19,
+   "area_m2": 20816,
+   "centre": [
+    159.0,
+    254.4
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 263,
+   "side": "mid",
+   "height_m": -1.5,
+   "relief_m": 22.4,
+   "structure_share": 0.01,
+   "bushes": 49,
+   "contains": [
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    0,
+    9,
+    14,
+    16,
+    21,
+    23,
+    24
+   ],
+   "sight": {
+    "spots_ha": 7.66,
+    "spotted_by": 1189.3
+   }
+  },
+  {
+   "id": 16,
+   "seed": 20,
+   "area_m2": 21152,
+   "centre": [
+    203.7,
+    265.3
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 185,
+   "side": "B",
+   "height_m": 1.3,
+   "relief_m": 16.5,
+   "structure_share": 0.01,
+   "bushes": 30,
+   "contains": [
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    2,
+    9,
+    15,
+    20,
+    22,
+    23
+   ],
+   "sight": {
+    "spots_ha": 8.38,
+    "spotted_by": 1304.8
+   }
+  },
+  {
+   "id": 17,
+   "seed": 21,
+   "area_m2": 26480,
+   "centre": [
+    301.2,
+    135.2
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 484,
+   "side": "A",
+   "height_m": 3.5,
+   "relief_m": 21.4,
+   "structure_share": 0.06,
+   "bushes": 89,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "WallSection",
+     "src": "BP_LI_RidgeWall_WallSection_01"
+    },
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    5,
+    8
+   ],
+   "sight": {
+    "spots_ha": 2.5,
+    "spotted_by": 384.9
+   }
+  },
+  {
+   "id": 18,
+   "seed": 22,
+   "area_m2": 29984,
+   "centre": [
+    266.5,
+    190.2
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 237,
+   "side": "A",
+   "height_m": 1.7,
+   "relief_m": 18.9,
+   "structure_share": 0.02,
+   "bushes": 58,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "TurretBase",
+     "src": "SM_CrashedSpaceShip_01_Turret_Base_01_01"
+    },
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    1,
+    4,
+    5,
+    12
+   ],
+   "sight": {
+    "spots_ha": 4.67,
+    "spotted_by": 722.2
+   }
+  },
+  {
+   "id": 19,
+   "seed": 23,
+   "area_m2": 40512,
+   "centre": [
+    136.2,
+    174.6
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 366,
+   "side": "A",
+   "height_m": -2.5,
+   "relief_m": 19.9,
+   "structure_share": 0.05,
+   "bushes": 216,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    0,
+    4,
+    7,
+    13,
+    14
+   ],
+   "sight": {
+    "spots_ha": 5.51,
+    "spotted_by": 859.7
+   }
+  },
+  {
+   "id": 20,
+   "seed": 24,
+   "area_m2": 16016,
+   "centre": [
+    213.0,
+    230.5
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 42,
+   "side": "mid",
+   "height_m": -2.6,
+   "relief_m": 12.5,
+   "structure_share": 0.0,
+   "bushes": 1,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    1,
+    2,
+    9,
+    12,
+    16
+   ],
+   "sight": {
+    "spots_ha": 6.17,
+    "spotted_by": 958.5
+   }
+  },
+  {
+   "id": 21,
+   "seed": 25,
+   "area_m2": 26560,
+   "centre": [
+    127.8,
+    261.9
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 388,
+   "side": "mid",
+   "height_m": -4.2,
+   "relief_m": 16.7,
+   "structure_share": 0.03,
+   "bushes": 81,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    0,
+    15,
+    24
+   ],
+   "sight": {
+    "spots_ha": 5.51,
+    "spotted_by": 862.5
+   }
+  },
+  {
+   "id": 22,
+   "seed": 26,
+   "area_m2": 24880,
+   "centre": [
+    240.2,
+    288.1
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 288,
+   "side": "B",
+   "height_m": 0.7,
+   "relief_m": 31.8,
+   "structure_share": 0.01,
+   "bushes": 66,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "WallSection",
+     "src": "BP_LI_RidgeWall_WallSection_04"
+    },
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    2,
+    3,
+    6,
+    16,
+    23
+   ],
+   "sight": {
+    "spots_ha": 3.65,
+    "spotted_by": 559.6
+   }
+  },
+  {
+   "id": 23,
+   "seed": 27,
+   "area_m2": 32448,
+   "centre": [
+    182.5,
+    299.8
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 344,
+   "side": "B",
+   "height_m": -0.8,
+   "relief_m": 38.3,
+   "structure_share": 0.02,
+   "bushes": 67,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    3,
+    15,
+    16,
+    22,
+    24
+   ],
+   "sight": {
+    "spots_ha": 6.43,
+    "spotted_by": 987.0
+   }
+  },
+  {
+   "id": 24,
+   "seed": 28,
+   "area_m2": 29328,
+   "centre": [
+    142.2,
+    302.7
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 441,
+   "side": "B",
+   "height_m": 0.8,
+   "relief_m": 33.2,
+   "structure_share": 0.04,
+   "bushes": 92,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    15,
+    21,
+    23
+   ],
+   "sight": {
+    "spots_ha": 4.38,
+    "spotted_by": 675.8
+   }
+  }
+ ]
+}

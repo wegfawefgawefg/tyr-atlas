@@ -1,0 +1,107 @@
+{
+ "map": "Divide",
+ "callouts": [
+  {
+   "id": 0,
+   "name": "Pad",
+   "why": "The east energy zone pad itself (tiny cut-off speck).",
+   "source": "carried"
+  },
+  {
+   "id": 1,
+   "name": "West Energy",
+   "why": "Energy zone in the north-west.",
+   "source": "carried"
+  },
+  {
+   "id": 2,
+   "name": "A Ammo",
+   "why": "Ammo zone on the A (south-west) side.",
+   "source": "carried"
+  },
+  {
+   "id": 3,
+   "name": "B Ammo",
+   "why": "Ammo zone on the B (north-east) side.",
+   "source": "carried"
+  },
+  {
+   "id": 4,
+   "name": "A Cap",
+   "why": "Capture zone inside the A spawn dome, south-west corner.",
+   "source": "carried"
+  },
+  {
+   "id": 5,
+   "name": "B Cap",
+   "why": "Capture zone inside the B spawn dome, north-east corner.",
+   "source": "carried"
+  },
+  {
+   "id": 6,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, east edge by the buildings.",
+   "source": "carried"
+  },
+  {
+   "id": 7,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, west edge.",
+   "source": "carried"
+  },
+  {
+   "id": 8,
+   "name": "Blocks",
+   "why": "Building blocks along the south edge.",
+   "source": "carried"
+  },
+  {
+   "id": 9,
+   "name": "North Field",
+   "why": "Open high ground along the north edge.",
+   "source": "carried"
+  },
+  {
+   "id": 10,
+   "name": "East Energy",
+   "why": "Energy zone among the cliff buildings in the south-east.",
+   "source": "carried"
+  },
+  {
+   "id": 11,
+   "name": "West Rocks",
+   "why": "Big rock mass on the west edge.",
+   "source": "carried"
+  },
+  {
+   "id": 12,
+   "name": "A Gully",
+   "why": "Low bushy ground leading out of A Cap to the east.",
+   "source": "carried"
+  },
+  {
+   "id": 13,
+   "name": "Thicket",
+   "why": "Densest bush belt, south of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 14,
+   "name": "Mid",
+   "why": "Lowest ground at the map centre.",
+   "source": "carried"
+  },
+  {
+   "id": 15,
+   "name": "Trench",
+   "why": "Deep cut running north-east from Mid.",
+   "source": "carried"
+  },
+  {
+   "id": 16,
+   "name": "B Gully",
+   "why": "Low bushy ground leading out of B Cap to the west.",
+   "source": "carried"
+  }
+ ]
+}

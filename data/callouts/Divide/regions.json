@@ -1,0 +1,544 @@
+{
+ "map": "Divide",
+ "res_m": 4.0,
+ "shape": [
+  441,
+  441
+ ],
+ "origin": [
+  -500.0,
+  -176599.99930233063
+ ],
+ "regions": [
+  {
+   "id": 0,
+   "seed": 0,
+   "area_m2": 32,
+   "centre": [
+    289.5,
+    159.5
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 366,
+   "side": null,
+   "height_m": 10.0,
+   "relief_m": 0.1,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AbilityResourceZone"
+    }
+   ],
+   "neighbours": [],
+   "sight": {
+    "spots_ha": 0.16,
+    "spotted_by": 34.6
+   }
+  },
+  {
+   "id": 1,
+   "seed": 1,
+   "area_m2": 32560,
+   "centre": [
+    187.6,
+    281.9
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 272,
+   "side": null,
+   "height_m": 3.9,
+   "relief_m": 29.6,
+   "structure_share": 0.22,
+   "bushes": 550,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AbilityResourceZone"
+    }
+   ],
+   "neighbours": [
+    9,
+    11,
+    13,
+    14,
+    15
+   ],
+   "sight": {
+    "spots_ha": 1.95,
+    "spotted_by": 296.9
+   }
+  },
+  {
+   "id": 2,
+   "seed": 2,
+   "area_m2": 34288,
+   "centre": [
+    160.4,
+    161.8
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 374,
+   "side": null,
+   "height_m": 7.3,
+   "relief_m": 25.1,
+   "structure_share": 0.1,
+   "bushes": 477,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    }
+   ],
+   "neighbours": [
+    7,
+    12,
+    13
+   ],
+   "sight": {
+    "spots_ha": 2.15,
+    "spotted_by": 329.9
+   }
+  },
+  {
+   "id": 3,
+   "seed": 3,
+   "area_m2": 23952,
+   "centre": [
+    314.9,
+    295.2
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 444,
+   "side": null,
+   "height_m": 4.5,
+   "relief_m": 23.3,
+   "structure_share": 0.1,
+   "bushes": 396,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    }
+   ],
+   "neighbours": [
+    6,
+    16
+   ],
+   "sight": {
+    "spots_ha": 1.11,
+    "spotted_by": 175.6
+   }
+  },
+  {
+   "id": 4,
+   "seed": 4,
+   "area_m2": 2880,
+   "centre": [
+    163.6,
+    136.0
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 444,
+   "side": null,
+   "height_m": 8.3,
+   "relief_m": 2.6,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [],
+   "sight": {
+    "spots_ha": 0.29,
+    "spotted_by": 44.2
+   }
+  },
+  {
+   "id": 5,
+   "seed": 5,
+   "area_m2": 2880,
+   "centre": [
+    303.9,
+    303.3
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 432,
+   "side": null,
+   "height_m": 7.2,
+   "relief_m": 2.0,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [],
+   "sight": {
+    "spots_ha": 0.3,
+    "spotted_by": 45.3
+   }
+  },
+  {
+   "id": 6,
+   "seed": 6,
+   "area_m2": 30976,
+   "centre": [
+    307.7,
+    233.3
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 322,
+   "side": null,
+   "height_m": 4.6,
+   "relief_m": 28.9,
+   "structure_share": 0.11,
+   "bushes": 338,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "HealZone"
+    },
+    {
+     "kind": "landmark",
+     "word": "Building",
+     "src": "BP_LI_Divide_RocksCliffsBuildings_09"
+    },
+    {
+     "kind": "landmark",
+     "word": "Building",
+     "src": "BP_LI_Divide_RocksCliffsBuildings_10"
+    }
+   ],
+   "neighbours": [
+    3,
+    15
+   ],
+   "sight": {
+    "spots_ha": 1.3,
+    "spotted_by": 202.7
+   }
+  },
+  {
+   "id": 7,
+   "seed": 7,
+   "area_m2": 29648,
+   "centre": [
+    158.7,
+    214.7
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 280,
+   "side": null,
+   "height_m": 3.7,
+   "relief_m": 20.7,
+   "structure_share": 0.08,
+   "bushes": 282,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "HealZone"
+    }
+   ],
+   "neighbours": [
+    2,
+    11,
+    13
+   ],
+   "sight": {
+    "spots_ha": 2.64,
+    "spotted_by": 407.0
+   }
+  },
+  {
+   "id": 8,
+   "seed": 8,
+   "area_m2": 20336,
+   "centre": [
+    245.3,
+    124.2
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 417,
+   "side": null,
+   "height_m": 5.3,
+   "relief_m": 19.7,
+   "structure_share": 0.04,
+   "bushes": 106,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Building",
+     "src": "BP_LI_Divide_Buildings_01"
+    }
+   ],
+   "neighbours": [
+    12
+   ],
+   "sight": {
+    "spots_ha": 1.76,
+    "spotted_by": 273.2
+   }
+  },
+  {
+   "id": 9,
+   "seed": 9,
+   "area_m2": 40160,
+   "centre": [
+    222.3,
+    309.6
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 332,
+   "side": null,
+   "height_m": 8.7,
+   "relief_m": 29.8,
+   "structure_share": 0.04,
+   "bushes": 344,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Building",
+     "src": "BP_LI_Divide_Buildings_02"
+    }
+   ],
+   "neighbours": [
+    1,
+    15,
+    16
+   ],
+   "sight": {
+    "spots_ha": 2.82,
+    "spotted_by": 429.0
+   }
+  },
+  {
+   "id": 10,
+   "seed": 13,
+   "area_m2": 21808,
+   "centre": [
+    269.4,
+    161.3
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 311,
+   "side": null,
+   "height_m": 14.9,
+   "relief_m": 14.1,
+   "structure_share": 0.08,
+   "bushes": 250,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Building",
+     "src": "BP_LI_Divide_RocksCliffsBuildings_07"
+    },
+    {
+     "kind": "landmark",
+     "word": "Building",
+     "src": "BP_LI_Divide_RocksCliffsBuildings_13"
+    }
+   ],
+   "neighbours": [
+    13
+   ],
+   "sight": {
+    "spots_ha": 0.74,
+    "spotted_by": 112.0
+   }
+  },
+  {
+   "id": 11,
+   "seed": 14,
+   "area_m2": 16656,
+   "centre": [
+    163.3,
+    265.9
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 301,
+   "side": null,
+   "height_m": 0.0,
+   "relief_m": 17.6,
+   "structure_share": 0.2,
+   "bushes": 233,
+   "contains": [
+    {
+     "kind": "structure",
+     "size_m2": 3040.0
+    }
+   ],
+   "neighbours": [
+    1,
+    7,
+    13
+   ],
+   "sight": {
+    "spots_ha": 2.01,
+    "spotted_by": 313.9
+   }
+  },
+  {
+   "id": 12,
+   "seed": 15,
+   "area_m2": 39120,
+   "centre": [
+    197.3,
+    139.0
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 372,
+   "side": null,
+   "height_m": -4.6,
+   "relief_m": 26.8,
+   "structure_share": 0.11,
+   "bushes": 504,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    2,
+    8,
+    13
+   ],
+   "sight": {
+    "spots_ha": 2.08,
+    "spotted_by": 326.6
+   }
+  },
+  {
+   "id": 13,
+   "seed": 16,
+   "area_m2": 40784,
+   "centre": [
+    220.2,
+    200.4
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 110,
+   "side": null,
+   "height_m": -6.1,
+   "relief_m": 24.5,
+   "structure_share": 0.19,
+   "bushes": 822,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    1,
+    2,
+    7,
+    10,
+    11,
+    12,
+    14,
+    15
+   ],
+   "sight": {
+    "spots_ha": 2.4,
+    "spotted_by": 374.3
+   }
+  },
+  {
+   "id": 14,
+   "seed": 17,
+   "area_m2": 22304,
+   "centre": [
+    234.0,
+    228.4
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 27,
+   "side": null,
+   "height_m": -9.1,
+   "relief_m": 19.2,
+   "structure_share": 0.16,
+   "bushes": 513,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    1,
+    13,
+    15
+   ],
+   "sight": {
+    "spots_ha": 2.21,
+    "spotted_by": 342.2
+   }
+  },
+  {
+   "id": 15,
+   "seed": 18,
+   "area_m2": 31856,
+   "centre": [
+    257.4,
+    241.2
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 132,
+   "side": null,
+   "height_m": -3.6,
+   "relief_m": 36.4,
+   "structure_share": 0.18,
+   "bushes": 619,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    1,
+    6,
+    9,
+    13,
+    14
+   ],
+   "sight": {
+    "spots_ha": 2.37,
+    "spotted_by": 364.1
+   }
+  },
+  {
+   "id": 16,
+   "seed": 19,
+   "area_m2": 32560,
+   "centre": [
+    272.3,
+    306.7
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 366,
+   "side": null,
+   "height_m": -4.4,
+   "relief_m": 24.4,
+   "structure_share": 0.14,
+   "bushes": 602,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    3,
+    9
+   ],
+   "sight": {
+    "spots_ha": 1.93,
+    "spotted_by": 290.1
+   }
+  }
+ ]
+}

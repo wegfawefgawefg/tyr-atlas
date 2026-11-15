@@ -1,0 +1,149 @@
+{
+ "map": "WindValley",
+ "callouts": [
+  {
+   "id": 0,
+   "name": "A Cap",
+   "why": "Capture zone inside the A spawn dome, south edge.",
+   "source": "carried"
+  },
+  {
+   "id": 1,
+   "name": "B Cap",
+   "why": "Capture zone inside the B spawn dome, north edge.",
+   "source": "carried"
+  },
+  {
+   "id": 2,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, north-west of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 3,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, south-west of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 4,
+   "name": "Mid",
+   "why": "Cluster of structures at the map centre.",
+   "source": "carried"
+  },
+  {
+   "id": 5,
+   "name": "Pillars",
+   "why": "Pillar group on the east edge.",
+   "source": "carried"
+  },
+  {
+   "id": 6,
+   "name": "Hill",
+   "why": "Raised wooded ground on the west edge.",
+   "source": "carried"
+  },
+  {
+   "id": 7,
+   "name": "Ruins",
+   "why": "Ruined walls in the north-east corner.",
+   "source": "carried"
+  },
+  {
+   "id": 8,
+   "name": "B Wall",
+   "why": "Wall ruins beside B Cap to the west.",
+   "source": "carried"
+  },
+  {
+   "id": 9,
+   "name": "Rotunda",
+   "why": "Ring-shaped ruin in the south-west corner.",
+   "source": "carried"
+  },
+  {
+   "id": 10,
+   "name": "A Wall",
+   "why": "Wall ruins beside A Cap to the west.",
+   "source": "carried"
+  },
+  {
+   "id": 11,
+   "name": "Mesa",
+   "why": "Big flat-topped rock south of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 12,
+   "name": "Grove",
+   "why": "Trees and bushes in the south-east.",
+   "source": "carried"
+  },
+  {
+   "id": 13,
+   "name": "Ramp",
+   "why": "Big pillar with a ramp, east of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 14,
+   "name": "East Rise",
+   "why": "Rising ground with big pillars in the north-east.",
+   "source": "carried"
+  },
+  {
+   "id": 15,
+   "name": "Basin",
+   "why": "Wide low ground in the north-west.",
+   "source": "carried"
+  },
+  {
+   "id": 16,
+   "name": "A Yard",
+   "why": "Open ground beside A Cap to the east.",
+   "source": "carried"
+  },
+  {
+   "id": 17,
+   "name": "Twin Rocks",
+   "why": "Pair of big rocks in the south-west.",
+   "source": "carried"
+  },
+  {
+   "id": 18,
+   "name": "Thicket",
+   "why": "Densest bush belt, south-east of Mid.",
+   "source": "carried"
+  },
+  {
+   "id": 19,
+   "name": "Field",
+   "why": "Wide open ground west of Mid.",
+   "source": "carried"
+  },
+  {
+   "id": 20,
+   "name": "Brush",
+   "why": "Bush belt north-east of Mid.",
+   "source": "carried"
+  },
+  {
+   "id": 21,
+   "name": "Boulder",
+   "why": "Big rock just north of Mid.",
+   "source": "carried"
+  },
+  {
+   "id": 22,
+   "name": "North Dip",
+   "why": "Low ground between Boulder and East Rise.",
+   "source": "carried"
+  },
+  {
+   "id": 23,
+   "name": "B Yard",
+   "why": "Open ground beside B Cap to the south.",
+   "source": "carried"
+  }
+ ]
+}

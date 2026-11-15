@@ -1,0 +1,71 @@
+{
+ "map": "Scorch",
+ "callouts": [
+  {
+   "id": 0,
+   "name": "Mid",
+   "why": "Low centre of the map; the energy zone is here.",
+   "source": "carried"
+  },
+  {
+   "id": 1,
+   "name": "West Ammo",
+   "why": "Ammo zone on the high west side of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 2,
+   "name": "East Ammo",
+   "why": "Ammo zone in the low east side among the towers.",
+   "source": "carried"
+  },
+  {
+   "id": 3,
+   "name": "A Cap",
+   "why": "Capture zone on the A (south) side of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 4,
+   "name": "B Cap",
+   "why": "Capture zone on the B (north) side, at the mouth of the bushy low ground.",
+   "source": "carried"
+  },
+  {
+   "id": 5,
+   "name": "A Spawn",
+   "why": "A spawn, south edge.",
+   "source": "carried"
+  },
+  {
+   "id": 6,
+   "name": "B Spawn",
+   "why": "B team spawn dome",
+   "source": "spawn"
+  },
+  {
+   "id": 7,
+   "name": "Towers",
+   "why": "Low north-east ground dotted with towers.",
+   "source": "carried"
+  },
+  {
+   "id": 8,
+   "name": "Low Shelf",
+   "why": "Bare flat shelf on the east edge.",
+   "source": "carried"
+  },
+  {
+   "id": 9,
+   "name": "Cracks",
+   "why": "Cracked ground across the big south-east slope.",
+   "source": "carried"
+  },
+  {
+   "id": 10,
+   "name": "Peak",
+   "why": "High bushy ground south-west of A Cap.",
+   "source": "hand"
+  }
+ ]
+}

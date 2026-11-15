@@ -1,0 +1,149 @@
+{
+ "map": "Ravine",
+ "callouts": [
+  {
+   "id": 0,
+   "name": "B Cap",
+   "why": "Capture zone inside the B spawn dome, north edge.",
+   "source": "carried"
+  },
+  {
+   "id": 1,
+   "name": "A Cap",
+   "why": "Capture zone inside the A spawn dome, south edge.",
+   "source": "carried"
+  },
+  {
+   "id": 2,
+   "name": "B Heal",
+   "why": "Heal zone on the B side, just south of B Cap.",
+   "source": "carried"
+  },
+  {
+   "id": 3,
+   "name": "A Heal",
+   "why": "Heal zone on the A side, just west of A Cap.",
+   "source": "carried"
+  },
+  {
+   "id": 4,
+   "name": "Crystals",
+   "why": "Crystal field in the south-east corner.",
+   "source": "carried"
+  },
+  {
+   "id": 5,
+   "name": "Ruins",
+   "why": "Ruined towers and half arch on the hill west of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 6,
+   "name": "Arch",
+   "why": "Stone arch on the high north-west ledge.",
+   "source": "carried"
+  },
+  {
+   "id": 7,
+   "name": "A Bridge",
+   "why": "Bridge over the ravine on the A (south) side.",
+   "source": "carried"
+  },
+  {
+   "id": 8,
+   "name": "Tower",
+   "why": "Tower on the highest ledge of the west edge.",
+   "source": "carried"
+  },
+  {
+   "id": 9,
+   "name": "Cliffs",
+   "why": "Steep high ground in the south-west.",
+   "source": "carried"
+  },
+  {
+   "id": 10,
+   "name": "Disk",
+   "why": "Stone disk in the north-west corner.",
+   "source": "carried"
+  },
+  {
+   "id": 11,
+   "name": "Thicket",
+   "why": "Bush and rock cluster south-west of the centre.",
+   "source": "carried"
+  },
+  {
+   "id": 12,
+   "name": "Spine",
+   "why": "Curved bare ridge east of the centre, best view on the map.",
+   "source": "carried"
+  },
+  {
+   "id": 13,
+   "name": "A Yard",
+   "why": "Open ground beside A Cap to the east.",
+   "source": "carried"
+  },
+  {
+   "id": 14,
+   "name": "Trench",
+   "why": "South run of the ravine between Mid and A Bridge.",
+   "source": "carried"
+  },
+  {
+   "id": 15,
+   "name": "Block",
+   "why": "Big square building on the east edge.",
+   "source": "carried"
+  },
+  {
+   "id": 16,
+   "name": "Boulder",
+   "why": "Lone big rock in the south-east dip.",
+   "source": "carried"
+  },
+  {
+   "id": 17,
+   "name": "Mid",
+   "why": "Ravine floor at the map centre.",
+   "source": "carried"
+  },
+  {
+   "id": 18,
+   "name": "Slope",
+   "why": "Ground falling from Spine down to Mid.",
+   "source": "carried"
+  },
+  {
+   "id": 19,
+   "name": "Gully",
+   "why": "North run of the ravine between Mid and B Heal.",
+   "source": "carried"
+  },
+  {
+   "id": 20,
+   "name": "Hedge",
+   "why": "Line of bushes along the north-east edge.",
+   "source": "carried"
+  },
+  {
+   "id": 21,
+   "name": "Bowl",
+   "why": "Wide open hollow in the north-east.",
+   "source": "carried"
+  },
+  {
+   "id": 22,
+   "name": "B Bridge",
+   "why": "Bridge over the ravine on the B (north-west) side.",
+   "source": "carried"
+  },
+  {
+   "id": 23,
+   "name": "B Yard",
+   "why": "Open ground beside B Cap to the east.",
+   "source": "carried"
+  }
+ ]
+}

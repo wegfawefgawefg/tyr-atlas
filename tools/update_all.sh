@@ -49,8 +49,11 @@ if [ -n "${MAPS:-}" ]; then
   $P tools/mapdsm.py
   # Dunes, Ruins and Glade are not in rotation, so they stay off the site (old layers kept in site_hidden/maps)
   $P tools/maplos.py Fields Divide Ravine Scorch WindValley Core
-  # Callout regions are NOT rebuilt here: re-segmenting changes region ids. If the maps changed, run
-  #   tools/callouts.py <maps>; tools/callout_names.py <maps>   (carries names over; name leftovers by hand)
+  # Callout regions and their hand-picked names live in data/callouts/<Map>/ and are NOT rebuilt here (re-segmenting
+  # changes region ids). If a map changed: copy its regions.npy/callouts.json to extract/maps/<Map>/regions_v1.npy and
+  # callouts_v1.json, run tools/callouts.py <Map>; tools/callout_names.py <Map> (carries names over; name leftovers by
+  # hand), then copy regions.npy, regions.json and callouts.json back into data/callouts/<Map>/.
+  for m in Fields Divide Ravine Scorch WindValley Core; do cp data/callouts/$m/* extract/maps/$m/; done
   $P tools/callouts_web.py Fields Divide Ravine Scorch WindValley Core
 fi
 

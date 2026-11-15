@@ -1,0 +1,363 @@
+{
+ "map": "Scorch",
+ "res_m": 4.0,
+ "shape": [
+  252,
+  252
+ ],
+ "origin": [
+  -49999.996,
+  -55599.995601331786
+ ],
+ "regions": [
+  {
+   "id": 0,
+   "seed": 0,
+   "area_m2": 32000,
+   "centre": [
+    127.9,
+    150.3
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 128,
+   "side": "B",
+   "height_m": 21.3,
+   "relief_m": 44.4,
+   "structure_share": 0.01,
+   "bushes": 141,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AbilityResourceZone"
+    },
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    1,
+    3,
+    10
+   ],
+   "sight": {
+    "spots_ha": 3.6,
+    "spotted_by": 555.6
+   }
+  },
+  {
+   "id": 1,
+   "seed": 1,
+   "area_m2": 3920,
+   "centre": [
+    96.9,
+    118.1
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 215,
+   "side": "mid",
+   "height_m": -15.2,
+   "relief_m": 68.5,
+   "structure_share": 0.13,
+   "bushes": 36,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    }
+   ],
+   "neighbours": [
+    0
+   ],
+   "sight": {
+    "spots_ha": 0.31,
+    "spotted_by": 48.0
+   }
+  },
+  {
+   "id": 2,
+   "seed": 2,
+   "area_m2": 17744,
+   "centre": [
+    188.9,
+    119.8
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 158,
+   "side": "mid",
+   "height_m": -3.8,
+   "relief_m": 40.6,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    },
+    {
+     "kind": "landmark",
+     "word": "Structures",
+     "src": "BP_LI_Scorch_Structures_10"
+    }
+   ],
+   "neighbours": [
+    7,
+    8,
+    9
+   ],
+   "sight": {
+    "spots_ha": 3.6,
+    "spotted_by": 559.6
+   }
+  },
+  {
+   "id": 3,
+   "seed": 3,
+   "area_m2": 14672,
+   "centre": [
+    135.4,
+    92.4
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 151,
+   "side": "A",
+   "height_m": 11.5,
+   "relief_m": 27.0,
+   "structure_share": 0.01,
+   "bushes": 57,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [
+    0,
+    10
+   ],
+   "sight": {
+    "spots_ha": 5.4,
+    "spotted_by": 846.6
+   }
+  },
+  {
+   "id": 4,
+   "seed": 4,
+   "area_m2": 37552,
+   "centre": [
+    159.3,
+    194.8
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 273,
+   "side": "B",
+   "height_m": -24.6,
+   "relief_m": 41.9,
+   "structure_share": 0.08,
+   "bushes": 381,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [
+    7
+   ],
+   "sight": {
+    "spots_ha": 2.78,
+    "spotted_by": 417.8
+   }
+  },
+  {
+   "id": 5,
+   "seed": 5,
+   "area_m2": 25040,
+   "centre": [
+    117.8,
+    47.4
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 344,
+   "side": "A",
+   "height_m": 20.3,
+   "relief_m": 41.3,
+   "structure_share": 0.14,
+   "bushes": 499,
+   "contains": [
+    {
+     "kind": "spawn",
+     "team": "A"
+    }
+   ],
+   "neighbours": [
+    9,
+    10
+   ],
+   "sight": {
+    "spots_ha": 1.64,
+    "spotted_by": 251.6
+   }
+  },
+  {
+   "id": 6,
+   "seed": 7,
+   "area_m2": 6112,
+   "centre": [
+    92.7,
+    161.3
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 267,
+   "side": "B",
+   "height_m": -2.6,
+   "relief_m": 6.4,
+   "structure_share": 0.06,
+   "bushes": 150,
+   "contains": [
+    {
+     "kind": "spawn",
+     "team": "B"
+    },
+    {
+     "kind": "landmark",
+     "word": "BrokenWall",
+     "src": "BP_LI_Scorch_BrokenWall_02"
+    }
+   ],
+   "neighbours": [],
+   "sight": {
+    "spots_ha": 0.38,
+    "spotted_by": 58.0
+   }
+  },
+  {
+   "id": 7,
+   "seed": 9,
+   "area_m2": 21360,
+   "centre": [
+    170.4,
+    162.2
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 162,
+   "side": "B",
+   "height_m": -16.9,
+   "relief_m": 34.7,
+   "structure_share": 0.01,
+   "bushes": 41,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Structures",
+     "src": "BP_LI_Scorch_Structures_07"
+    }
+   ],
+   "neighbours": [
+    2,
+    4,
+    8
+   ],
+   "sight": {
+    "spots_ha": 4.09,
+    "spotted_by": 632.0
+   }
+  },
+  {
+   "id": 8,
+   "seed": 10,
+   "area_m2": 15712,
+   "centre": [
+    193.8,
+    159.0
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 217,
+   "side": "B",
+   "height_m": -8.9,
+   "relief_m": 33.8,
+   "structure_share": 0.0,
+   "bushes": 2,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Structures",
+     "src": "BP_LI_Scorch_Structures_08"
+    }
+   ],
+   "neighbours": [
+    2,
+    7
+   ],
+   "sight": {
+    "spots_ha": 3.53,
+    "spotted_by": 548.5
+   }
+  },
+  {
+   "id": 9,
+   "seed": 11,
+   "area_m2": 35952,
+   "centre": [
+    169.4,
+    87.2
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 178,
+   "side": "A",
+   "height_m": 6.4,
+   "relief_m": 64.2,
+   "structure_share": 0.02,
+   "bushes": 98,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "GroundCracks",
+     "src": "BP_LI_Scorch_GroundCracks_01"
+    },
+    {
+     "kind": "landmark",
+     "word": "Structures",
+     "src": "BP_LI_Scorch_Structures_09"
+    }
+   ],
+   "neighbours": [
+    2,
+    5
+   ],
+   "sight": {
+    "spots_ha": 3.97,
+    "spotted_by": 605.3
+   }
+  },
+  {
+   "id": 10,
+   "seed": 13,
+   "area_m2": 14432,
+   "centre": [
+    110.5,
+    83.9
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 235,
+   "side": "A",
+   "height_m": 27.1,
+   "relief_m": 23.6,
+   "structure_share": 0.05,
+   "bushes": 68,
+   "contains": [
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    0,
+    3,
+    5
+   ],
+   "sight": {
+    "spots_ha": 3.2,
+    "spotted_by": 495.0
+   }
+  }
+ ]
+}

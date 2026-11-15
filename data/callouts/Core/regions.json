@@ -1,0 +1,377 @@
+{
+ "map": "Core",
+ "res_m": 4.0,
+ "shape": [
+  252,
+  252
+ ],
+ "origin": [
+  -50399.613,
+  -50400.0
+ ],
+ "regions": [
+  {
+   "id": 0,
+   "seed": 0,
+   "area_m2": 11744,
+   "centre": [
+    133.6,
+    102.8
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 49,
+   "side": "mid",
+   "height_m": 0.8,
+   "relief_m": 6.4,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AbilityResourceZone"
+    }
+   ],
+   "neighbours": [
+    1,
+    9
+   ],
+   "sight": {
+    "spots_ha": 1.2,
+    "spotted_by": 183.8
+   }
+  },
+  {
+   "id": 1,
+   "seed": 1,
+   "area_m2": 11248,
+   "centre": [
+    102.7,
+    127.9
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 137,
+   "side": "mid",
+   "height_m": 0.6,
+   "relief_m": 5.6,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    }
+   ],
+   "neighbours": [
+    0
+   ],
+   "sight": {
+    "spots_ha": 0.81,
+    "spotted_by": 120.7
+   }
+  },
+  {
+   "id": 2,
+   "seed": 2,
+   "area_m2": 44800,
+   "centre": [
+    186.8,
+    67.3
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 283,
+   "side": "mid",
+   "height_m": -15.8,
+   "relief_m": 28.1,
+   "structure_share": 0.01,
+   "bushes": 34,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "AmmunitionZone"
+    }
+   ],
+   "neighbours": [
+    3,
+    4
+   ],
+   "sight": {
+    "spots_ha": 4.47,
+    "spotted_by": 698.2
+   }
+  },
+  {
+   "id": 3,
+   "seed": 3,
+   "area_m2": 53568,
+   "centre": [
+    122.8,
+    62.1
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 217,
+   "side": "A",
+   "height_m": -1.0,
+   "relief_m": 16.9,
+   "structure_share": 0.0,
+   "bushes": 24,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [
+    2,
+    4,
+    6,
+    7
+   ],
+   "sight": {
+    "spots_ha": 6.94,
+    "spotted_by": 1083.3
+   }
+  },
+  {
+   "id": 4,
+   "seed": 4,
+   "area_m2": 44880,
+   "centre": [
+    192.8,
+    132.3
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 243,
+   "side": "B",
+   "height_m": -0.4,
+   "relief_m": 13.1,
+   "structure_share": 0.0,
+   "bushes": 1,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [
+    2,
+    3,
+    5,
+    8
+   ],
+   "sight": {
+    "spots_ha": 7.04,
+    "spotted_by": 1097.3
+   }
+  },
+  {
+   "id": 5,
+   "seed": 5,
+   "area_m2": 27600,
+   "centre": [
+    159.1,
+    177.2
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 268,
+   "side": "B",
+   "height_m": 0.9,
+   "relief_m": 9.8,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "HealZone"
+    }
+   ],
+   "neighbours": [
+    4,
+    8,
+    11
+   ],
+   "sight": {
+    "spots_ha": 5.51,
+    "spotted_by": 852.5
+   }
+  },
+  {
+   "id": 6,
+   "seed": 6,
+   "area_m2": 21984,
+   "centre": [
+    83.9,
+    90.2
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 225,
+   "side": "A",
+   "height_m": 0.9,
+   "relief_m": 16.3,
+   "structure_share": 0.01,
+   "bushes": 51,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "HealZone"
+    }
+   ],
+   "neighbours": [
+    3,
+    7,
+    10
+   ],
+   "sight": {
+    "spots_ha": 4.62,
+    "spotted_by": 718.2
+   }
+  },
+  {
+   "id": 7,
+   "seed": 7,
+   "area_m2": 19664,
+   "centre": [
+    52.1,
+    67.8
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 380,
+   "side": "A",
+   "height_m": 1.1,
+   "relief_m": 6.8,
+   "structure_share": 0.03,
+   "bushes": 154,
+   "contains": [
+    {
+     "kind": "spawn",
+     "team": "A"
+    }
+   ],
+   "neighbours": [
+    3,
+    6,
+    10
+   ],
+   "sight": {
+    "spots_ha": 3.32,
+    "spotted_by": 525.7
+   }
+  },
+  {
+   "id": 8,
+   "seed": 8,
+   "area_m2": 13664,
+   "centre": [
+    195.2,
+    194.7
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 401,
+   "side": "B",
+   "height_m": 1.0,
+   "relief_m": 6.2,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "spawn",
+     "team": "B"
+    }
+   ],
+   "neighbours": [
+    4,
+    5
+   ],
+   "sight": {
+    "spots_ha": 3.38,
+    "spotted_by": 530.9
+   }
+  },
+  {
+   "id": 9,
+   "seed": 9,
+   "area_m2": 15280,
+   "centre": [
+    147.4,
+    128.3
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 74,
+   "side": "B",
+   "height_m": 0.9,
+   "relief_m": 8.6,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    0
+   ],
+   "sight": {
+    "spots_ha": 1.24,
+    "spotted_by": 195.3
+   }
+  },
+  {
+   "id": 10,
+   "seed": 10,
+   "area_m2": 33296,
+   "centre": [
+    66.9,
+    129.5
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 276,
+   "side": "A",
+   "height_m": -0.4,
+   "relief_m": 20.2,
+   "structure_share": 0.04,
+   "bushes": 148,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    6,
+    7,
+    11
+   ],
+   "sight": {
+    "spots_ha": 4.64,
+    "spotted_by": 717.4
+   }
+  },
+  {
+   "id": 11,
+   "seed": 11,
+   "area_m2": 34544,
+   "centre": [
+    114.3,
+    177.9
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 264,
+   "side": "B",
+   "height_m": 1.7,
+   "relief_m": 42.9,
+   "structure_share": 0.04,
+   "bushes": 101,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    5,
+    10
+   ],
+   "sight": {
+    "spots_ha": 4.91,
+    "spotted_by": 757.8
+   }
+  }
+ ]
+}

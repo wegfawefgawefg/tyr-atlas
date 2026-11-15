@@ -1,0 +1,788 @@
+{
+ "map": "Ravine",
+ "res_m": 4.0,
+ "shape": [
+  383,
+  383
+ ],
+ "origin": [
+  -82500.17,
+  -39100.57689742598
+ ],
+ "regions": [
+  {
+   "id": 0,
+   "seed": 0,
+   "area_m2": 2848,
+   "centre": [
+    200.1,
+    300.6
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 404,
+   "side": null,
+   "height_m": -2.3,
+   "relief_m": 0.7,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [],
+   "sight": {
+    "spots_ha": 0.29,
+    "spotted_by": 45.3
+   }
+  },
+  {
+   "id": 1,
+   "seed": 1,
+   "area_m2": 2864,
+   "centre": [
+    223.5,
+    96.0
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 421,
+   "side": null,
+   "height_m": -0.3,
+   "relief_m": 1.1,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "CaptureZone"
+    }
+   ],
+   "neighbours": [],
+   "sight": {
+    "spots_ha": 0.29,
+    "spotted_by": 44.1
+   }
+  },
+  {
+   "id": 2,
+   "seed": 2,
+   "area_m2": 31728,
+   "centre": [
+    210.0,
+    272.4
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 287,
+   "side": null,
+   "height_m": -1.1,
+   "relief_m": 11.7,
+   "structure_share": 0.04,
+   "bushes": 113,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "HealZone"
+    }
+   ],
+   "neighbours": [
+    10,
+    19,
+    21,
+    22,
+    23
+   ],
+   "sight": {
+    "spots_ha": 6.07,
+    "spotted_by": 940.4
+   }
+  },
+  {
+   "id": 3,
+   "seed": 3,
+   "area_m2": 20528,
+   "centre": [
+    186.3,
+    85.6
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 477,
+   "side": null,
+   "height_m": -0.6,
+   "relief_m": 22.2,
+   "structure_share": 0.06,
+   "bushes": 89,
+   "contains": [
+    {
+     "kind": "zone",
+     "zone": "HealZone"
+    }
+   ],
+   "neighbours": [
+    7
+   ],
+   "sight": {
+    "spots_ha": 2.1,
+    "spotted_by": 325.3
+   }
+  },
+  {
+   "id": 4,
+   "seed": 4,
+   "area_m2": 28928,
+   "centre": [
+    283.2,
+    123.9
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 408,
+   "side": null,
+   "height_m": -1.9,
+   "relief_m": 27.4,
+   "structure_share": 0.01,
+   "bushes": 12,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Crystals",
+     "src": "BP_LI_Ravine_Crystals_01"
+    }
+   ],
+   "neighbours": [
+    13,
+    15,
+    16
+   ],
+   "sight": {
+    "spots_ha": 4.56,
+    "spotted_by": 713.0
+   }
+  },
+  {
+   "id": 5,
+   "seed": 5,
+   "area_m2": 44912,
+   "centre": [
+    181.9,
+    214.2
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 148,
+   "side": null,
+   "height_m": 6.6,
+   "relief_m": 30.5,
+   "structure_share": 0.05,
+   "bushes": 290,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Structures",
+     "src": "BP_LI_Ravine_Structures_01"
+    },
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    6,
+    8,
+    9,
+    11,
+    22
+   ],
+   "sight": {
+    "spots_ha": 5.03,
+    "spotted_by": 779.5
+   }
+  },
+  {
+   "id": 6,
+   "seed": 8,
+   "area_m2": 17296,
+   "centre": [
+    140.6,
+    244.2
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 349,
+   "side": null,
+   "height_m": 11.9,
+   "relief_m": 24.9,
+   "structure_share": 0.01,
+   "bushes": 52,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Disk",
+     "src": "SM_RavBld_01_Disk_01_01"
+    }
+   ],
+   "neighbours": [
+    5,
+    8,
+    22
+   ],
+   "sight": {
+    "spots_ha": 3.89,
+    "spotted_by": 606.5
+   }
+  },
+  {
+   "id": 7,
+   "seed": 10,
+   "area_m2": 26592,
+   "centre": [
+    185.7,
+    117.0
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 358,
+   "side": null,
+   "height_m": -7.6,
+   "relief_m": 27.5,
+   "structure_share": 0.01,
+   "bushes": 29,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Bridge",
+     "src": "SM_RavBld_01_Bridge_01_05"
+    }
+   ],
+   "neighbours": [
+    3,
+    9,
+    11,
+    13,
+    14
+   ],
+   "sight": {
+    "spots_ha": 3.27,
+    "spotted_by": 505.7
+   }
+  },
+  {
+   "id": 8,
+   "seed": 11,
+   "area_m2": 15536,
+   "centre": [
+    129.9,
+    212.3
+   ],
+   "compass": "west",
+   "dist_from_centre_m": 349,
+   "side": null,
+   "height_m": 34.7,
+   "relief_m": 30.1,
+   "structure_share": 0.05,
+   "bushes": 77,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Tower",
+     "src": "SM_RavBld_01_Tower_01_03"
+    }
+   ],
+   "neighbours": [
+    5,
+    6,
+    9
+   ],
+   "sight": {
+    "spots_ha": 2.76,
+    "spotted_by": 428.9
+   }
+  },
+  {
+   "id": 9,
+   "seed": 12,
+   "area_m2": 58208,
+   "centre": [
+    151.9,
+    148.8
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 332,
+   "side": null,
+   "height_m": 18.1,
+   "relief_m": 50.9,
+   "structure_share": 0.01,
+   "bushes": 121,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Disk",
+     "src": "SM_RavBld_01_Disk_01_01"
+    }
+   ],
+   "neighbours": [
+    5,
+    7,
+    8,
+    11
+   ],
+   "sight": {
+    "spots_ha": 3.96,
+    "spotted_by": 618.8
+   }
+  },
+  {
+   "id": 10,
+   "seed": 13,
+   "area_m2": 23024,
+   "centre": [
+    160.2,
+    295.3
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 439,
+   "side": null,
+   "height_m": -2.2,
+   "relief_m": 18.0,
+   "structure_share": 0.07,
+   "bushes": 120,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Disk",
+     "src": "SM_RavBld_01_Disk_01_01"
+    }
+   ],
+   "neighbours": [
+    2,
+    22,
+    23
+   ],
+   "sight": {
+    "spots_ha": 3.65,
+    "spotted_by": 571.4
+   }
+  },
+  {
+   "id": 11,
+   "seed": 14,
+   "area_m2": 16528,
+   "centre": [
+    193.2,
+    167.3
+   ],
+   "compass": "south-west",
+   "dist_from_centre_m": 164,
+   "side": null,
+   "height_m": 3.3,
+   "relief_m": 21.6,
+   "structure_share": 0.11,
+   "bushes": 129,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Disk",
+     "src": "SM_RavBld_01_Disk_01_01"
+    }
+   ],
+   "neighbours": [
+    5,
+    7,
+    9,
+    17
+   ],
+   "sight": {
+    "spots_ha": 4.59,
+    "spotted_by": 695.7
+   }
+  },
+  {
+   "id": 12,
+   "seed": 15,
+   "area_m2": 17104,
+   "centre": [
+    273.7,
+    227.0
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 252,
+   "side": null,
+   "height_m": 11.0,
+   "relief_m": 23.2,
+   "structure_share": 0.0,
+   "bushes": 0,
+   "contains": [
+    {
+     "kind": "peak"
+    }
+   ],
+   "neighbours": [
+    15,
+    16,
+    18,
+    19,
+    20,
+    21
+   ],
+   "sight": {
+    "spots_ha": 8.02,
+    "spotted_by": 1270.3
+   }
+  },
+  {
+   "id": 13,
+   "seed": 17,
+   "area_m2": 34112,
+   "centre": [
+    247.5,
+    115.7
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 363,
+   "side": null,
+   "height_m": -1.5,
+   "relief_m": 16.2,
+   "structure_share": 0.07,
+   "bushes": 227,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Tower",
+     "src": "SM_RavBld_01_Tower_01_01"
+    },
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    4,
+    7,
+    14,
+    16
+   ],
+   "sight": {
+    "spots_ha": 5.11,
+    "spotted_by": 788.4
+   }
+  },
+  {
+   "id": 14,
+   "seed": 18,
+   "area_m2": 13008,
+   "centre": [
+    225.4,
+    149.4
+   ],
+   "compass": "south",
+   "dist_from_centre_m": 210,
+   "side": null,
+   "height_m": -2.9,
+   "relief_m": 25.0,
+   "structure_share": 0.06,
+   "bushes": 64,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    7,
+    13,
+    16
+   ],
+   "sight": {
+    "spots_ha": 3.73,
+    "spotted_by": 591.6
+   }
+  },
+  {
+   "id": 15,
+   "seed": 19,
+   "area_m2": 23712,
+   "centre": [
+    303.6,
+    179.4
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 360,
+   "side": null,
+   "height_m": 1.9,
+   "relief_m": 26.7,
+   "structure_share": 0.03,
+   "bushes": 68,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Disk",
+     "src": "SM_RavBld_01_Disk_01_01"
+    },
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    4,
+    12,
+    16,
+    20
+   ],
+   "sight": {
+    "spots_ha": 2.32,
+    "spotted_by": 362.1
+   }
+  },
+  {
+   "id": 16,
+   "seed": 20,
+   "area_m2": 26256,
+   "centre": [
+    257.3,
+    174.3
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 196,
+   "side": null,
+   "height_m": -1.9,
+   "relief_m": 25.9,
+   "structure_share": 0.04,
+   "bushes": 85,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    4,
+    12,
+    13,
+    14,
+    15,
+    17,
+    18
+   ],
+   "sight": {
+    "spots_ha": 5.38,
+    "spotted_by": 834.5
+   }
+  },
+  {
+   "id": 17,
+   "seed": 21,
+   "area_m2": 15568,
+   "centre": [
+    222.9,
+    190.4
+   ],
+   "compass": "south-east",
+   "dist_from_centre_m": 50,
+   "side": null,
+   "height_m": -10.4,
+   "relief_m": 17.4,
+   "structure_share": 0.08,
+   "bushes": 57,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    11,
+    16,
+    18,
+    19
+   ],
+   "sight": {
+    "spots_ha": 3.2,
+    "spotted_by": 497.0
+   }
+  },
+  {
+   "id": 18,
+   "seed": 22,
+   "area_m2": 19744,
+   "centre": [
+    258.5,
+    209.1
+   ],
+   "compass": "east",
+   "dist_from_centre_m": 171,
+   "side": null,
+   "height_m": -2.6,
+   "relief_m": 22.6,
+   "structure_share": 0.05,
+   "bushes": 74,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    12,
+    16,
+    17,
+    19
+   ],
+   "sight": {
+    "spots_ha": 6.47,
+    "spotted_by": 1005.7
+   }
+  },
+  {
+   "id": 19,
+   "seed": 23,
+   "area_m2": 19760,
+   "centre": [
+    230.2,
+    237.8
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 157,
+   "side": null,
+   "height_m": -4.8,
+   "relief_m": 19.4,
+   "structure_share": 0.04,
+   "bushes": 33,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    2,
+    12,
+    17,
+    18,
+    21,
+    22
+   ],
+   "sight": {
+    "spots_ha": 5.12,
+    "spotted_by": 815.2
+   }
+  },
+  {
+   "id": 20,
+   "seed": 24,
+   "area_m2": 24192,
+   "centre": [
+    299.4,
+    240.5
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 368,
+   "side": null,
+   "height_m": 2.0,
+   "relief_m": 19.4,
+   "structure_share": 0.07,
+   "bushes": 153,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    12,
+    15,
+    21
+   ],
+   "sight": {
+    "spots_ha": 4.32,
+    "spotted_by": 667.1
+   }
+  },
+  {
+   "id": 21,
+   "seed": 25,
+   "area_m2": 40272,
+   "centre": [
+    272.4,
+    276.0
+   ],
+   "compass": "north-east",
+   "dist_from_centre_m": 375,
+   "side": null,
+   "height_m": -0.7,
+   "relief_m": 27.7,
+   "structure_share": 0.01,
+   "bushes": 30,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    2,
+    12,
+    19,
+    20,
+    23
+   ],
+   "sight": {
+    "spots_ha": 5.68,
+    "spotted_by": 888.5
+   }
+  },
+  {
+   "id": 22,
+   "seed": 26,
+   "area_m2": 26848,
+   "centre": [
+    153.9,
+    271.7
+   ],
+   "compass": "north-west",
+   "dist_from_centre_m": 377,
+   "side": null,
+   "height_m": -11.4,
+   "relief_m": 23.6,
+   "structure_share": 0.01,
+   "bushes": 38,
+   "contains": [
+    {
+     "kind": "landmark",
+     "word": "Bridge",
+     "src": "SM_RavBld_01_Bridge_01_04"
+    },
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    2,
+    5,
+    6,
+    10,
+    19
+   ],
+   "sight": {
+    "spots_ha": 2.43,
+    "spotted_by": 378.8
+   }
+  },
+  {
+   "id": 23,
+   "seed": 27,
+   "area_m2": 22672,
+   "centre": [
+    228.5,
+    300.5
+   ],
+   "compass": "north",
+   "dist_from_centre_m": 401,
+   "side": null,
+   "height_m": 1.1,
+   "relief_m": 18.0,
+   "structure_share": 0.04,
+   "bushes": 41,
+   "contains": [
+    {
+     "kind": "pit"
+    }
+   ],
+   "neighbours": [
+    2,
+    10,
+    21
+   ],
+   "sight": {
+    "spots_ha": 3.6,
+    "spotted_by": 565.2
+   }
+  }
+ ]
+}
