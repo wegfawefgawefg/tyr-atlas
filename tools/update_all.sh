@@ -49,7 +49,8 @@ if [ -n "${MAPS:-}" ]; then
     timeout 1500 $X map extract/maps/$n Tyr/Plugins/GameFeatures/Maps/$p.umap 2>&1 | grep -E 'umap:' || true
   done
   $P tools/mapdsm.py
-  $P tools/maplos.py Fields Divide Ravine Scorch WindValley Core Dunes Ruins Glade
+  # Dunes, Ruins and Glade are not in rotation, so they stay off the site (old layers kept in site_hidden/maps)
+  $P tools/maplos.py Fields Divide Ravine Scorch WindValley Core
   # Callout regions are NOT rebuilt here: re-segmenting changes region ids. If the maps changed, run
   #   tools/callouts.py <maps>; tools/callout_names.py <maps>   (carries names over; name leftovers by hand)
   $P tools/callouts_web.py Fields Divide Ravine Scorch WindValley Core

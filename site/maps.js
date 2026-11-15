@@ -4,9 +4,10 @@
 (() => {
 const TA = window.TA;
 if (!TA) return;
-// live: maps seen in real matches (match travel in our logs); the rest ship in the files but never came up
+// maps seen in real matches (match travel in our logs). Dunes, Ruins and Glade ship in the files but never came up, so they
+// are not shown; their layers are still built (tools/maplos.py) but kept out of site/ (add them back here if they return).
 const MAPS = [['fields', 'Fields', 1], ['divide', 'Divide', 1], ['ravine', 'Ravine', 1], ['scorch', 'Scorch', 1], ['windvalley', 'Wind Valley', 1],
-  ['core', 'Core', 1], ['dunes', 'Dunes', 0], ['ruins', 'Ruins', 0], ['glade', 'Glade', 0]];
+  ['core', 'Core', 1]];
 const LAYERS = [['advantage', 'Spots more than it is spotted'], ['sees', 'Ground it can spot'], ['seen', 'How often it is spotted'], ['zone', 'Who spots a capture zone'], ['none', 'Terrain only']];
 const LEVELS = [0, 10, 20, 30, 40, 50, 60, 70, 80];       // camo levels the sweep was run at (meta.camos)
 let camo = 3;                                               // index into LEVELS
@@ -39,7 +40,7 @@ function load(name) {
 
 function controls() {
   const ms = $('map-pick'); if (!ms || ms.childElementCount) return;
-  const groups = [['In rotation', 1], ['In the files, not seen in matches', 0]];
+  const groups = [['In rotation', 1]];
   for (const [gl, live] of groups) { const og = document.createElement('optgroup'); og.label = gl;
     for (const [k, l, lv] of MAPS) if (lv === live) { const o = document.createElement('option'); o.value = k; o.textContent = l; og.append(o); }
     ms.append(og); }

@@ -7,7 +7,12 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Tyr Tank Atlas">
 <meta property="og:description" content="Every tank in Tyr compared from the game's own files: stats, talents, components, armor and face-offs. Unofficial fan analysis.">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://tyr-atlas.pages.dev/">
+<meta property="og:image" content="https://tyr-atlas.pages.dev/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tyr-atlas.pages.dev/og.jpg">
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -340,7 +345,7 @@
     <p class="note" id="map-note"></p>
     <p>How spotting works in Tyr, from the game files: you are spotted when an enemy has line of sight to any part of your tank and is within 400 m × (1 − your camo). Camo is capped at 80%, so the closest anyone can stay unspotted is 80 m. A bush gives +40% camo to sight lines that pass through it (within 3.25 m of its centre), but only against spotters more than 15 m from that bush; closer than that they see straight through. Bush camo doesn't stack above 40%. Firing costs camo (−15, scaled by −0.4) for a while.</p>
     <p>What that means on the map: on open ground spotting is symmetric, so if you can spot them they can spot you, and terrain alone gives no edge. Crests still help when shooting (less of you to hit), but not for spotting. The edge comes from bushes and camo. B spots are the best positions near bushes, where you spot far more than you are spotted; the edge grows with camo. O spots are overlooks: open spots that spot the most ground.</p>
-    <p class="note">Model details: 2 m cells; spotter eye at 2.5 m; a tank is a 2.5 m column and counts as spotted if any part is visible. Bushes don't block sight, they add camo. The playable area is the ground a tank can drive on (slopes under 35°) that is connected to the zones, inside the map's invisible walls and outside its out-of-bounds zones (both read from the map files; Dunes has neither, so its edge is estimated). Firing is modelled as camo − 15 − 40% of camo, from the game mode's settings; how long that lasts is set in code we haven't read. Camo values for each tank come from its stats, its camo talents and the Shift Cloak and Camo Web components. The "in rotation" list is the maps that came up in our own match logs.</p>
+    <p class="note">Model details: 2 m cells; spotter eye at 2.5 m; a tank is a 2.5 m column and counts as spotted if any part is visible. Bushes don't block sight, they add camo. The playable area is the ground a tank can drive on (slopes under 35°) that is connected to the zones, inside the map's invisible walls and outside its out-of-bounds zones (both read from the map files). Firing is modelled as camo − 15 − 40% of camo, from the game mode's settings; the penalty lasts 0.15 s, but anyone who spots you in that flash keeps you spotted for 7 s. Camo values for each tank come from its stats, its camo talents and the Shift Cloak and Camo Web components. The maps shown are the ones that came up in our own match logs; Dunes, Ruins and Glade are in the game files but never came up, so they are left out.</p>
   </section>
 </div>
 
