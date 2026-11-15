@@ -9,7 +9,7 @@ Goal: stats site (and later a video) for Tyr (Stoke Games, UE5 tank shooter, Ste
 
 ## Data pipeline
 
-- The pak AES key is read from TYR_AES_KEY or extract/aes.key (kept out of the repo).
+- `tools/find_aes.py` finds the pak AES key in the exe (stack-built key); update_all.sh writes it to extract/aes.key.
 - `tools/reflect_scan.py` + `tools/make_usmap.py` rebuild a .usmap from UHT reflection tables in the
   shipping exe (no game run needed). Output `extract/Tyr.usmap`.
 - `tools/extract` (C#, CUE4Parse net8 snapshot in third_party) dumps assets to `extract/json`.

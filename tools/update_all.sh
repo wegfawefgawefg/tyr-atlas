@@ -1,5 +1,5 @@
 #!/bin/sh
-# Rebuild everything after a game patch: key check, usmap, asset dumps, datasets, armor, combat, site data, maps, art.
+# Rebuild everything after a game patch: AES key, usmap, asset dumps, datasets, armor, combat, site data, maps, art.
 #   tools/update_all.sh            data + armor + site data (fast path, most patches)
 #   MAPS=1 tools/update_all.sh     also re-export maps and rerun spotting (slow; see note on callouts below)
 #   ART=1 tools/update_all.sh      also re-export tank models and re-render them in Blender (slow)
@@ -16,8 +16,12 @@ step() { echo "== $*"; }
 step "game build"
 grep -E '"buildid"|"LastUpdated"' "$GAME/../../appmanifest_2445260.acf"
 
-step "AES key (TYR_AES_KEY or extract/aes.key; a game patch can change it, and the dumps below then fail)"
-[ -n "${TYR_AES_KEY:-}" ] || [ -s extract/aes.key ] || { echo "no AES key: set TYR_AES_KEY or write it to extract/aes.key"; exit 1; }
+step "AES key: scan the exe for it (it can change with a patch) and write extract/aes.key"
+mkdir -p extract
+PAK=$(ls "$GAME"/Tyr/Content/Paks/*.pak | head -1)
+$P tools/find_aes.py "$EXE" "$PAK" | tee extract/aes_scan.txt | tail -1
+grep -o 'KEY 0x[0-9A-F]\{64\}' extract/aes_scan.txt | cut -c5- > extract/aes.key
+[ -s extract/aes.key ] || { echo "AES key not found in the exe (the scan in tools/find_aes.py may need updating)"; exit 1; }
 
 step "usmap from exe reflection"
 $P tools/reflect_scan.py extract/reflect_stage1.pkl
