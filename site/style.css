@@ -225,6 +225,9 @@ td.comps { text-align: left; font-family: var(--f-body); }
 .foot { max-width: 1160px; margin: 0 auto; padding: 18px max(16px, env(safe-area-inset-right, 0px)) max(32px, env(safe-area-inset-bottom, 0px)) var(--pad);
   display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); }
 .foot p { margin: 0; }
+.foot .kofi a { color: var(--hot); font-weight: 600; }
+.nav a.support { margin-left: auto; color: var(--hot); }
+.nav a.support:hover { color: var(--ink); }
 .asof { font: 500 12px/1.4 var(--f-data); color: var(--muted); margin: 0; }
 .foot .asof { color: var(--ink-2); }
 
